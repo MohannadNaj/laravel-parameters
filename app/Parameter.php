@@ -31,6 +31,10 @@ class Parameter extends Model
         return $rule;
     }
 
+    public function getValue()
+    {
+        return $this->value;
+    }
     /* Start: Relationships */
 
     public function updated_by_user()
