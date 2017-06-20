@@ -14,3 +14,6 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+// TODO: Configurable
+Route::resource('parameters','ParameterController');
