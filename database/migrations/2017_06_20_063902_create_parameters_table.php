@@ -15,6 +15,17 @@ class CreateParametersTable extends Migration
     {
         Schema::create('parameters', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name');
+
+            $table->string('label')->nullable();
+            $table->string('lang')->nullable();
+
+            $table->string('type');
+
+            $table->text('value');
+
+            $table->integer('created_by_user_id')->nullable();
+            $table->integer('updated_by_user_id')->nullable();
             $table->timestamps();
         });
     }
