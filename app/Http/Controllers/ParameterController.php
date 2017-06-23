@@ -63,7 +63,7 @@ class ParameterController extends Controller
      */
     public function store(Request $request)
     {
-
+        $this->validate($request, \App\Parameter\ParametersValidator::newRules($request->type));
     }
 
     /**

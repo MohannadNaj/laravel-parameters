@@ -9,10 +9,11 @@
 	  	<div class="panel-body">
 	  		<form action="{{route('parameters.store')}}" class="form-horizontal" method="POST" role="form">
 	  			{{csrf_field()}}
-			  	<div class="form-group">
+			  	<div class="form-group {{ $errors->has('name') ? 'has-error':'' }}">
 			  		<label class="control-label col-sm-2" for="">Name</label>
 			  		<div class="col-sm-4">
 			  			<input type="text" class="form-control" name="name" placeholder="parameter_name">
+			  			@include('parameters.shared.parameters-input-errors',['input'=> 'name'])
 			  		</div>
 			  	</div>
 
