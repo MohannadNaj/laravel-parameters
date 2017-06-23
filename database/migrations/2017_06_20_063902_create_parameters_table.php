@@ -19,10 +19,11 @@ class CreateParametersTable extends Migration
 
             $table->string('label')->nullable();
             $table->string('lang')->nullable();
+            $table->boolean('editable')->default(true);
 
             $table->string('type');
 
-            $table->text('value');
+            $table->text('value')->nullable();
 
             $table->integer('created_by_user_id')->nullable();
             $table->integer('updated_by_user_id')->nullable();

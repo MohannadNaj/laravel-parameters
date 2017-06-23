@@ -4,7 +4,10 @@
     @include('parameters.shared.parameters-head')
 </head>
 <body>
+	@include('parameters.shared.parameters-navbar')
+    
     @yield('content')
+
 @stack('modals')
 {{-- <img src="{{asset('images/loading.gif')}}" class="loading" style="display: none; position: fixed; left: 0; bottom: 0;"> --}}
 <!-- Scripts -->

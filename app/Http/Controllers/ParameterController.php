@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class ParameterController extends Controller
 {
+    public $supportedTypes = ['textfield','text','array','image','integer','boolean'];
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +15,30 @@ class ParameterController extends Controller
      */
     public function index()
     {
-        //
+        set_active(['navbar'=>'index']);
+
+        return view('parameters.index');
+    }
+
+    public function all()
+    {
+        set_active(['navbar'=>'all']);
+
+        return view('parameters.all');
+    }
+
+    public function categories()
+    {
+        set_active(['navbar'=>'categories']);
+
+        return view('parameters.categories');
+    }
+
+    public function logs()
+    {
+        set_active(['navbar'=>'logs']);
+
+        return view('parameters.logs');
     }
 
     /**
@@ -24,7 +48,11 @@ class ParameterController extends Controller
      */
     public function create()
     {
-        //
+        set_active(['navbar'=>'create']);
+
+        $data['types'] = $this->supportedTypes;
+
+        return view('parameters.create', $data);
     }
 
     /**
@@ -35,7 +63,7 @@ class ParameterController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**

@@ -79,4 +79,8 @@ footer {
     width: 50%; /* 6 columns */
   }
 }
+
+.black-bg {
+  background: #000000;
+}
     </style>
