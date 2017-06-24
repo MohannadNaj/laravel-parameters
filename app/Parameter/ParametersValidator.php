@@ -6,7 +6,11 @@ class ParametersValidator {
 
 	public static function newRules($type)
 	{
-		return ['value' => static::getNewRules($type), 'name'=>'unique:parameters|required'];
+		return ['value' => static::getNewRules($type),
+				'name'=>'unique:parameters|required',
+				'label' => 'required_without:lang',
+				'lang' => 'required_without:label',
+				];
 	}
 
 	private static function getNewRules($type)
@@ -22,7 +26,7 @@ class ParametersValidator {
 				break;
 
 			case 'boolean':
-				$rule = 'in:0,1';
+				$rule = 'boolean';
 				break;
 
 			case 'integer':

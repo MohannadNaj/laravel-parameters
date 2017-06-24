@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-
+use App\Parameter\ParametersSingleton;
+use App\Parameter;
+use App\Parameter\ParameterObserver;
 class ParametersServiceProvider extends ServiceProvider
 {
     /**
@@ -13,6 +15,7 @@ class ParametersServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Parameter::observe(ParameterObserver::class);
     }
 
     /**
@@ -26,9 +29,6 @@ class ParametersServiceProvider extends ServiceProvider
 
         require_once($helper_path);
 
-        // create a parameters singleton
-        app()->singleton('parameter', function () {
-            return \App\Parameter::all();
-        });
+        new ParametersSingleton();
     }
 }
