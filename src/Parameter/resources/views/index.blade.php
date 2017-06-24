@@ -1,4 +1,4 @@
-@extends('parameters.shared.parameters-layout')
+@extends('parameters::shared.parameters-layout')
 
 @section('content')
   

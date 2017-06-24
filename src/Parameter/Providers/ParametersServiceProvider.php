@@ -15,7 +15,13 @@ class ParametersServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Parameter::observe(ParameterObserver::class);
+
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'parameters');
+        $this->loadRoutesFrom(__DIR__.'/../routes.php');
+        $this->publishes([
+                __DIR__.'/../public/vendor' => public_path('vendor'),
+            ], 'public');
     }
 
     /**
@@ -25,10 +31,10 @@ class ParametersServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $helper_path = base_path(sprintf('Parameter%1$sHelpers%1$sparameters.php', DIRECTORY_SEPARATOR));
-
+        $helper_path = __DIR__. sprintf('%1$s..%1$shelpers%1$sparameters.php', DIRECTORY_SEPARATOR);
         require_once($helper_path);
-
         new ParametersSingleton();
+
+        Parameter::observe(ParameterObserver::class);
     }
 }

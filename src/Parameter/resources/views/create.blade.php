@@ -1,4 +1,4 @@
-@extends('parameters.shared.parameters-layout')
+@extends('parameters::shared.parameters-layout')
 
 @section('content')
 <div class="container">
@@ -13,7 +13,7 @@
 			  		<label class="control-label col-sm-2" for="">Name</label>
 			  		<div class="col-sm-4">
 			  			<input type="text" class="form-control" name="name" value="{{old('name')}}" placeholder="parameter_name">
-			  			@include('parameters.shared.parameters-input-errors',['input'=> 'name'])
+			  			@include('parameters::shared.parameters-input-errors',['input'=> 'name'])
 			  		</div>
 			  	</div>
 
@@ -21,7 +21,7 @@
 			  		<label class="control-label col-sm-2" for="">Label</label>
 			  		<div class="col-sm-4">
 			  			<input type="text" class="form-control" name="label" value="{{old('label')}}" placeholder="parameter_label">
-			  			@include('parameters.shared.parameters-input-errors',['input'=> 'label'])
+			  			@include('parameters::shared.parameters-input-errors',['input'=> 'label'])
 			  		</div>
 			  	</div>
 
@@ -29,7 +29,7 @@
 			  		<label class="control-label col-sm-2" for="">Lang</label>
 			  		<div class="col-sm-4">
 			  			<input type="text" class="form-control" value="{{old('lang')}}" name="lang" placeholder="parameter_lang">
-			  			@include('parameters.shared.parameters-input-errors',['input'=> 'lang'])
+			  			@include('parameters::shared.parameters-input-errors',['input'=> 'lang'])
 			  		</div>
 			  	</div>
 
@@ -39,7 +39,7 @@
 		  			</label>
 	  				<div class="col-sm-4">
 	  					<input type="checkbox" value="1" class="" name="editable" placeholder="editable" {{old('editable', (bool) ! old() ) ? 'checked=""' : ''}}>
-			  			@include('parameters.shared.parameters-input-errors',['input'=> 'editable'])
+			  			@include('parameters::shared.parameters-input-errors',['input'=> 'editable'])
 	  				</div>
 			  	</div>
 
@@ -53,7 +53,7 @@
 				  				<option {{old('type') == $type ? 'selected=""' :''}} value="{{$type}}">{{$type}}</option>
 			  				@endforeach
 				  		</select>		  				
-			  			@include('parameters.shared.parameters-input-errors',['input'=> 'type'])
+			  			@include('parameters::shared.parameters-input-errors',['input'=> 'type'])
 		  			</div>
 			  	</div>
 
@@ -61,7 +61,7 @@
 			  		<label class="control-label col-sm-2" for="">Value</label>
 			  		<div class="col-sm-4">
 			  			<input type="text" class="form-control" name="value" placeholder="parameter_value" value="{{old('value')}}">
-			  			@include('parameters.shared.parameters-input-errors',['input'=> 'value'])
+			  			@include('parameters::shared.parameters-input-errors',['input'=> 'value'])
 			  		</div>
 			  	</div>
 

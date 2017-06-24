@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    @include('parameters.shared.parameters-head')
+    @include('parameters::shared.parameters-head')
 </head>
 <body>
-	@include('parameters.shared.parameters-navbar')
+	@include('parameters::shared.parameters-navbar')
     
     @yield('content')
 

@@ -5,6 +5,7 @@ namespace Parameter\Http\Controllers;
 use Parameter\Parameter\Parameter;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use \Parameter\ParametersValidator;
 
 class ParameterController extends Controller
 {
@@ -18,28 +19,28 @@ class ParameterController extends Controller
     {
         set_active(['navbar'=>'index']);
 
-        return view('parameters.index');
+        return view('parameters::index');
     }
 
     public function all()
     {
         set_active(['navbar'=>'all']);
 
-        return view('parameters.all');
+        return view('parameters::all');
     }
 
     public function categories()
     {
         set_active(['navbar'=>'categories']);
 
-        return view('parameters.categories');
+        return view('parameters::categories');
     }
 
     public function logs()
     {
         set_active(['navbar'=>'logs']);
 
-        return view('parameters.logs');
+        return view('parameters::logs');
     }
 
     /**
@@ -53,7 +54,7 @@ class ParameterController extends Controller
 
         $data['types'] = $this->supportedTypes;
 
-        return view('parameters.create', $data);
+        return view('parameters::create', $data);
     }
 
     /**
@@ -64,7 +65,7 @@ class ParameterController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, \Parameter\Parameter\ParametersValidator::newRules($request->type));
+        $this->validate($request, ParametersValidator::newRules($request->type));
     }
 
     /**

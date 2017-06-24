@@ -50,4 +50,16 @@ class Parameter extends Model
     }
 
     /* End: Relationships */
+    /**
+     * Create a new Eloquent Collection instance.
+     *
+     * @param  array  $models
+     * @return \WhichBeach\Beach\Support\BeachCollection
+     */
+    public function newCollection(array $models = [])
+    {
+        return parent::newCollection($models);
+        // TODO: custom collection, has a `fresh` method
+    }
+
 }
