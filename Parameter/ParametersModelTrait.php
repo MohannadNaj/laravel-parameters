@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Parameter;
+namespace Parameter;
 
 trait ParametersModelTrait {
 	

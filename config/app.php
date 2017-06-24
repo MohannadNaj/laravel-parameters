@@ -177,7 +177,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        App\Providers\ParametersServiceProvider::class,
+        Parameter\Providers\ParametersServiceProvider::class,
 
     ],
 

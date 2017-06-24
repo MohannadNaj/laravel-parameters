@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Parameter\Http\Controllers;
 
-use App\Parameter;
+use Parameter\Parameter\Parameter;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ParameterController extends Controller
 {
@@ -63,13 +64,13 @@ class ParameterController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, \App\Parameter\ParametersValidator::newRules($request->type));
+        $this->validate($request, \Parameter\Parameter\ParametersValidator::newRules($request->type));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Parameter  $parameter
+     * @param  \Parameter\Parameter  $parameter
      * @return \Illuminate\Http\Response
      */
     public function show(Parameter $parameter)
@@ -80,7 +81,7 @@ class ParameterController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Parameter  $parameter
+     * @param  \Parameter\Parameter  $parameter
      * @return \Illuminate\Http\Response
      */
     public function edit(Parameter $parameter)
@@ -92,7 +93,7 @@ class ParameterController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Parameter  $parameter
+     * @param  \Parameter\Parameter  $parameter
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Parameter $parameter)
@@ -103,7 +104,7 @@ class ParameterController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Parameter  $parameter
+     * @param  \Parameter\Parameter  $parameter
      * @return \Illuminate\Http\Response
      */
     public function destroy(Parameter $parameter)

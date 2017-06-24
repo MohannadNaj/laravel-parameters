@@ -1,7 +1,6 @@
 <?php
 
-namespace App\Parameter;
-use \App\Parameter;
+namespace Parameter;
 
 class ParameterObserver {
 	private $dirtyFields = [];

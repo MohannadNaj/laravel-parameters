@@ -1,5 +1,5 @@
 <?php
-namespace App\Parameter;
+namespace Parameter;
 
 class ParametersSingleton {
 
@@ -7,7 +7,7 @@ class ParametersSingleton {
 	{
         // create a parameters singleton
         app()->singleton('parameter', function () {
-            return \App\Parameter::all();
+            return \Parameter\Parameter::all();
         });
 
 	}

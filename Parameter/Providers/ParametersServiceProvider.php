@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Providers;
+namespace Parameter\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Parameter\ParametersSingleton;
-use App\Parameter;
-use App\Parameter\ParameterObserver;
+use Parameter\ParametersSingleton;
+use Parameter\Parameter;
+use Parameter\ParameterObserver;
 class ParametersServiceProvider extends ServiceProvider
 {
     /**
@@ -25,7 +25,7 @@ class ParametersServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $helper_path = app_path(sprintf('Helpers%sparameters.php', DIRECTORY_SEPARATOR));
+        $helper_path = base_path(sprintf('Parameter%1$sHelpers%1$sparameters.php', DIRECTORY_SEPARATOR));
 
         require_once($helper_path);
 
