@@ -26,6 +26,8 @@ class ParametersServiceProvider extends ServiceProvider
             [
                 $this->formatPath(__DIR__.'/../public/vendor') => public_path('vendor'),
             ], 'public');
+
+        Parameter::observe(ParameterObserver::class);
     }
 
     /**
@@ -38,6 +40,5 @@ class ParametersServiceProvider extends ServiceProvider
         require_once($this->formatPath(__DIR__. '/../Helpers/parameters.php'));
         new ParametersSingleton();
 
-        Parameter::observe(ParameterObserver::class);
     }
 }

@@ -57,14 +57,6 @@
 		  			</div>
 			  	</div>
 
-			  	<div class="form-group {{ $errors->has('value') ? 'has-error':'' }}">
-			  		<label class="control-label col-sm-2" for="">Value</label>
-			  		<div class="col-sm-4">
-			  			<input type="text" class="form-control" name="value" placeholder="parameter_value" value="{{old('value')}}">
-			  			@include('parameters::shared.parameters-input-errors',['input'=> 'value'])
-			  		</div>
-			  	</div>
-
 			  	<button type="submit" class="col-sm-offset-1 btn btn-primary">Submit</button>
 			  </form>
 	  	</div>

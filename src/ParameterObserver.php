@@ -5,14 +5,14 @@ namespace Parameter;
 class ParameterObserver {
 	private $dirtyFields = [];
 
-	function __construct()
+	public function saving(Parameter $parameter)
 	{
-		new ParametersSingleton();
+		$parameter->buildValue();
 	}
 
-	public function created(Parameter $parameter)
+	public function saved(Parameter $parameter)
 	{
-
+		new ParametersSingleton();
 	}
 
 	public function updating(Parameter $parameter)
@@ -32,7 +32,7 @@ class ParameterObserver {
 
 	public function deleted(Parameter $parameter)
 	{
-
+		new ParametersSingleton();
 	}
 
 }

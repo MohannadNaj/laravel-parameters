@@ -2,7 +2,8 @@
 
 namespace Parameter\Http\Controllers;
 
-use Parameter\Parameter\Parameter;
+use Parameter\Parameter;
+use Parameter\ParametersManager;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use \Parameter\ParametersValidator;
@@ -52,7 +53,7 @@ class ParameterController extends Controller
     {
         set_active(['navbar'=>'create']);
 
-        $data['types'] = $this->supportedTypes;
+        $data['types'] = ParametersManager::$supportedTypes;
 
         return view('parameters::create', $data);
     }
@@ -66,6 +67,17 @@ class ParameterController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, ParametersValidator::newRules($request->type));
+
+        if(! $request->has('editable'))
+        {
+            $request->merge(['editable' => false]);
+        }
+
+        $parameter = Parameter::create($request->only('name','type','editable','lang','label'));
+
+        session()->flash('_parameters_message','Parameter Created Successfully');
+
+        return redirect(route('parameters.show',['parameter'=>$parameter->id]));
     }
 
     /**
@@ -76,7 +88,9 @@ class ParameterController extends Controller
      */
     public function show(Parameter $parameter)
     {
-        //
+        $data['parameter'] = $parameter;
+
+        return view('parameters::show', $data);
     }
 
     /**

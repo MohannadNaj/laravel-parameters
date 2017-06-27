@@ -3,38 +3,20 @@
 namespace Parameter;
 
 use Illuminate\Database\Eloquent\Model;
+use Parameter\ParametersModelTrait;
 
 class Parameter extends Model
 {
-	protected $guarded = ['id'];
+    use ParametersModelTrait;
+
+    protected $guarded = ['id'];
 
     public static function name($field)
     {
         // latest: in case the same field is created twice at table, get the latest value
         return static::where('name', $field)->get()->last();
     }
-    
-    public function rules()
-    {
-        // TODO: Configurable Rules
-        switch ($this->type) {
-            case 'boolean':
-                $rule = 'required|in:0,1';
-            break;
-            case 'integer':
-                $rule = 'required|integer';
-            break;
-            default:
-                $rule = 'required';
-            break;
-        }
-        return $rule;
-    }
 
-    public function getValue()
-    {
-        return $this->value;
-    }
     /* Start: Relationships */
 
     public function updated_by_user()
