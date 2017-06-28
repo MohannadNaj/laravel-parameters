@@ -23,6 +23,9 @@ class CreateParametersTable extends Migration
 
             $table->string('type');
 
+            $table->integer('group_param_id')->nullable();
+            $table->string('group_col_name')->nullable();
+
             $table->text('value')->nullable();
 
             $table->integer('created_by_user_id')->nullable();

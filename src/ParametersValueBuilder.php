@@ -4,11 +4,10 @@ namespace Parameter;
 
 class ParametersValueBuilder
 {
-    public function buildArray(& $parameter)
+    public function buildGroup(& $parameter)
     {
 		$parameter->value =  json_encode(
-				['meta'=> $this->buildArrayMeta($parameter),
-				'value' => $parameter->value]
+				$parameter->value
 			, JSON_HEX_APOS);
     }
 

@@ -24,7 +24,7 @@ trait ParametersModelTrait {
             return $value;
         }
 
-		if($this->type == "array")
+		if($this->type == "group")
 		{
 			if(! is_array($value))
 			{

@@ -3,6 +3,6 @@
 namespace Parameter;
 
 class ParametersManager {
-    public static $supportedTypes = ['textfield','text','array','file','integer','boolean'];
+    public static $supportedTypes = ['textfield','text','group','file','integer','boolean'];
 
 }
