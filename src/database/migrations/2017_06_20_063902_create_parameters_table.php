@@ -15,6 +15,7 @@ class CreateParametersTable extends Migration
     {
         Schema::create('parameters', function (Blueprint $table) {
             $table->increments('id');
+
             $table->string('name');
 
             $table->string('label')->nullable();
@@ -27,6 +28,7 @@ class CreateParametersTable extends Migration
             $table->string('group_col_name')->nullable();
 
             $table->text('value')->nullable();
+            $table->text('meta')->nullable();
 
             $table->integer('created_by_user_id')->nullable();
             $table->integer('updated_by_user_id')->nullable();

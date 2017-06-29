@@ -25,9 +25,12 @@ class ParameterController extends Controller
 
     public function all()
     {
+        
+        $data['parameters'] = param();
+
         set_active(['navbar'=>'all']);
 
-        return view('parameters::all');
+        return view('parameters::all', $data);
     }
 
     public function categories()

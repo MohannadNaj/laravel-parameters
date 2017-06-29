@@ -8,7 +8,7 @@ if (! function_exists('param')) {
             return app('parameter')->where('name', $name)->first()->getValue();
         }
 
-        // if the method is used to return the parameter model instance
+        // if the method is used to return the parameters collection
         return app('parameter');
     }
 }

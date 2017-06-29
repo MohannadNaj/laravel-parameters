@@ -15,7 +15,7 @@
               <a href="{{route('parameters.index')}}">Home</a>
             </li>
             <li class="{{is_active('navbar','all')}}">
-              <a href="{{route('parameters.all')}}">Edit</a>
+              <a href="{{route('parameters.all')}}">All</a>
             </li>
             <li class="{{is_active('navbar','categories')}}">
               <a href="{{route('parameters.categories')}}">Categories</a>

@@ -22,7 +22,7 @@ class ParameterObserver {
 
 	public function updated(Parameter $parameter)
 	{
-		print_r($this->dirtyFields);
+
 	}
 
 	public function deleting(Parameter $parameter)
