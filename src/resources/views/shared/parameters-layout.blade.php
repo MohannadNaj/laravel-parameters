@@ -11,7 +11,9 @@
 @stack('modals')
 {{-- <img src="{{asset('images/loading.gif')}}" class="loading" style="display: none; position: fixed; left: 0; bottom: 0;"> --}}
 <!-- Scripts -->
-<script src="{{asset('vendor/parameters/js/jquery.min.js')}}"></script>
+{{-- <script src="{{asset('vendor/parameters/js/vue.js')}}"></script>
+<script src="{{asset('vendor/parameters/js/mix.js')}}"></script> --}}
+<script src="{{asset('js/app.js')}}"></script>
 <script src="{{asset('vendor/parameters/js/bootstrap.min.js')}}"></script>
 <script type="text/javascript">
     @stack('js_footer')

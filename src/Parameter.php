@@ -27,8 +27,14 @@ class Parameter extends Model
 
     public function added_by_user()
     {
-		// TODO: Configurable
+        // TODO: Configurable
         return $this->belongsTo('App\User', 'updated_by_user_id');
+    }
+
+    public function category()
+    {
+		// TODO: Configurable
+        return $this->belongsTo('Parameter\Parameter');
     }
 
     /* End: Relationships */

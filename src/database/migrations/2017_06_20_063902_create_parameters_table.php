@@ -26,6 +26,7 @@ class CreateParametersTable extends Migration
 
             $table->integer('group_param_id')->nullable();
             $table->string('group_col_name')->nullable();
+            $table->integer('category_id')->nullable();
 
             $table->text('value')->nullable();
             $table->text('meta')->nullable();
