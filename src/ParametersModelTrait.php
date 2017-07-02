@@ -24,4 +24,9 @@ trait ParametersModelTrait {
 		return $parameterRetriever->getValue();
 	}
 
+	public static function getColumns()
+	{
+		$instance = new self;
+		return $instance->getConnection()->getSchemaBuilder()->getColumnListing($instance->getTable());
+	}
 }

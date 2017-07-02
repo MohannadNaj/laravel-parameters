@@ -13,7 +13,7 @@
 <!-- Scripts -->
 {{-- <script src="{{asset('vendor/parameters/js/vue.js')}}"></script>
 <script src="{{asset('vendor/parameters/js/mix.js')}}"></script> --}}
-<script src="{{asset('js/app.js')}}"></script>
+<script src="{{asset('vendor/parameters/js/app.js')}}"></script>
 <script src="{{asset('vendor/parameters/js/bootstrap.min.js')}}"></script>
 <script type="text/javascript">
     @stack('js_footer')

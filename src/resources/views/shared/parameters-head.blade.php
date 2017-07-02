@@ -8,6 +8,7 @@
 
     <!-- Styles -->
     <link href="{{asset('vendor/parameters/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('vendor/parameters/css/app.css')}}" rel="stylesheet">
     <link href="{{asset('vendor/parameters/css/bootstrap-theme.min.css')}}" rel="stylesheet">
     <!-- Scripts -->
     <script>
@@ -82,5 +83,9 @@ footer {
 
 .black-bg {
   background: #000000;
+}
+
+.no-padding-bottom {
+  padding-bottom: 0px;
 }
     </style>
