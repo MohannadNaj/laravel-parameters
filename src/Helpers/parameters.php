@@ -5,7 +5,12 @@ if (! function_exists('param')) {
     {
         // if we are using the method to return a specified parameter value, e.g: param('some_param')
         if ($name) {
-            return app('parameter')->where('name', $name)->first()->getValue();
+        	$param = app('parameter')->where('name', $name)->first();
+        	if(! $param) {
+        		$param = app('parameter')->where('id', $name)->first();
+        	}
+
+    		return $param ? $param->getValue() : null;
         }
 
         // if the method is used to return the parameters collection

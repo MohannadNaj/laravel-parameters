@@ -27,6 +27,10 @@ class ParametersServiceProvider extends ServiceProvider
                 $this->formatPath(__DIR__.'/../public/vendor') => public_path('vendor'),
             ], 'public');
 
+        view()->composer('parameters::shared.parameters-head', function($view) {
+            $view->with('parametersColumns', \Parameter\Parameter::getColumns());
+        });
+
         Parameter::observe(ParameterObserver::class);
     }
 

@@ -11,24 +11,8 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="{{is_active('navbar','index')}}">
-              <a href="{{route('parameters.index')}}">Home</a>
-            </li>
-            <li class="{{is_active('navbar','all')}}">
-              <a href="{{route('parameters.all')}}">All</a>
-            </li>
-            <li class="{{is_active('navbar','categories')}}">
-              <a href="{{route('parameters.categories')}}">Categories</a>
-            </li>
-            <li class="{{is_active('navbar','logs')}}">
-              <a href="{{route('parameters.logs')}}">Logs</a>
-            </li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li class="{{is_active('navbar','create') == "active" ? 'black-bg' : ''}}">
-              <div class="navbar-btn">
-                <a class="btn btn-success" href="{{route('parameters.create')}}">Add</a>
-              </div>
+            <li class="">
+              <a>Parameters</a>
             </li>
           </ul>
         </div><!-- /.nav-collapse -->

@@ -4,16 +4,13 @@
     @include('parameters::shared.parameters-head')
 </head>
 <body>
-	@include('parameters::shared.parameters-navbar')
-    
-    @yield('content')
-
-@stack('modals')
-{{-- <img src="{{asset('images/loading.gif')}}" class="loading" style="display: none; position: fixed; left: 0; bottom: 0;"> --}}
-<!-- Scripts -->
-{{-- <script src="{{asset('vendor/parameters/js/vue.js')}}"></script>
-<script src="{{asset('vendor/parameters/js/mix.js')}}"></script> --}}
-<script src="{{asset('vendor/parameters/js/app.js')}}"></script>
+    <div id="app">
+      @include('parameters::shared.parameters-navbar')
+    	@yield('content')
+      <notifications></notifications>
+      <modal ref="modal" id="modal"></modal>
+    </div>
+<script src="{{asset('vendor/parameters/js/app.js') . '?v='.Illuminate\Support\Str::random()}}"></script>
 <script src="{{asset('vendor/parameters/js/bootstrap.min.js')}}"></script>
 <script type="text/javascript">
     @stack('js_footer')

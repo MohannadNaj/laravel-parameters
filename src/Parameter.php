@@ -10,6 +10,8 @@ class Parameter extends Model
     use ParametersModelTrait;
 
     protected $guarded = ['id'];
+    protected $appends = ['humanizedCreatedAt','humanizedUpdatedAt'];
+    protected $casts = ['meta'=>'array'];
 
     public static function name($field)
     {
@@ -38,4 +40,14 @@ class Parameter extends Model
     }
 
     /* End: Relationships */
+
+    public function getHumanizedCreatedAtAttribute($value)
+    {
+        return \Carbon\Carbon::parse($this->created_at)->diffForHumans();
+    }
+
+    public function getHumanizedUpdatedAtAttribute($value)
+    {
+        return \Carbon\Carbon::parse($this->updated_at)->diffForHumans();
+    }
 }

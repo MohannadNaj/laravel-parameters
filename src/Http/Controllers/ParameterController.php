@@ -5,21 +5,15 @@ namespace Parameter\Http\Controllers;
 use Parameter\Parameter;
 use Parameter\ParametersManager;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use \Parameter\ParametersValidator;
+use Storage ;
 
 class ParameterController extends Controller
 {
-    public $supportedTypes = ['textfield','text','array','image','integer','boolean'];
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        set_active(['navbar'=>'index']);
-
         return view('parameters::index');
     }
 
@@ -28,45 +22,30 @@ class ParameterController extends Controller
         
         $data['parameters'] = param();
 
-        set_active(['navbar'=>'all']);
 
         return view('parameters::all', $data);
     }
 
     public function categories()
     {
-        set_active(['navbar'=>'categories']);
 
         return view('parameters::categories');
     }
 
     public function logs()
     {
-        set_active(['navbar'=>'logs']);
 
         return view('parameters::logs');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        set_active(['navbar'=>'create']);
 
         $data['types'] = ParametersManager::$supportedTypes;
 
         return view('parameters::create', $data);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $this->validate($request, ParametersValidator::newRules($request->type));
@@ -76,19 +55,11 @@ class ParameterController extends Controller
             $request->merge(['editable' => false]);
         }
 
-        $parameter = Parameter::create($request->only('name','type','editable','lang','label'));
+        $parameter = Parameter::create($request->only('name','type','editable','lang','label','category_id'));
 
-        session()->flash('_parameters_message','Parameter Created Successfully');
-
-        return redirect(route('parameters.show',['parameter'=>$parameter->id]));
+        return ['parameter'=>$parameter];
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \Parameter\Parameter  $parameter
-     * @return \Illuminate\Http\Response
-     */
     public function show(Parameter $parameter)
     {
         $data['parameter'] = $parameter;
@@ -96,37 +67,87 @@ class ParameterController extends Controller
         return view('parameters::show', $data);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \Parameter\Parameter  $parameter
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Parameter $parameter)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Parameter\Parameter  $parameter
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Parameter $parameter)
     {
-        //
+        $this->validate($request, ParametersValidator::updateRules($parameter->type));
+
+        $parameter->update($request->all());
+
+        return $parameter;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \Parameter\Parameter  $parameter
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Parameter $parameter)
     {
-        //
+        $parameterCopy = clone $parameter;
+
+        $parameter->delete();
+
+        return ['data'=>$parameterCopy];
+    }
+
+    public function addPhoto(Request $request)
+    {
+        if(! $request->file('file')->isValid())
+            return ['Error in uploading file'];
+
+        $this->validate($request,
+            [ 'file' => ParametersValidator::updateRules('file')['value'] ]);
+        
+        $path = $request->file->store('uploads','local');
+
+        return ['path'=>$path];
+    }
+
+    public function updatePhoto(Request $request)
+    {
+        $this->validate($request, ['path'=>'required', 'parameter'=>'required|integer']);
+        $path = $request->path;
+
+        if (! Storage::disk('local')->exists($path)) {
+            return ['Error in uploading file'];
+        }
+
+        $local = Storage::disk('local')->get($path);
+
+        $public = Storage::disk('public')->put($path, $local);
+
+        $data = ['path'=> $path, 'url'=> Storage::disk('public')->url($path) ];
+
+        $parameter = param()->where('id', $request->parameter)->first();
+
+        $parameter->update(['value'=>$path]);
+
+        $data['parameter'] = $parameter;
+
+        return $data;
+    }
+
+    public function choseCategory(Request $request, Parameter $parameter, $category_id = null)
+    {
+        $parameter->category_id = $category_id;
+        $parameter->save();
+
+        return ['parameter'=>$parameter];
+    }
+    public function addCategory(Request $request)
+    {
+        $data['type'] = 'textfield';
+        $data['name'] = 'category-' . Str::random();
+        $data['editable'] = true;
+        $data['is_category'] = true;
+        $data['label'] = $request->value;
+
+        $request->merge($data);
+
+        $this->validate($request, ParametersValidator::newRules($request->type));
+
+        $parameter = Parameter::create($request->only('is_category', 'value', 'name','type','editable','lang','label'))->fresh();
+
+        return ['parameter'=>$parameter];
     }
 }

@@ -14,7 +14,10 @@
     <script>
         window.Laravel = <?php echo json_encode([
             'csrfToken' => csrf_token(),
+            'images_dir' => 'storage',
             'base_url' => url('/') . '/',
+            'parametersColumns' =>  array_fill_keys($parametersColumns, null ), // $parametersColumns from Service Provider
+            'parametersTypes'=> Parameter\ParametersManager::$supportedTypes,
             'auth_user_id' => auth()->id(),
         ] ); ?>;
         @stack('js_head')
@@ -87,5 +90,8 @@ footer {
 
 .no-padding-bottom {
   padding-bottom: 0px;
+}
+.no-margin {
+  margin: 0px !important;
 }
     </style>
