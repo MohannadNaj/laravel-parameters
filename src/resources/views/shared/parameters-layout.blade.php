@@ -11,7 +11,6 @@
       <modal ref="modal" id="modal"></modal>
     </div>
 <script src="{{asset('vendor/parameters/js/app.js') . '?v='.Illuminate\Support\Str::random()}}"></script>
-<script src="{{asset('vendor/parameters/js/bootstrap.min.js')}}"></script>
 <script type="text/javascript">
     @stack('js_footer')
     $(document).ready(function () {

@@ -7,9 +7,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="{{asset('vendor/parameters/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('vendor/parameters/css/app.css')}}" rel="stylesheet">
-    <link href="{{asset('vendor/parameters/css/bootstrap-theme.min.css')}}" rel="stylesheet">
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
