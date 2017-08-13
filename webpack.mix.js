@@ -11,9 +11,10 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.setPublicPath('./src/public/vendor/parameters/');
+mix.setPublicPath('./');
 
-mix.js('./src/resources/assets/js/app.js', 'js');
+
+mix.js('./src/resources/assets/js/app.js', 'src/public/vendor/parameters/js');
 
 mix.copy('node_modules/font-awesome/fonts/', './src/public/vendor/parameters/fonts/');
 
@@ -24,4 +25,4 @@ mix.copy('node_modules/tinymce/plugins/emoticons/img', './src/public/vendor/para
 mix.copy('node_modules/tinymce/plugins/codesample/css', './src/public/vendor/parameters/js/plugins/codesample/css');
 mix.copy('node_modules/tinymce/plugins/visualblocks/css', './src/public/vendor/parameters/js/plugins/visualblocks/css');
 
-mix.sass('./src/resources/assets/sass/app.scss', 'css');
+mix.sass('./src/resources/assets/sass/app.scss', 'src/public/vendor/parameters/css');
