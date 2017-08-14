@@ -1,6 +1,6 @@
 <?php
 
-namespace Parameter\Http\Controllers;
+namespace Http\Controllers;
 
 use Parameter\Parameter;
 use Parameter\ParametersManager;
@@ -12,6 +12,11 @@ use Storage ;
 
 class ParameterController extends Controller
 {
+    public function __construct()
+    {
+        
+    }
+
     public function index()
     {
         $data['parameters'] = param();
