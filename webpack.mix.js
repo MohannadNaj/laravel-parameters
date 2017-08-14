@@ -10,19 +10,19 @@ let mix = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
+mix.setPublicPath('public');
 
-mix.setPublicPath('./');
+mix.js('./src/resources/assets/js/app.js', 'js')
+.sass('./src/resources/assets/sass/app.scss', 'css');
 
+//mix.copy('node_modules/font-awesome/fonts/', 'public/fonts/');
+//mix.copy('node_modules/bootstrap-sass/assets/fonts/bootstrap/', 'public/fonts/');
 
-mix.js('./src/resources/assets/js/app.js', 'src/public/vendor/parameters/js');
+mix.copy('node_modules/tinymce/skins', 'public/css/libs/tinymce/skins');
+mix.copy('node_modules/tinymce/themes', 'public/css/libs/tinymce/themes');
 
-mix.copy('node_modules/font-awesome/fonts/', './src/public/vendor/parameters/fonts/');
+mix.copy('node_modules/tinymce/plugins/emoticons/img', 'public/js/plugins/emoticons/img');
+mix.copy('node_modules/tinymce/plugins/codesample/css', 'public/js/plugins/codesample/css');
+mix.copy('node_modules/tinymce/plugins/visualblocks/css', 'public/js/plugins/visualblocks/css');
 
-mix.copy('node_modules/tinymce/skins', './src/public/vendor/parameters/css/libs/tinymce/skins');
-mix.copy('node_modules/tinymce/themes', './src/public/vendor/parameters/css/libs/tinymce/themes');
-
-mix.copy('node_modules/tinymce/plugins/emoticons/img', './src/public/vendor/parameters/js/plugins/emoticons/img');
-mix.copy('node_modules/tinymce/plugins/codesample/css', './src/public/vendor/parameters/js/plugins/codesample/css');
-mix.copy('node_modules/tinymce/plugins/visualblocks/css', './src/public/vendor/parameters/js/plugins/visualblocks/css');
-
-mix.sass('./src/resources/assets/sass/app.scss', 'src/public/vendor/parameters/css');
+mix.setResourceRoot('/vendor/parameters/');

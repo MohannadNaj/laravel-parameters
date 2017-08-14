@@ -6,11 +6,9 @@ use Illuminate\Support\ServiceProvider;
 use Parameter\ParametersSingleton;
 use Parameter\Parameter;
 use Parameter\ParameterObserver;
-use Parameter\Helpers\DirectorySeparatorTrait;
 
 class ParametersServiceProvider extends ServiceProvider
 {
-    use DirectorySeparatorTrait;
     /**
      * Bootstrap the application services.
      *
@@ -18,13 +16,12 @@ class ParametersServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
-        $this->loadMigrationsFrom($this->formatPath(__DIR__.'/../database/migrations'));
-        $this->loadViewsFrom($this->formatPath(__DIR__.'/../resources/views'), 'parameters');
-        $this->loadRoutesFrom($this->formatPath(__DIR__.'/../routes.php'));
+        $this->loadMigrationsFrom(realpath(__DIR__.'/../database/migrations'));
+        $this->loadViewsFrom(realpath(__DIR__.'/../resources/views'), 'parameters');
+        $this->loadRoutesFrom(realpath(__DIR__.'/../routes.php'));
         $this->publishes(
             [
-                $this->formatPath(__DIR__.'/../public/vendor') => public_path('vendor'),
+                realpath(__DIR__.'/../../public/') => public_path('vendor/parameters'),
             ], 'public');
 
         view()->composer('parameters::shared.parameters-head', function($view) {
@@ -41,7 +38,7 @@ class ParametersServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        require_once($this->formatPath(__DIR__. '/../Helpers/parameters.php'));
+        require_once(realpath(__DIR__. '/../Helpers/parameters.php'));
         new ParametersSingleton();
 
     }
