@@ -1,4 +1,0 @@
-- "Developer Mode"
-    - Seeder (surrounded by if)
-    - check usage on code
-    - 

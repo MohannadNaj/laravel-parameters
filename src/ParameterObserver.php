@@ -38,6 +38,7 @@ class ParameterObserver {
 			$meta['logs'][] = [
 				'old' 	=> $original[$key],
 				'new' 	=> $value,
+				'auth_id' => auth()->id(),
 				'field' => $key,
 				'date' 	=> \Carbon\Carbon::now()->toDateTimeString()];
 		}

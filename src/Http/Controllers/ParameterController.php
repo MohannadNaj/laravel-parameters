@@ -1,6 +1,6 @@
 <?php
 
-namespace Http\Controllers;
+namespace Parameter\Http\Controllers;
 
 use Parameter\Parameter;
 use Parameter\ParametersManager;
