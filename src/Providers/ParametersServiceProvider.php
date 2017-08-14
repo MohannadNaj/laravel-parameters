@@ -17,7 +17,7 @@ class ParametersServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->loadMigrationsFrom(realpath(__DIR__.'/../database/migrations'));
-        $this->loadViewsFrom(realpath(__DIR__.'/../resources/views'), 'parameters');
+        $this->loadViewsFrom(realpath(__DIR__.'/../../resources/views'), 'parameters');
         $this->loadRoutesFrom(realpath(__DIR__.'/../routes.php'));
         $this->publishes(
             [

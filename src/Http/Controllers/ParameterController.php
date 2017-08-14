@@ -14,36 +14,9 @@ class ParameterController extends Controller
 {
     public function index()
     {
-        return view('parameters::index');
-    }
-
-    public function all()
-    {
-        
         $data['parameters'] = param();
 
-
-        return view('parameters::all', $data);
-    }
-
-    public function categories()
-    {
-
-        return view('parameters::categories');
-    }
-
-    public function logs()
-    {
-
-        return view('parameters::logs');
-    }
-
-    public function create()
-    {
-
-        $data['types'] = ParametersManager::$supportedTypes;
-
-        return view('parameters::create', $data);
+        return view('parameters::index', $data);
     }
 
     public function store(Request $request)
@@ -58,18 +31,6 @@ class ParameterController extends Controller
         $parameter = Parameter::create($request->only('name','type','editable','lang','label','category_id'));
 
         return ['parameter'=>$parameter];
-    }
-
-    public function show(Parameter $parameter)
-    {
-        $data['parameter'] = $parameter;
-
-        return view('parameters::show', $data);
-    }
-
-    public function edit(Parameter $parameter)
-    {
-        //
     }
 
     public function update(Request $request, Parameter $parameter)

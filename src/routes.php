@@ -7,8 +7,11 @@ Route::middleware('web')
     Route::get('parameters/all','ParameterController@all')->name('parameters.all');
     Route::get('parameters/categories','ParameterController@categories')->name('parameters.categories');
     Route::get('parameters/logs','ParameterController@logs')->name('parameters.logs');
-    Route::resource('parameters','ParameterController');
-     	
+    Route::get('parameters','ParameterController@index')->name('parameters.index');
+    Route::post('parameters','ParameterController@store')->name('parameters.store');
+    Route::patch('parameters/{parameter}','ParameterController@update')->name('parameters.update');
+    Route::delete('parameters/{parameter}','ParameterController@destroy')->name('parameters.destroy');
+
     Route::post('parameters/addPhoto','ParameterController@addPhoto')->name('parameters.addPhoto');
     Route::post('parameters/updatePhoto','ParameterController@updatePhoto')->name('parameters.updatePhoto');
     
