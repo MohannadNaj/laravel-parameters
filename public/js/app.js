@@ -1521,7 +1521,6 @@ var app = new Vue({
     el: '#app',
     mounted: function mounted() {
         Helper.modal = this.$refs['modal'];
-        console.log('mounting...');
     }
 });
 
@@ -101484,7 +101483,6 @@ module.exports = Component.exports
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 // CONCATENATED MODULE: ./resources/assets/js/settings/dropzone-settings.js
 /* harmony default export */ var dropzone_settings = ({
@@ -102106,7 +102104,6 @@ module.exports = Component.exports
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 // EXTERNAL MODULE: ./resources/assets/js/components/mixins/parameters/categories/controls.js
 var controls = __webpack_require__(60);
