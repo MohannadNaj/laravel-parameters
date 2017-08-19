@@ -17,7 +17,6 @@ Vue.component('add-parameter', require('./components/add-parameter.vue'));
 // Editors
 Vue.component('editor-boolean', require('./components/editors/boolean.vue'));
 Vue.component('editor-file', require('./components/editors/file.vue'));
-Vue.component('editor-group', require('./components/editors/group.vue'));
 Vue.component('editor-integer', require('./components/editors/integer.vue'));
 Vue.component('editor-text', require('./components/editors/text.vue'));
 Vue.component('editor-textfield', require('./components/editors/textfield.vue'));
