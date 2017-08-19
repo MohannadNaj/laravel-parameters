@@ -33,7 +33,7 @@ class ParameterController extends Controller
             $request->merge(['editable' => false]);
         }
 
-        $parameter = Parameter::create($request->only('name','type','editable','lang','label','category_id'));
+        $parameter = Parameter::create($request->only('name','type','editable','label','category_id'));
 
         return ['parameter'=>$parameter];
     }
@@ -112,7 +112,7 @@ class ParameterController extends Controller
 
         $this->validate($request, ParametersValidator::newRules($request->type));
 
-        $parameter = Parameter::create($request->only('is_category', 'value', 'name','type','editable','lang','label'))->fresh();
+        $parameter = Parameter::create($request->only('is_category', 'value', 'name','type','editable','label'))->fresh();
 
         return ['parameter'=>$parameter];
     }

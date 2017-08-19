@@ -3,7 +3,7 @@
 namespace Parameter;
 
 class ParameterObserver {
-	protected $loggableFields = ['value','label','lang','category_id'];
+	protected $loggableFields = ['value','label','category_id'];
 
 	public function saving(Parameter $parameter)
 	{

@@ -31,8 +31,7 @@ abstract class BaseRules
     {
         return [
             'name'=>'unique:parameters|required',
-            'label' => 'required_without:lang',
-            'lang' => 'required_without:label',
+            'label' => 'required',
         ];
     }
 
@@ -40,8 +39,7 @@ abstract class BaseRules
     {
         return [
             'value' => 'max:255',
-            'lang' => 'required_without:label',
-            'label' => 'required_without:lang',
+            'lang' => 'required
         ];
     }
 }

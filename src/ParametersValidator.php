@@ -10,8 +10,7 @@ class ParametersValidator {
 	{
 		return ['value' => static::getValueRules($type),
 				'name'=>'unique:parameters|required',
-				'label' => static::commonRules()['label'] . '|required_without:lang',
-				'lang' => static::commonRules()['lang'] . '|required_without:label',
+				'label' => static::commonRules()['label'] . '|required',
 				'type' => static::commonRules()['type'],
 				];
 	}
@@ -19,13 +18,11 @@ class ParametersValidator {
 	public static function updateRules($type) {
 		return ['value' => static::getValueRules($type),
 				'label' => static::commonRules()['label'],
-				'lang' => static::commonRules()['lang']
 				];
 	}
 
 	public static function commonRules() {
 		return ['label' => 'max:255',
-				'lang' => 'max:255',
 				'type' => 'required|in:' . implode(ParametersManager::$supportedTypes,',')];
 	}
 

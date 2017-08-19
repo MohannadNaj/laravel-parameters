@@ -27,17 +27,6 @@
 						</div>
 					</div>
 					<div class="form-group ">
-						<label class="control-label col-sm-2">Lang</label>
-						<div class="col-sm-4">
-							<input type="text" class="form-control" v-model="data.lang" placeholder="parameter_lang">
-							<div v-if="showErrors" class="help-block">
-								<ul>
-									<li v-for="message in errors.lang_errors">{{message}}</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div class="form-group ">
 						<label class="control-label col-sm-2">
 							Editable
 						</label>
@@ -77,7 +66,6 @@
 						data: {
 								name: '',
 								label: '',
-								lang: '',
 								editable: true,
 								type: 'textfield',
 							},
