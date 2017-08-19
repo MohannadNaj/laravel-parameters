@@ -33,13 +33,11 @@
 				if(previewMode)
 				{
 					if(this.tinymceEditorInstance)
-						this.tinymceEditorInstance.hide();
+						this.tinymceEditorInstance.destroy();
 					return null;
 				}
 
 				this.$nextTick(x => {
-					if(! this.tinymceEditorInstance)
-					{
 						this.tinymceSettings.selector = '#' + this.tinymceId;
 						this.tinymceSettings.save_onsavecallback = this.save;
 
@@ -49,8 +47,6 @@
 						this.tinymceEditorInstance.on('Change', x=>{
 							this.paramValue = this.tinymceEditorInstance.getContent();
 						});
-					}
-					this.tinymceEditorInstance.show();
 				});
 			});
 		},

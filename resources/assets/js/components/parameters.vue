@@ -29,7 +29,6 @@
       <div class="col-sm-9">
   			<parameters-list ref="parameters"></parameters-list>
   	  </div>
-      <dropzone-upload ref="dropzone-modal" _target="parameters/addPhoto" _update_target="parameters/updatePhoto"></dropzone-upload>
     </div>
 	
 </template>

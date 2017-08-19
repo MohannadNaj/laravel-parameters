@@ -29,7 +29,7 @@
 		},
 		mixins: [EditorMixin],
 		mounted() {
-			this.dropzone_modal = this.$root.$refs['all-parameters'].$refs['dropzone-modal'];
+			this.dropzone_modal = Helper.dropzoneModal;
 
 
 			this.$on('file-uploaded', function(data) {

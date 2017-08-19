@@ -1521,6 +1521,7 @@ var app = new Vue({
     el: '#app',
     mounted: function mounted() {
         Helper.modal = this.$refs['modal'];
+        Helper.dropzoneModal = this.$refs['dropzone-modal'];
     }
 });
 
@@ -101556,7 +101557,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 //
 //
 //
-//
 
 
 
@@ -101564,7 +101564,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     data: function data() {
         return {
             is_uploaded: false,
-            csrf: '',
             path: null,
             window: window,
             handlerInstance: null,
@@ -101578,7 +101577,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     props: {
         _target: '',
         _update_target: '',
-        modalId: { default: 'profile_upload' }
+        modalId: { default: 'dropzone_upload' }
     },
     computed: {
         requestParams: function requestParams() {
@@ -101594,18 +101593,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     methods: {
         init: function init() {
-            this.csrf = window.Laravel.csrfToken;
 
-            if (typeof window.uploadInstances == "undefined") {
-                window.uploadInstances = {};
-            }
-
-            window.uploadInstances[this.modalId] = this;
             dropzone_settings.handlerInstance = this;
-            window.Dropzone.options.profileUpload = dropzone_settings;
-        },
-        setUploadInstance: function setUploadInstance() {
-            window.vue_profile_upload = this;
+            window.Dropzone.options.dropzoneUpload = dropzone_settings;
         },
         handleRespnose: function handleRespnose(file, responseText) {
             if (typeof responseText.path != "undefined") {
@@ -101666,10 +101656,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": _vm.modalId + 'Label'
     }
   }, [_vm._v(_vm._s(_vm.header_msg))])]), _vm._v(" "), _c('div', {
-    staticClass: "modal-body",
-    attrs: {
-      "id": "modal-dropzone"
-    }
+    staticClass: "modal-body"
   }, [_c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -101678,29 +101665,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "text-center dropzone",
     attrs: {
       "action": _vm.target_action,
-      "id": "profile-upload"
+      "id": "dropzone-upload"
     }
-  }, [_c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.csrf),
-      expression: "csrf"
-    }],
-    attrs: {
-      "type": "hidden",
-      "name": "_token"
-    },
-    domProps: {
-      "value": (_vm.csrf)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.csrf = $event.target.value
-      }
-    }
-  })])])])]), _vm._v(" "), _c('div', {
+  })])])]), _vm._v(" "), _c('div', {
     staticClass: "modal-footer"
   }, [_c('button', {
     staticClass: "btn btn-default",
@@ -101708,7 +101675,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "type": "button",
       "data-dismiss": "modal"
     }
-  }, [_vm._v("إغلاق")]), _vm._v(" "), _c('button', {
+  }, [_vm._v("Close")]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-primary",
     attrs: {
       "type": "button"
@@ -101716,7 +101683,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.saveChanges
     }
-  }, [_vm._v("حفظ التغييرات")])])])])])])
+  }, [_vm._v("Save Changes")])])])])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('button', {
     staticClass: "close",
@@ -102166,7 +102133,6 @@ var parameters_default = /*#__PURE__*/__webpack_require__.n(parameters);
 //
 //
 //
-//
 
 
 /* harmony default export */ var components_parameters = __webpack_exports__["default"] = ({
@@ -102204,7 +102170,7 @@ var parameters_default = /*#__PURE__*/__webpack_require__.n(parameters);
 			EventBus.listen('change-paramCategory', this.changeParamCategory);
 			EventBus.listen('chose-paramCategory', this.choseParamCategory);
 			EventBus.listen('created-category', this.createdCategory);
-			EventBus.listen('parameter-updated', this.updateCategoryParameter);
+			EventBus.listen('updated-parameter', this.updateCategoryParameter);
 			EventBus.listen('created-parameter', this.createdParameter);
 			EventBus.listen('confirm-removeParameter', this.confirmRemoveParameter);
 			EventBus.listen('cancel-removeParameter', this.cancelRemoveParameter);
@@ -102555,13 +102521,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "col-sm-9"
   }, [_c('parameters-list', {
     ref: "parameters"
-  })], 1), _vm._v(" "), _c('dropzone-upload', {
-    ref: "dropzone-modal",
-    attrs: {
-      "_target": "parameters/addPhoto",
-      "_update_target": "parameters/updatePhoto"
-    }
-  })], 1)
+  })], 1)])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -103060,7 +103020,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 if (!_this4.previewMode) _this4.togglePreview();
             });
             this.alert('Parameter: ' + parameter.label + ' has been updated successfully');
-            EventBus.fire('parameter-updated', parameter);
+            EventBus.fire('updated-parameter', parameter);
         },
         togglePreview: function togglePreview() {
             this.childComponent.previewMode = !this.childComponent.previewMode;
@@ -104855,7 +104815,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 	mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_editors_base_js___default.a],
 	mounted: function mounted() {
-		this.dropzone_modal = this.$root.$refs['all-parameters'].$refs['dropzone-modal'];
+		this.dropzone_modal = Helper.dropzoneModal;
 
 		this.$on('file-uploaded', function (data) {
 			this.paramValue = data.path;
@@ -105182,23 +105142,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			var _this = this;
 
 			if (previewMode) {
-				if (this.tinymceEditorInstance) this.tinymceEditorInstance.hide();
+				if (this.tinymceEditorInstance) this.tinymceEditorInstance.destroy();
 				return null;
 			}
 
 			this.$nextTick(function (x) {
-				if (!_this.tinymceEditorInstance) {
-					_this.tinymceSettings.selector = '#' + _this.tinymceId;
-					_this.tinymceSettings.save_onsavecallback = _this.save;
+				_this.tinymceSettings.selector = '#' + _this.tinymceId;
+				_this.tinymceSettings.save_onsavecallback = _this.save;
 
-					tinymce.init(_this.tinymceSettings);
+				tinymce.init(_this.tinymceSettings);
 
-					_this.tinymceEditorInstance = tinymce.get(_this.tinymceId);
-					_this.tinymceEditorInstance.on('Change', function (x) {
-						_this.paramValue = _this.tinymceEditorInstance.getContent();
-					});
-				}
-				_this.tinymceEditorInstance.show();
+				_this.tinymceEditorInstance = tinymce.get(_this.tinymceId);
+				_this.tinymceEditorInstance.on('Change', function (x) {
+					_this.paramValue = _this.tinymceEditorInstance.getContent();
+				});
 			});
 		});
 	},
@@ -105716,6 +105673,7 @@ window.Helper = new (function () {
 		get: function get() {
 			return {
 				modal: null,
+				dropzoneModal: null,
 				modalElement: null
 			};
 		}

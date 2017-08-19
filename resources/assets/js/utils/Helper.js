@@ -8,6 +8,7 @@ window.Helper = new class {
 	get data() {
 		return {
 			modal: null,
+			dropzoneModal: null,
 			modalElement: null,
 		}
 	}

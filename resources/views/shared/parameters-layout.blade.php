@@ -7,8 +7,10 @@
     <div id="app">
       @include('parameters::shared.parameters-navbar')
     	@yield('content')
+      <!-- Helpers -->
       <notifications></notifications>
       <modal ref="modal" id="modal"></modal>
+      <dropzone-upload ref="dropzone-modal" _target="parameters/addPhoto" _update_target="parameters/updatePhoto"></dropzone-upload>
     </div>
 <script src="{{asset('vendor/parameters/js/app.js') . '?v='.Illuminate\Support\Str::random()}}"></script>
 <script type="text/javascript">

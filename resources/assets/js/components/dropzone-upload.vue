@@ -7,18 +7,17 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" :id="modalId + 'Label'">{{ header_msg }}</h4>
               </div>
-              <div id="modal-dropzone" class="modal-body">
+              <div class="modal-body">
                 <div class="row">
                     <div class="col-xs-12">
-                        <form v-bind:action="target_action" id="profile-upload" class="text-center dropzone">
-                            <input type="hidden" name="_token" v-model="csrf">
+                        <form v-bind:action="target_action" id="dropzone-upload" class="text-center dropzone">
                         </form>
                     </div>
                 </div>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">إغلاق</button>
-                <button @click="saveChanges" type="button" class="btn btn-primary">حفظ التغييرات</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button @click="saveChanges" type="button" class="btn btn-primary">Save Changes</button>
               </div>
             </div>
           </div>
@@ -33,7 +32,6 @@
         data() {
             return {
                 is_uploaded: false,
-                csrf: '',
                 path: null,
                 window: window,
                 handlerInstance: null,
@@ -46,7 +44,7 @@
         props: {
             _target:'',
             _update_target:'',
-            modalId: {default: 'profile_upload'}
+            modalId: {default: 'dropzone_upload'}
         },
         computed: {
             requestParams() {
@@ -61,18 +59,9 @@
         },
         methods: {
             init() {
-                this.csrf = window.Laravel.csrfToken;
 
-                if(typeof window.uploadInstances == "undefined") {
-                    window.uploadInstances = {};
-                }
-
-                window.uploadInstances[this.modalId] = this;
                 dropzone_settings.handlerInstance = this;
-                window.Dropzone.options.profileUpload = dropzone_settings;
-            },
-            setUploadInstance() {
-                window.vue_profile_upload = this;
+                window.Dropzone.options.dropzoneUpload = dropzone_settings;
             },
             handleRespnose(file,  responseText) {
                 if(typeof responseText.path != "undefined") {
