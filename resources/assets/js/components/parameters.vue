@@ -68,7 +68,7 @@
 		        EventBus.listen('change-paramCategory', this.changeParamCategory);
 		        EventBus.listen('chose-paramCategory', this.choseParamCategory);
 		        EventBus.listen('created-category', this.createdCategory);
-		        EventBus.listen('parameter-updated', this.updateCategoryParameter);
+		        EventBus.listen('updated-parameter', this.updateCategoryParameter);
 		        EventBus.listen('created-parameter', this.createdParameter);
 		        EventBus.listen('confirm-removeParameter', this.confirmRemoveParameter);
 		        EventBus.listen('cancel-removeParameter', this.cancelRemoveParameter);

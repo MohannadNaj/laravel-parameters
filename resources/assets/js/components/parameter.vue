@@ -125,7 +125,7 @@
                         this.togglePreview();
                 });
                 this.alert('Parameter: ' + parameter.label + ' has been updated successfully');
-                EventBus.fire('parameter-updated', parameter);
+                EventBus.fire('updated-parameter', parameter);
             },
             togglePreview() {
                 this.childComponent.previewMode = !this.childComponent.previewMode ;
