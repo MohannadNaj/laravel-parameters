@@ -19,7 +19,6 @@ class CreateParametersTable extends Migration
             $table->string('name');
 
             $table->string('label')->nullable();
-            $table->boolean('editable')->default(true);
 
             $table->string('type');
 

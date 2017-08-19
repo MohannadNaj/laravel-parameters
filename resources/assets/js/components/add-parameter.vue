@@ -28,19 +28,6 @@
 					</div>
 					<div class="form-group ">
 						<label class="control-label col-sm-2">
-							Editable
-						</label>
-						<div class="col-sm-4">
-							<input type="checkbox" value="1" v-model="data.editable" placeholder="editable" checked="">
-							<div v-if="showErrors" class="help-block">
-								<ul>
-									<li v-for="message in errors.editable_errors">{{message}}</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div class="form-group ">
-						<label class="control-label col-sm-2">
 							Type
 						</label>
 						<div class="col-sm-4">
@@ -66,7 +53,6 @@
 						data: {
 								name: '',
 								label: '',
-								editable: true,
 								type: 'textfield',
 							},
 						showErrors: false,

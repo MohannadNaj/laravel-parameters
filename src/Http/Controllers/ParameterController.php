@@ -28,12 +28,7 @@ class ParameterController extends Controller
     {
         $this->validate($request, ParametersValidator::newRules($request->type));
 
-        if(! $request->has('editable'))
-        {
-            $request->merge(['editable' => false]);
-        }
-
-        $parameter = Parameter::create($request->only('name','type','editable','label','category_id'));
+        $parameter = Parameter::create($request->only('name','type','label','category_id'));
 
         return ['parameter'=>$parameter];
     }
@@ -104,7 +99,6 @@ class ParameterController extends Controller
     {
         $data['type'] = 'textfield';
         $data['name'] = 'category-' . Str::random();
-        $data['editable'] = true;
         $data['is_category'] = true;
         $data['label'] = $request->value;
 
@@ -112,7 +106,7 @@ class ParameterController extends Controller
 
         $this->validate($request, ParametersValidator::newRules($request->type));
 
-        $parameter = Parameter::create($request->only('is_category', 'value', 'name','type','editable','label'))->fresh();
+        $parameter = Parameter::create($request->only('is_category', 'value', 'name','type','label'))->fresh();
 
         return ['parameter'=>$parameter];
     }
