@@ -18,22 +18,22 @@
 		</template>
 
 		<script>
-			export default {
-				data() {
-					return {
-						parameter: []
-					}
-				},
-				mounted() {
-					
-				},
-				methods: {
-					cancel() {
-						EventBus.fire('cancel-removeParameter', this.parameter);
-					},
-					remove() {
-						EventBus.fire('confirmed-removeParameter', this.parameter);
-					}
-				}
-			}
-		</script>
+
+export default {
+  data() {
+    return {
+      parameter: []
+    }
+  },
+  mounted() {},
+  methods: {
+    cancel() {
+      EventBus.fire('cancel-removeParameter', this.parameter)
+    },
+    remove() {
+      EventBus.fire('confirmed-removeParameter', this.parameter)
+    }
+  }
+}
+
+</script>

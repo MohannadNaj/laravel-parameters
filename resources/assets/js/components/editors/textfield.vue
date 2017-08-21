@@ -10,15 +10,15 @@
 </template>
 
 <script>
-	import EditorMixin from './../mixins/editors/base.js';
 
-	export default {
-		mixins: [EditorMixin],
-		mounted() {
-//
-		},
-		methods: {
+import EditorMixin from './../mixins/editors/base.js'
 
-		}
-	}
+export default {
+  mixins: [EditorMixin],
+  mounted() {
+    //
+  },
+  methods: {}
+}
+
 </script>

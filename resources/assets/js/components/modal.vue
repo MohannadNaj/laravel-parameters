@@ -27,94 +27,93 @@
   </div>
 </template>
 <script>
+
 export default {
-    data() {
-      return {
-          component: null,
-          componentModel: null,
-          componentTag: null,
-          data_showComponent: false,
-          window: window,
-          data_body:  '',
-          data_close: '',
-          data_id: '',
-          data_save: '',
-          data_title: '',
-          data_callerData: '',
-          data_html: '',
-          data_showFooter: true,
-        }
-    },
-    mounted() {
-      this.mapPropsToData();
-    },
-    props : {
-      body: {default:''},
-      close: {default:'Close'},
-      id: {default:''},
-      save: {default:'Save'},
-      title: {default:''},
-      callerData: {},
-      html: {default:''},
-      showFooter: true,
-    },
-    methods: {
-      savedata_click() {
-            this.$parent.$emit('modal-save', this.callerData);
-            $(window).trigger('modal-save', this.callerData);
-      },
-      mapPropsToData() {
-        this.data_body = this.body;
-        this.data_close = this.close;
-        this.data_id = this.id;
-        this.data_save = this.save;
-        this.data_title = this.title;
-        this.data_callerData = this.callerData;
-        this.data_html = this.html;
-        this.data_showFooter = this.showFooter;
-      },
-      cleanContent() {
-          this.data_html = '';
-          this.data_body = '';
-          this.data_showComponent = false;
-
-          return this;
-      },
-      showModal() {
-        $('#' + this.data_id).modal('show');
-      },
-      hideModal() {
-        $('#' + this.data_id).modal('hide');
-      },
-      showComponent(componentTag = null, title = null) {
-          this.cleanContent();
-
-          if(componentTag)
-            this.componentTag = componentTag;
-
-          if(title)
-            this.data_title = title;
-
-          this.data_showFooter = false;
-          this.data_showComponent = true;
-
-          this.hideComponentOnClose();
-
-          return this;
-      },
-      hideComponent() {
-        this.data_showComponent = false;
-      },
-      hideComponentOnClose() {
-          $('#' + this.data_id).one('hide.bs.modal', y=>{
-            this.hideComponent();
-          });
-      },
-      showModalAfter(callback) {
-        this.$nextTick(callback);
-        this.showModal();
-      }
+  data() {
+    return {
+      component: null,
+      componentModel: null,
+      componentTag: null,
+      data_showComponent: false,
+      window: window,
+      data_body: '',
+      data_close: '',
+      data_id: '',
+      data_save: '',
+      data_title: '',
+      data_callerData: '',
+      data_html: '',
+      data_showFooter: true
     }
+  },
+  mounted() {
+    this.mapPropsToData()
+  },
+  props: {
+    body: { default: '' },
+    close: { default: 'Close' },
+    id: { default: '' },
+    save: { default: 'Save' },
+    title: { default: '' },
+    callerData: {},
+    html: { default: '' },
+    showFooter: true
+  },
+  methods: {
+    savedata_click() {
+      this.$parent.$emit('modal-save', this.callerData)
+      $(window).trigger('modal-save', this.callerData)
+    },
+    mapPropsToData() {
+      this.data_body = this.body
+      this.data_close = this.close
+      this.data_id = this.id
+      this.data_save = this.save
+      this.data_title = this.title
+      this.data_callerData = this.callerData
+      this.data_html = this.html
+      this.data_showFooter = this.showFooter
+    },
+    cleanContent() {
+      this.data_html = ''
+      this.data_body = ''
+      this.data_showComponent = false
+
+      return this
+    },
+    showModal() {
+      $('#' + this.data_id).modal('show')
+    },
+    hideModal() {
+      $('#' + this.data_id).modal('hide')
+    },
+    showComponent(componentTag = null, title = null) {
+      this.cleanContent()
+
+      if (componentTag) this.componentTag = componentTag
+
+      if (title) this.data_title = title
+
+      this.data_showFooter = false
+      this.data_showComponent = true
+
+      this.hideComponentOnClose()
+
+      return this
+    },
+    hideComponent() {
+      this.data_showComponent = false
+    },
+    hideComponentOnClose() {
+      $('#' + this.data_id).one('hide.bs.modal', y => {
+        this.hideComponent()
+      })
+    },
+    showModalAfter(callback) {
+      this.$nextTick(callback)
+      this.showModal()
+    }
+  }
 }
 
 </script>

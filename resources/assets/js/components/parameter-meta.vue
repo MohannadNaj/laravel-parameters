@@ -41,93 +41,93 @@
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
 
-			}
-		},
-		props: {
-			parameter: {
-				default: { function() { return {} }}
-			}
-		},
-        methods: {
-            changeCategory() {
-                EventBus.fire('change-paramCategory', this.parameter);
-            },
-            showLogs() {
-                if(! this.hasLogs)
-                    return this.alert('No Revisions found','warning');
-
-                var modal = Helper.modal;
-
-                modal.data_title = this.parameter.label + ' logs';
-                modal.data_html = $(this.$el).find('.logs-list').html();
-                modal.showModal();
-            },
-            parseValue(val, logField = 'value') {
-                val = val == null ? "" : val.toString();
-
-                if(this.parameter.type == "boolean" && logField == 'value')
-                    return this.parseBooleanValue(val);
-
-                return val;
-            },
-            parseBooleanValue(val) {
-                if(val == "0")
-                    val = "false";
-                if(val == "1")
-                    val = "true";
-
-                return val;
-            },
-            getDiff(log) {
-
-                var oldVal = log.old,
-                newVal = log.new,
-                color = '',
-                span = null;
-
-                oldVal = this.parseValue(oldVal, log.field);
-                newVal = this.parseValue(newVal, log.field);
-
-                var diff = JsDiff.diffChars(oldVal, newVal),
-                    fragment = "";
-
-                diff.forEach(function(part){
-                  color = part.added ? 'green' :
-                    part.removed ? 'red' : 'grey';
-                  span = document.createElement('span');
-                  span.style.color = color;
-                  span.appendChild(document
-                    .createTextNode(part.value));
-                  fragment = fragment + span.outerHTML;
-                });
-
-                return fragment;
-            },
-            preventChange(e) {
-                e.target.innerHTML = this.getPHPCode;
-            }
-        },
-        computed: {
-            reverseLogs() {
-                return this.parameter.meta.logs.reverse();
-            },
-            countLogs() {
-              if(this.parameter.meta != undefined && this.parameter.meta.logs != undefined )
-                    return this.parameter.meta.logs.length;
-                return 0;
-            },
-            hasLogs() {
-                return this.countLogs > 0;
-            },
-            getPHPCode() {
-                if(this.parameter == undefined)
-                    return '';
-                return "param('" + this.parameter.name + "')";
-            }
+export default {
+  data() {
+    return {}
+  },
+  props: {
+    parameter: {
+      default: {
+        function() {
+          return {}
         }
-	}
+      }
+    }
+  },
+  methods: {
+    changeCategory() {
+      EventBus.fire('change-paramCategory', this.parameter)
+    },
+    showLogs() {
+      if (!this.hasLogs) return this.alert('No Revisions found', 'warning')
+
+      var modal = Helper.modal
+
+      modal.data_title = this.parameter.label + ' logs'
+      modal.data_html = $(this.$el).find('.logs-list').html()
+      modal.showModal()
+    },
+    parseValue(val, logField = 'value') {
+      val = val == null ? '' : val.toString()
+
+      if (this.parameter.type == 'boolean' && logField == 'value')
+        return this.parseBooleanValue(val)
+
+      return val
+    },
+    parseBooleanValue(val) {
+      if (val == '0') val = 'false'
+      if (val == '1') val = 'true'
+
+      return val
+    },
+    getDiff(log) {
+      var oldVal = log.old,
+        newVal = log.new,
+        color = '',
+        span = null
+
+      oldVal = this.parseValue(oldVal, log.field)
+      newVal = this.parseValue(newVal, log.field)
+
+      var diff = JsDiff.diffChars(oldVal, newVal),
+        fragment = ''
+
+      diff.forEach(function(part) {
+        color = part.added ? 'green' : part.removed ? 'red' : 'grey'
+        span = document.createElement('span')
+        span.style.color = color
+        span.appendChild(document.createTextNode(part.value))
+        fragment = fragment + span.outerHTML
+      })
+
+      return fragment
+    },
+    preventChange(e) {
+      e.target.innerHTML = this.getPHPCode
+    }
+  },
+  computed: {
+    reverseLogs() {
+      return this.parameter.meta.logs.reverse()
+    },
+    countLogs() {
+      if (
+        this.parameter.meta != undefined &&
+        this.parameter.meta.logs != undefined
+      )
+        return this.parameter.meta.logs.length
+      return 0
+    },
+    hasLogs() {
+      return this.countLogs > 0
+    },
+    getPHPCode() {
+      if (this.parameter == undefined) return ''
+      return "param('" + this.parameter.name + "')"
+    }
+  }
+}
+
 </script>

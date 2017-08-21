@@ -10,20 +10,19 @@
 </template>
 
 <script>
-	import EditorMixin from './../mixins/editors/base.js';
 
-	export default {
-		mixins: [EditorMixin],
-		mounted() {
-			
-		},
-		methods: {
-			submitIfEnter(event) {
-		         var keycode = (event.keyCode ? event.keyCode : event.which);
+import EditorMixin from './../mixins/editors/base.js'
 
-		         if (keycode == 13)
-		             this.$parent.submit();
-			}
-		}
-	}
+export default {
+  mixins: [EditorMixin],
+  mounted() {},
+  methods: {
+    submitIfEnter(event) {
+      var keycode = event.keyCode ? event.keyCode : event.which
+
+      if (keycode == 13) this.$parent.submit()
+    }
+  }
+}
+
 </script>

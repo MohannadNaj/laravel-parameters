@@ -1,24 +1,24 @@
 // Lodash
-window._ = require('lodash');
+window._ = require('lodash')
 
 // jQuery & Bootstrap
 try {
-    window.$ = window.jQuery = require('jquery');
+  window.$ = window.jQuery = require('jquery')
 
-    require('bootstrap-sass');
+  require('bootstrap-sass')
 } catch (e) {}
 
 // Axios
-window.axios = require('axios');
+window.axios = require('axios')
 
 // Vue
-window.Vue = require('vue');
+window.Vue = require('vue')
 
 // Dropzone
-window.Dropzone = require("./libs/dropzone.min");
+window.Dropzone = require('./libs/dropzone.min')
 
 // TinyMCE
-var tinymce = require('tinymce/tinymce');
+var tinymce = require('tinymce/tinymce')
 
 // JsDiff
-window.JsDiff = require('diff');
+window.JsDiff = require('diff')

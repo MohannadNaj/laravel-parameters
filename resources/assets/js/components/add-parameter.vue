@@ -47,82 +47,81 @@
 		</template>
 
 		<script>
-			export default {
-				data() {
-					return {
-						data: {
-								name: '',
-								label: '',
-								type: 'textfield',
-							},
-						showErrors: false,
-						errors: {},
-						data_category_id: '',
-						parametersTypes: []
-					}
-				},
-				props: {
-					category_id: '',
-					isCategoriesGroup: false,
-				},
-				mounted() {
-					this.parametersTypes = window.Laravel.parametersTypes;
 
-					_.each(_.keys(this.data), (x) => {
-						this.errors[x + '_errors'] = [];
-					});
-					this.showErrors = true;
-					EventBus.listen('opening-category', x => {
-						this.$nextTick(y => {
-							this.mapPropsToData();
-						});
-					});
-					this.mapPropsToData();
-				},
-				watch: {
-					category_id(newValue) {
-						this.$nextTick(x => {
-							this.mapPropsToData();
-						});
-						console.log()
-					}
-				},
-				methods: {
-					mapPropsToData() {
-						this.data_category_id = this.category_id;
-					},
-					prepareRequestData() {
-						if(this.isCategoriesGroup)
-							return this.data;
-						
-						return _.extend(this.data, {category_id: this.data_category_id});
-					},
-					submit() {
-						this.$http.post(window.Laravel.base_url + 'parameters',
-							this.prepareRequestData()
-						).then((response) => {
-							EventBus.fire('created-parameter', response.data.parameter);
-						})
-						.catch((error) => {
-		                    var errorMessage = 'Error in adding parameter';
-		                    var errorData = error.response.data;
+export default {
+  data() {
+    return {
+      data: {
+        name: '',
+        label: '',
+        type: 'textfield'
+      },
+      showErrors: false,
+      errors: {},
+      data_category_id: '',
+      parametersTypes: []
+    }
+  },
+  props: {
+    category_id: '',
+    isCategoriesGroup: false
+  },
+  mounted() {
+    this.parametersTypes = window.Laravel.parametersTypes
 
-		                    if(typeof errorData == "string")
-		                    {
-		                        if(Helper.isTokenException(errorData))
-		                        {
-		                            errorMessage += Helper.getTokenExceptionMessage();
-		                        }
-		                    } else if(typeof errorData == "object") {
-		                    	var errorsCollection = {};
-								_.each(errorData, (fieldErrors, fieldName) => {
-									errorsCollection[fieldName + '_errors'] = fieldErrors;
-								});
-								this.errors = errorsCollection;
-		                    }
-		                    this.alert(errorMessage, 'danger', 20);
-						});
-					},
-				},
-			}
-		</script>
+    _.each(_.keys(this.data), x => {
+      this.errors[x + '_errors'] = []
+    })
+    this.showErrors = true
+    EventBus.listen('opening-category', x => {
+      this.$nextTick(y => {
+        this.mapPropsToData()
+      })
+    })
+    this.mapPropsToData()
+  },
+  watch: {
+    category_id(newValue) {
+      this.$nextTick(x => {
+        this.mapPropsToData()
+      })
+      console.log()
+    }
+  },
+  methods: {
+    mapPropsToData() {
+      this.data_category_id = this.category_id
+    },
+    prepareRequestData() {
+      if (this.isCategoriesGroup) return this.data
+
+      return _.extend(this.data, { category_id: this.data_category_id })
+    },
+    submit() {
+      this.$http
+        .post(window.Laravel.base_url + 'parameters', this.prepareRequestData())
+        .then(response => {
+          EventBus.fire('created-parameter', response.data.parameter)
+        })
+        .catch(error => {
+          var errorMessage = 'Error in adding parameter'
+          var errorData = error.response.data
+
+          if (typeof errorData == 'string') {
+            if (Helper.isTokenException(errorData)) {
+              errorMessage += Helper.getTokenExceptionMessage()
+            }
+          } else if (typeof errorData == 'object') {
+            var errorsCollection = {}
+            _.each(errorData, (fieldErrors, fieldName) => {
+              errorsCollection[fieldName + '_errors'] = fieldErrors
+            })
+            this.errors = errorsCollection
+          }
+          this.alert(errorMessage, 'danger', 20)
+        })
+    }
+  }
+}
+
+</script>

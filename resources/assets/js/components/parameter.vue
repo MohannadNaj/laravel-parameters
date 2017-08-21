@@ -55,101 +55,111 @@
 </template>
 
 <script>
-    export default {
-        data() {
-            return {
-                isDirty: false,
-                errors: [],
-                previewMode: false,
-                childComponent: null,
-                originalParameter: window.Laravel.parametersColumns,
-            }
-        },
-        props: {
-            parameter: {
-                default: function() {
-                    return window.Laravel.parametersColumns
-                }
-            }
-        },
-        mounted() {
-            this.originalParameter = this.parameter;
 
-            this.registerEvents();
-            this.$nextTick(x => {
-                this.childComponent = this.$refs[this.originalParameter.id + 'editor-' + this.originalParameter.type];
-            });
-        },
-        methods: {
-            removeParameter(event) {
-                var eventConfirmationLevel = event.ctrlKey ? 'confirmed' : 'confirm';
-
-                EventBus.fire(eventConfirmationLevel + '-removeParameter', this.parameter);
-            },
-            registerEvents() {
-                EventBus.listen('value-change-' + this.parameter.id, data => {
-                    this.isDirty = data.isDirty;
-                    this.errors = [];
-                });
-
-                this.$on('file-uploaded', data => {
-                    if(this.parameter.type == "file")
-                        this.parameterChanged(data.parameter);
-                } );
-
-                this.$on('save-change', this.submit );
-            },
-            submit() {
-                if(! this.isDirty)
-                    return null;
-
-                this.$http.patch(window.Laravel.base_url + 'parameters/' + this.originalParameter.id, {
-                    value: this.childComponent.paramValue
-                }).then( response => {
-                    this.parameterChanged(response.data);
-                }).catch((error) => {
-                    var errorMessage = 'Error in updating parameter (' + this.parameter.id + ')';
-                    var errorData = error.response.data;
-                    if(typeof errorData == "object") {
-                        this.errors = _.toArray(errorData);
-                    }
-                    Helper.checkCommonErrors(errorData, errorMessage);
-                });
-            },
-            parameterChanged(parameter) {
-                this.originalParameter = parameter;
-                this.$nextTick(x => {
-                    this.childComponent.init();
-                    this.isDirty = false;
-                    if(! this.previewMode)
-                        this.togglePreview();
-                });
-                this.alert('Parameter: ' + parameter.label + ' has been updated successfully');
-                EventBus.fire('updated-parameter', parameter);
-            },
-            togglePreview() {
-                this.childComponent.previewMode = !this.childComponent.previewMode ;
-                this.previewMode = this.childComponent.previewMode;
-            },
-            undoChanges() {
-                this.childComponent.paramValue = this.childComponent.originalParameter.value;
-                this.childComponent.$emit('undo-changes');
-                this.childComponent.focusInEditor();
-            },
-            parseError(error) {
-                return error.join(', ');
-            }
-        },
-        computed: {
-            getEditorComponentName() {
-                return 'editor-' + this.originalParameter.type;
-            },
-            getEditorComponentRef() {
-                return this.originalParameter.id + this.getEditorComponentName;
-            },
-            markIfDirty() {
-                return this.isDirty ? 'panel-warning': 'panel-default';
-            }
-        }
+export default {
+  data() {
+    return {
+      isDirty: false,
+      errors: [],
+      previewMode: false,
+      childComponent: null,
+      originalParameter: window.Laravel.parametersColumns
     }
+  },
+  props: {
+    parameter: {
+      default: function() {
+        return window.Laravel.parametersColumns
+      }
+    }
+  },
+  mounted() {
+    this.originalParameter = this.parameter
+
+    this.registerEvents()
+    this.$nextTick(x => {
+      this.childComponent = this.$refs[
+        this.originalParameter.id + 'editor-' + this.originalParameter.type
+      ]
+    })
+  },
+  methods: {
+    removeParameter(event) {
+      var eventConfirmationLevel = event.ctrlKey ? 'confirmed' : 'confirm'
+
+      EventBus.fire(eventConfirmationLevel + '-removeParameter', this.parameter)
+    },
+    registerEvents() {
+      EventBus.listen('value-change-' + this.parameter.id, data => {
+        this.isDirty = data.isDirty
+        this.errors = []
+      })
+
+      this.$on('file-uploaded', data => {
+        if (this.parameter.type == 'file') this.parameterChanged(data.parameter)
+      })
+
+      this.$on('save-change', this.submit)
+    },
+    submit() {
+      if (!this.isDirty) return null
+
+      this.$http
+        .patch(
+          window.Laravel.base_url + 'parameters/' + this.originalParameter.id,
+          {
+            value: this.childComponent.paramValue
+          }
+        )
+        .then(response => {
+          this.parameterChanged(response.data)
+        })
+        .catch(error => {
+          var errorMessage =
+            'Error in updating parameter (' + this.parameter.id + ')'
+          var errorData = error.response.data
+          if (typeof errorData == 'object') {
+            this.errors = _.toArray(errorData)
+          }
+          Helper.checkCommonErrors(errorData, errorMessage)
+        })
+    },
+    parameterChanged(parameter) {
+      this.originalParameter = parameter
+      this.$nextTick(x => {
+        this.childComponent.init()
+        this.isDirty = false
+        if (!this.previewMode) this.togglePreview()
+      })
+      this.alert(
+        'Parameter: ' + parameter.label + ' has been updated successfully'
+      )
+      EventBus.fire('updated-parameter', parameter)
+    },
+    togglePreview() {
+      this.childComponent.previewMode = !this.childComponent.previewMode
+      this.previewMode = this.childComponent.previewMode
+    },
+    undoChanges() {
+      this.childComponent.paramValue = this.childComponent.originalParameter.value
+      this.childComponent.$emit('undo-changes')
+      this.childComponent.focusInEditor()
+    },
+    parseError(error) {
+      return error.join(', ')
+    }
+  },
+  computed: {
+    getEditorComponentName() {
+      return 'editor-' + this.originalParameter.type
+    },
+    getEditorComponentRef() {
+      return this.originalParameter.id + this.getEditorComponentName
+    },
+    markIfDirty() {
+      return this.isDirty ? 'panel-warning' : 'panel-default'
+    }
+  }
+}
+
 </script>

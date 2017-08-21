@@ -34,45 +34,50 @@
 </template>
 
 <script>
-	import base from './mixins/parameters/base.js'
-	export default {
-		mixins: [base],
-		data() {
-			return {
-				categories: [],
-				parameters: [],
-				openedCategory: null,
-				categoriesParameters: [],
-				editCategoriesMode: false,
-			}
-		},
-		mounted() {
-			this.parameters = this.parameters_list;
-			this.registerEvents();
-			this.loadParameters();
-		},
-		props: {
-			parameters_list: null,
-		},
-		methods: {
-			loadParameters() {
-				this.prepareCategories();
-				this.$nextTick(this.openCategoryByHash);
-			},
-			registerEvents() {
-		        EventBus.listen('opening-category', data => {
-		            this.deactivateCategories();
-		            this.openCategory(data);
-		        });
-		        EventBus.listen('change-paramCategory', this.changeParamCategory);
-		        EventBus.listen('chose-paramCategory', this.choseParamCategory);
-		        EventBus.listen('created-category', this.createdCategory);
-		        EventBus.listen('updated-parameter', this.updateCategoryParameter);
-		        EventBus.listen('created-parameter', this.createdParameter);
-		        EventBus.listen('confirm-removeParameter', this.confirmRemoveParameter);
-		        EventBus.listen('cancel-removeParameter', this.cancelRemoveParameter);
-		        EventBus.listen('confirmed-removeParameter', this.confirmedRemoveParameter);
-			},
-	    }
-	}
+
+import base from './mixins/parameters/base.js'
+export default {
+  mixins: [base],
+  data() {
+    return {
+      categories: [],
+      parameters: [],
+      openedCategory: null,
+      categoriesParameters: [],
+      editCategoriesMode: false
+    }
+  },
+  mounted() {
+    this.parameters = this.parameters_list
+    this.registerEvents()
+    this.loadParameters()
+  },
+  props: {
+    parameters_list: null
+  },
+  methods: {
+    loadParameters() {
+      this.prepareCategories()
+      this.$nextTick(this.openCategoryByHash)
+    },
+    registerEvents() {
+      EventBus.listen('opening-category', data => {
+        this.deactivateCategories()
+        this.openCategory(data)
+      })
+      EventBus.listen('change-paramCategory', this.changeParamCategory)
+      EventBus.listen('chose-paramCategory', this.choseParamCategory)
+      EventBus.listen('created-category', this.createdCategory)
+      EventBus.listen('updated-parameter', this.updateCategoryParameter)
+      EventBus.listen('created-parameter', this.createdParameter)
+      EventBus.listen('confirm-removeParameter', this.confirmRemoveParameter)
+      EventBus.listen('cancel-removeParameter', this.cancelRemoveParameter)
+      EventBus.listen(
+        'confirmed-removeParameter',
+        this.confirmedRemoveParameter
+      )
+    }
+  }
+}
+
 </script>

@@ -20,65 +20,65 @@
 		</template>
 
 		<script>
-			export default {
-				data() {
-					return {
-			            parameter: window.Laravel.parametersColumns,
-		                categories: [],
-		                isBusy: false,
-					}
-				},
-		        props: {
 
-		        },
-		        methods: {
-		        	init() {
-		        		this.registerEvents();
-		        	},
-		        	registerEvents() {
-		        		EventBus.listen('update-categories', this.updateCategories);
-		        	},
-		        	updateCategories(categories) {
-		        		this.categories = categories;
-		        	},
-					paramBelongsToCategory(category) {
-						var paramCategoryId = this.parameter.category_id;
+export default {
+  data() {
+    return {
+      parameter: window.Laravel.parametersColumns,
+      categories: [],
+      isBusy: false
+    }
+  },
+  props: {},
+  methods: {
+    init() {
+      this.registerEvents()
+    },
+    registerEvents() {
+      EventBus.listen('update-categories', this.updateCategories)
+    },
+    updateCategories(categories) {
+      this.categories = categories
+    },
+    paramBelongsToCategory(category) {
+      var paramCategoryId = this.parameter.category_id
 
-						paramCategoryId = paramCategoryId == null ? "": paramCategoryId;
+      paramCategoryId = paramCategoryId == null ? '' : paramCategoryId
 
-						return paramCategoryId == category.target;
-					},
-					choseCategory(category) {
-						if(this.paramBelongsToCategory(category))
-							return ;
+      return paramCategoryId == category.target
+    },
+    choseCategory(category) {
+      if (this.paramBelongsToCategory(category)) return
 
-						if(this.isBusy)
-							return this.alert('Wait until the previous request processed..', 'danger');
+      if (this.isBusy)
+        return this.alert(
+          'Wait until the previous request processed..',
+          'danger'
+        )
 
-						this.isBusy = true;
+      this.isBusy = true
 
-						EventBus.fire('chose-paramCategory', {
-							parameter: this.parameter.id,
-							category: category.target
-						});
-					}
-		        },
-				mounted() {
-					EventBus.listen('changed-paramCategory', data => {
-						this.isBusy = false;
-						if(! data.ok)
-							return ;
+      EventBus.fire('chose-paramCategory', {
+        parameter: this.parameter.id,
+        category: category.target
+      })
+    }
+  },
+  mounted() {
+    EventBus.listen('changed-paramCategory', data => {
+      this.isBusy = false
+      if (!data.ok) return
 
-						this.parameter = data.parameter;						
-					});
-					EventBus.listen('start-addCategory', x=> {
-						this.isBusy = true;
-					});
-					EventBus.listen('end-addCategory', x=> {
-						this.isBusy = false;
-					});
-				},
-				computed: {
-				}
-			}
-		</script>
+      this.parameter = data.parameter
+    })
+    EventBus.listen('start-addCategory', x => {
+      this.isBusy = true
+    })
+    EventBus.listen('end-addCategory', x => {
+      this.isBusy = false
+    })
+  },
+  computed: {}
+}
+
+</script>
