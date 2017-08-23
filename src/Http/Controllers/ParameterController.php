@@ -2,13 +2,12 @@
 
 namespace Parameter\Http\Controllers;
 
-use Parameter\Parameter;
-use Parameter\ParametersManager;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use App\Http\Controllers\Controller;
-use \Parameter\ParametersValidator;
 use Storage ;
+use Parameter\Parameter;
+use Illuminate\Http\Request;
+use Parameter\ParametersManager;
+use Parameter\ParametersValidator;
+use App\Http\Controllers\Controller;
 
 class ParameterController extends Controller
 {
@@ -28,7 +27,7 @@ class ParameterController extends Controller
     {
         $this->validate($request, ParametersValidator::newRules($request->type));
 
-        $parameter = Parameter::create($request->only('name','type','label','category_id'));
+        $parameter = Parameter::create($request->only(ParametersManager::$createParameterFields));
 
         return ['parameter'=>$parameter];
     }
@@ -97,16 +96,14 @@ class ParameterController extends Controller
     }
     public function addCategory(Request $request)
     {
-        $data['type'] = 'textfield';
-        $data['name'] = 'category-' . Str::random();
-        $data['is_category'] = true;
+        $data = ParametersManager::getCategoryDefaults();
         $data['label'] = $request->value;
 
         $request->merge($data);
 
         $this->validate($request, ParametersValidator::newRules($request->type));
 
-        $parameter = Parameter::create($request->only('is_category', 'value', 'name','type','label'))->fresh();
+        $parameter = Parameter::create($request->only(ParametersManager::$addCategoryRequestFields))->fresh();
 
         return ['parameter'=>$parameter];
     }

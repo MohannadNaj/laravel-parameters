@@ -2,6 +2,8 @@
 
 namespace Parameter;
 
+use Parameter\ParametersManager;
+
 trait ParametersModelTrait {
 
     public function getValue()

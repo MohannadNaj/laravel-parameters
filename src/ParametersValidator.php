@@ -5,8 +5,6 @@ namespace Parameter;
 use Parameter\ParametersManager;
 
 class ParametersValidator {
-	public static $typesInterface = 'Parameter\\Types\\%s\\Rules';
-
 	public static function newRules($type)
 	{
 		return static::getRules($type, 'new');
@@ -24,10 +22,10 @@ class ParametersValidator {
 	}
 
 	private static function getRulesClass($type) {
-		$classPath = static::getClassPath(ucfirst( $type));
+		$classPath = static::getRulesClassPath($type);
 
 		if(! class_exists($classPath))
-			$classPath = static::getClassPath('_Default');
+			$classPath = static::getRulesClassPath('_Default');
 
 		return $classPath;
 	}
@@ -36,8 +34,8 @@ class ParametersValidator {
 			return 'get' . ucfirst($operation) . 'Rules';
 	}
 
-	private static function getClassPath($type)
+	private static function getRulesClassPath($type)
 	{
-		return sprintf(static::$typesInterface, $type);
+		return ParametersManager::rulesClassPath( $type );
 	}
 }
