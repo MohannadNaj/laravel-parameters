@@ -13,14 +13,14 @@ trait ParametersModelTrait {
 
 	public function buildValue()
 	{
-		$parameterBuilderClassName = 'Parameter\\Types\\' . ucfirst($this->type) . '\\Builder';
+		$parameterBuilderClassName = ParametersManager::BuilderClassPath($this->type);
 		$parameterBuilder = new $parameterBuilderClassName($this);
 		$parameterBuilder->build();
 	}
 
 	public function getValueAttribute($value)
 	{
-		$parameterRetrieverClassName = 'Parameter\\Types\\' . ucfirst($this->type) . '\\Retriever';
+		$parameterRetrieverClassName = ParametersManager::RetrieverClassPath($this->type);
 		$parameterRetriever = new $parameterRetrieverClassName($value);
 
 		return $parameterRetriever->getValue();

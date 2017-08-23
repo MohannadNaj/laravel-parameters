@@ -21,6 +21,17 @@ class ParametersManager {
         ];
     }
 
+    public static function clientData() {
+    	$parametersColumns = Parameter::getColumns();
+
+    	return [
+            'csrfToken' => csrf_token(),
+            'images_dir' => 'storage',
+            'base_url' => url('/') . '/',
+            'parametersColumns' =>  array_fill_keys($parametersColumns, null ),
+            'parametersTypes'=> static::$supportedTypes,
+        ];
+    }
     private static function getTypesInterface($type = null)
     {
     	if(is_null($type))

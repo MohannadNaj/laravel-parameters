@@ -10,32 +10,5 @@
     <link href="{{asset('vendor/parameters/css/app.css')}}" rel="stylesheet">
     <!-- Scripts -->
     <script>
-        window.Laravel = <?php echo json_encode([
-            'csrfToken' => csrf_token(),
-            'images_dir' => 'storage',
-            'base_url' => url('/') . '/',
-            'parametersColumns' =>  array_fill_keys($parametersColumns, null ), // $parametersColumns from Service Provider
-            'parametersTypes'=> Parameter\ParametersManager::$supportedTypes,
-            'auth_user_id' => auth()->id(),
-        ] ); ?>;
+        window.Laravel = <?php echo json_encode(Parameter\ParametersManager::clientData()); ?>;
     </script>
-    
-    <style type="text/css">
-body {
-  padding-top: 70px;
-}
-footer {
-  padding: 30px 0;
-}
-
-.black-bg {
-  background: #000000;
-}
-
-.no-padding-bottom {
-  padding-bottom: 0px;
-}
-.no-margin {
-  margin: 0px !important;
-}
-    </style>
