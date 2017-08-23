@@ -2,15 +2,12 @@
 
 namespace Parameter\Types;
 
-use Parameter\Parameter;
+use Parameter\ParametersManager;
 
 abstract class BaseRules
 {
-    protected $parameter;
-
-    public function __construct(Parameter $parameter)
+    public function __construct()
     {
-        $this->parameter = $parameter;
     }
 
     abstract public function newRules();
@@ -22,7 +19,7 @@ abstract class BaseRules
         return $this->newRules() + $this->commonNewRules();
     }
 
-    public function getUpdateRules($parameter)
+    public function getUpdateRules()
     {
         return $this->updateRules() + $this->commonUpdateRules();
     }
@@ -31,15 +28,15 @@ abstract class BaseRules
     {
         return [
             'name'=>'unique:parameters|required',
-            'label' => 'required',
+            'label' => 'required|max:255',
+            'type' => 'required|in:' . implode(ParametersManager::$supportedTypes,','),
         ];
     }
 
     private function commonUpdateRules()
     {
         return [
-            'value' => 'max:255',
-            'lang' => 'required
+            'label' => 'max:255',
         ];
     }
 }
