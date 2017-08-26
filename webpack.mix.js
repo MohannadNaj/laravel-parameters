@@ -1,4 +1,5 @@
 let mix = require('laravel-mix');
+var BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
 /*
  |--------------------------------------------------------------------------
@@ -11,12 +12,9 @@ let mix = require('laravel-mix');
  |
  */
 mix.setPublicPath('public');
-
+/*
 mix.js('./resources/assets/js/app.js', 'js')
 .sass('./resources/assets/sass/app.scss', 'css');
-
-//mix.copy('node_modules/font-awesome/fonts/', 'public/fonts/');
-//mix.copy('node_modules/bootstrap-sass/assets/fonts/bootstrap/', 'public/fonts/');
 
 mix.copy('node_modules/tinymce/skins', 'public/css/libs/tinymce/skins');
 mix.copy('node_modules/tinymce/themes', 'public/css/libs/tinymce/themes');
@@ -24,5 +22,7 @@ mix.copy('node_modules/tinymce/themes', 'public/css/libs/tinymce/themes');
 mix.copy('node_modules/tinymce/plugins/emoticons/img', 'public/js/plugins/emoticons/img');
 mix.copy('node_modules/tinymce/plugins/codesample/css', 'public/js/plugins/codesample/css');
 mix.copy('node_modules/tinymce/plugins/visualblocks/css', 'public/js/plugins/visualblocks/css');
-
+*/
 mix.setResourceRoot('/vendor/parameters/');
+
+require('./phpunit-watcher');

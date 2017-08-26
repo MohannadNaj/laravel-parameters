@@ -7,9 +7,8 @@ use Parameter\Parameter;
 use Illuminate\Http\Request;
 use Parameter\ParametersManager;
 use Parameter\ParametersValidator;
-use App\Http\Controllers\Controller;
 
-class ParameterController extends Controller
+class ParameterController extends BaseController
 {
     public function __construct()
     {
