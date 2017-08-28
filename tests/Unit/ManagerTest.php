@@ -17,16 +17,15 @@ class ManagerTest extends TestCase
 
 	public function test_1()
 	{
-        $response = $this->json('POST', '/parameters', ['name' => 'param','category_id' => 'e']);
+        $response = $this->actingAs(new \Illuminate\Foundation\Auth\User())->json('POST', '/parameters', ['name' => 'param','category_id' => 'e']);
         $response->seeStatusCode(422);
         $responseArray = $response->decodeResponseJson();
-//        $this->assertEquals(['type','label','category_id'], array_keys($responseArray));
+        $this->assertArrayContains(['type','label','category_id'], array_keys($responseArray));
 	}
 
 	public function test_2() {
-		$columns = array_values(Parameter::getColumns());
+		$columns = Parameter::getColumns();
 		$targetedColumns = ['id','name','label','category_id','updated_at'];
-
 		$this->assertArrayContains($targetedColumns, $columns);
 	}
 

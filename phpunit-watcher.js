@@ -1,10 +1,10 @@
-var files = ['src/**/*.php',
+let files = ['src/**/*.php',
             'tests/**/*.php',
             'app/**/*.php'];
 
-var cmd = '"./vendor/bin/phpunit"';
+let cmd = '"./vendor/bin/phpunit"';
 
-var chokidar = require('chokidar');
+let chokidar = require('chokidar');
 
 let handleOutput = (error, stdout, stderr) => {
 	    if (error) {
@@ -39,7 +39,7 @@ let handleChange = (path) => {
 
 const exec = require('child_process').exec;
 
-var watcher = chokidar.watch(files, {atomic: 300});
+const watcher = chokidar.watch(files, {atomic: 300});
 
 // Event listeners.
 watcher
