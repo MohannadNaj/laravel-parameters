@@ -4,7 +4,34 @@ let files = ['src/**/*.php',
 
 let cmd = '"./vendor/bin/phpunit"';
 
+let chokidarOptions = {};
+
 let chokidar = require('chokidar');
+
+// https://stackoverflow.com/a/24004942/4330182
+let debounce = (func, wait, immediate) => {
+    var timeout;           
+
+    return function() {
+        var context = this, 
+            args = arguments;
+
+        var callNow = immediate && !timeout;
+
+        clearTimeout(timeout);   
+
+        timeout = setTimeout(function() {
+
+             timeout = null;
+
+             if (!immediate) {
+               func.apply(context, args);
+             }
+        }, wait);
+
+        if (callNow) func.apply(context, args);  
+     }; 
+};
 
 let handleOutput = (error, stdout, stderr) => {
 	    if (error) {
@@ -22,7 +49,6 @@ let handleOutput = (error, stdout, stderr) => {
       ],
     ['\x1b[39m' , '| File: ', '\x1b[32m', path],
     ['\x1b[39m' , '------------'],
-    ['\x1b[92m','____________________'],
  ];
 };
 
@@ -32,14 +58,18 @@ let eventInfo = (path) => {
     })
 };
 
+let execute = debounce(() => {
+  exec(cmd, handleOutput);
+}, 1000);
+
 let handleChange = (path) => {
     eventInfo(path);
-    exec(cmd, handleOutput);
+    execute();
 };
 
 const exec = require('child_process').exec;
 
-const watcher = chokidar.watch(files, {atomic: 300});
+const watcher = chokidar.watch(files, chokidarOptions);
 
 // Event listeners.
 watcher

@@ -10,6 +10,6 @@ class ManagerTest extends UnitTest
 {
 	public function test_tests()
 	{
-		echo "hmm'aa'";
+		
 	}
 }
