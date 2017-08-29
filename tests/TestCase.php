@@ -2,15 +2,16 @@
 
 namespace Parameter\Tests;
 
-use Parameter\Parameter;
-use Parameter\Providers\ParametersServiceProvider;
 use Illuminate\Database\Schema\Blueprint;
+use Parameter\Providers\ParametersServiceProvider;
 use Orchestra\Testbench\BrowserKit\TestCase as OrchestraTestCase;
 
 use Mockery;
 
-abstract class TestCase  extends OrchestraTestCase
+abstract class TestCase extends OrchestraTestCase
 {
+    use TestHelper;
+
     public function tearDown()
     {
         Mockery::close();
@@ -19,8 +20,6 @@ abstract class TestCase  extends OrchestraTestCase
     public function setUp()
     {
         parent::setUp();
-
-        $this->setUpDatabase();
     }
 
     protected function getPackageProviders($app)
@@ -45,27 +44,8 @@ abstract class TestCase  extends OrchestraTestCase
         $app['config']->set('app.key', 'AckfSECXIvnK5r28GVIWUAxmbBSjTsmF');
     }
 
-    protected function setUpDatabase()
+    public function getTempDirectory()
     {
-        $this->resetDatabase();
-
-        $this->createActivityLogTable();
-    }
-
-    protected function resetDatabase()
-    {
-        file_put_contents($this->getTempDirectory().'/database.sqlite', null);
-    }
-
-    protected function createActivityLogTable()
-    {
-        include_once '__DIR__'.'/../src/database/migrations/2017_06_20_063902_create_parameters_table.php';
-
-        (new \CreateParametersTable())->up();
-    }
-
-    public function getTempDirectory(): string
-    {
-        return __DIR__.'/temp';
+        return __DIR__.'/_temp';
     }
 }
