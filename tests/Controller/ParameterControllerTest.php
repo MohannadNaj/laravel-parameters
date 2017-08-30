@@ -20,16 +20,6 @@ class ParameterControllerTest extends ControllerTest
         $this->assertArrayContains(['type','label','category_id'], array_keys($responseArray));
 	}
 
-	public function test_validate_upload_file()
-    {
-        $response = $this->json('POST', '/parameters/addPhoto', [
-            'file' => 'aaa'
-        ]);
-        print_r($this->response->getStatusCode());
-
-//		print_r($responseArray);
-    }
-
 	public function test_upload_file()
     {
         Storage::fake('local');
@@ -39,6 +29,7 @@ class ParameterControllerTest extends ControllerTest
         ]);
 
 		$responseArray = $response->decodeResponseJson();
+		print_r($responseArray);
 
         Storage::disk('local')->assertExists($responseArray['path']);
     }

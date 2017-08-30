@@ -52,7 +52,6 @@ class ParameterController extends BaseController
     public function addPhoto(Request $request)
     {
         if(! $request->file('file')->isValid())
-            dd('gggg');
             return ['Error in uploading file'];
 
         $this->validate($request,
