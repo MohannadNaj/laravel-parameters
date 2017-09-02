@@ -5,6 +5,7 @@ namespace Parameter\Http\Controllers;
 use Storage ;
 use Parameter\Parameter;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Parameter\ParametersManager;
 use Parameter\ParametersValidator;
 
@@ -51,8 +52,8 @@ class ParameterController extends BaseController
 
     public function addPhoto(Request $request)
     {
-        if(! $request->file('file')->isValid())
-            return ['Error in uploading file'];
+        if(! $request->hasFile('file') || ! $request->file('file')->isValid())
+            return $this->failedUploadResponse();
 
         $this->validate($request,
             [ 'file' => ParametersValidator::updateRules('file')['value'] ]);
@@ -68,7 +69,7 @@ class ParameterController extends BaseController
         $path = $request->path;
 
         if (! Storage::disk('local')->exists($path)) {
-            return ['Error in uploading file'];
+            return $this->failedUploadResponse();
         }
 
         $local = Storage::disk('local')->get($path);
@@ -105,5 +106,10 @@ class ParameterController extends BaseController
         $parameter = Parameter::create($request->only(ParametersManager::$addCategoryRequestFields))->fresh();
 
         return ['parameter'=>$parameter];
+    }
+
+    private function failedUploadResponse()
+    {
+        return response()->json(['Error in uploading file'])->setStatusCode(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 }

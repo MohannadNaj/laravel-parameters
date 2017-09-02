@@ -6,10 +6,14 @@ use Illuminate\Foundation\Auth\User as AuthUser;
 
 class User extends AuthUser
 {
-	private $isAdmin;
+	private $authorizedToEdit;
 
-	public function __construct($isAdmin = true)
+	public function __construct($authorizedToEdit = true)
 	{
-		$this->isAdmin = $isAdmin;
+		$this->authorizedToEdit = $authorizedToEdit;
+	}
+
+	public function canEditParameters() {
+		return $this->authorizedToEdit;
 	}
 }

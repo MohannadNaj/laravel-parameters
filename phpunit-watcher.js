@@ -8,7 +8,7 @@ let chokidarOptions = {};
 
 let chokidar = require('chokidar');
 
-// https://stackoverflow.com/a/24004942/4330182
+// debounce from: https://stackoverflow.com/a/24004942/4330182
 let debounce = (func, wait, immediate) => {
     var timeout;           
 
@@ -59,6 +59,7 @@ let eventInfo = (path) => {
 };
 
 let execute = debounce(() => {
+  console.log('running phpunit..');
   exec(cmd, handleOutput);
 }, 1000);
 
