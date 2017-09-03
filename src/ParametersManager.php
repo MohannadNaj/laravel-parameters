@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 class ParametersManager {
     public static $supportedTypes = ['textfield','text','file','integer','boolean'];
 
-    public static $typesInterface = 'Parameter\\Types\\%s\\';
+    private static $typesInterface = 'Parameter\\Types\\%s\\';
 
     public static $addCategoryRequestFields = ['is_category', 'value', 'name','type','label'];
 

@@ -29,8 +29,6 @@ class CreateParametersTable extends Migration
             $table->text('value')->nullable();
             $table->text('meta')->nullable();
 
-            $table->integer('created_by_user_id')->nullable();
-            $table->integer('updated_by_user_id')->nullable();
             $table->timestamps();
         });
     }

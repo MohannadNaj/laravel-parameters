@@ -52,7 +52,7 @@ let handleOutput = (error, stdout, stderr) => {
  ];
 };
 
-var countFileChanges = 0;
+var countFileChanges = [];
 
 let eventInfo = (path) => {
     eventInfoStructure(path).forEach((line) => {
@@ -61,7 +61,11 @@ let eventInfo = (path) => {
 };
 
 let getFilters = (_path) => {
-  if(countFileChanges != 1 || _path.toLowerCase().indexOf('tests') == -1)
+  var uniqueFileChanges = countFileChanges.filter((elem, pos) => {
+    return countFileChanges.indexOf(elem) == pos;
+  });
+
+  if(uniqueFileChanges.length != 1 || _path.toLowerCase().indexOf('tests') == -1)
     return '';
 
   var changedFile = path.parse(_path).name;
@@ -74,13 +78,13 @@ let getFilters = (_path) => {
 let execute = debounce((path) => {
   console.log('running phpunit..');
   exec(cmd + getFilters(path) , handleOutput);
-  countFileChanges = 0;
+  countFileChanges = [];
 }, 1000);
 
-let handleChange = (path) => {
-    eventInfo(path);
-    countFileChanges++;
-    execute(path);
+let handleChange = (_path) => {
+    eventInfo(_path);
+    countFileChanges.push(_path);
+    execute(_path);
 };
 
 const exec = require('child_process').exec;

@@ -9,13 +9,29 @@ use Parameter\ParametersManager;
 
 class ManagerTest extends UnitTest
 {
-	public function test_static_arrays_exist()
+	public function test_static_arrays_visible()
 	{
 		$this->assertArrayContains(['textfield','boolean'], ParametersManager::$supportedTypes);
+		$this->assertArrayContains(['name'], ParametersManager::$addCategoryRequestFields);
+		$this->assertArrayContains(['name'], ParametersManager::$createParameterFields);
 	}
-	public function test_static_call_works()
+
+	public function test_static_call_class_path()
 	{
 		$this->assertEquals('Parameter\Types\Text\Builder' ,
 			ParametersManager::builderClassPath('text'));
 	}
+
+	public function test_get_category_defaults()
+	{
+		$categoryDefaults = ParametersManager::getCategoryDefaults();
+
+		$this->assertArrayContains(
+			['is_category','name','type'],
+			array_keys($categoryDefaults)
+		);
+
+		$this->assertTrue($categoryDefaults['is_category']);
+	}
+
 }
