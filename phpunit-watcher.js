@@ -52,20 +52,35 @@ let handleOutput = (error, stdout, stderr) => {
  ];
 };
 
+var countFileChanges = 0;
+
 let eventInfo = (path) => {
     eventInfoStructure(path).forEach((line) => {
       console.log.apply(console, line);
     })
 };
 
-let execute = debounce(() => {
+let getFilters = (_path) => {
+  if(countFileChanges != 1 || _path.toLowerCase().indexOf('tests') == -1)
+    return '';
+
+  var changedFile = path.parse(_path).name;
+  var phpunitFilter = ` --filter ${changedFile}`;
+
+  console.log(phpunitFilter);
+  return phpunitFilter;
+};
+
+let execute = debounce((path) => {
   console.log('running phpunit..');
-  exec(cmd, handleOutput);
+  exec(cmd + getFilters(path) , handleOutput);
+  countFileChanges = 0;
 }, 1000);
 
 let handleChange = (path) => {
     eventInfo(path);
-    execute();
+    countFileChanges++;
+    execute(path);
 };
 
 const exec = require('child_process').exec;
