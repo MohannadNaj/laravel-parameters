@@ -1,9 +1,9 @@
 {
-    "name": "mohannadnaj/paramters",
-    "description": "Helper Package for marking active state in application's runtime.",
+    "name": "mohannadnaj/laravel-parameters",
+    "description": "Laravel Package for Managing App Parameters/Settings.",
     "license": "MIT",
     "type": "package",
-    "homepage": "https://github.com/mohannadnaj/active-state",
+    "homepage": "https://github.com/MohannadNaj/laravel-parameters",
     "authors": [
       {
         "name": "Mohannad Najjar",
@@ -13,15 +13,17 @@
     "keywords": ["framework", "laravel"],
     "require": {
         "php": ">=5.6.4",
-        "illuminate/database": "~5.4.0",
-        "illuminate/http": "~5.4.0",
-        "illuminate/support": "~5.4.0"
+        "illuminate/database": "~5.5",
+        "illuminate/http": "~5.5",
+        "illuminate/support": "~5.5"
     },
     "require-dev": {
-        "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "~5.7",
-        "orchestra/database": "~3.4",
-        "orchestra/testbench-browser-kit": "~3.1"
+        "fzaninotto/faker": "~1.4",
+        "mockery/mockery": "~0.9",
+        "orchestra/database": "~3.5",
+        "orchestra/testbench": "~3.5",
+        "orchestra/testbench-browser-kit": "~3.5",
+        "phpunit/phpunit": "~6.0"
     },
     "autoload": {
         "psr-4": {
@@ -35,6 +37,9 @@
         }
     },
     "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        },
         "laravel": {
             "providers": [
                 "Parameter\\Providers\\ParametersServiceProvider"
