@@ -1,3 +1,5 @@
+Vue.component('TestMe', require('./components/TestMe.vue'))
+
 Vue.component('dropzone-upload', require('./components/dropzone-upload.vue'))
 Vue.component('modal', require('./components/modal.vue'))
 
