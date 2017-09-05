@@ -85,7 +85,7 @@ class ParameterControllerTest extends ControllerTest
         $response = $this->actingAs(new User())->json('POST', '/parameters', ['name' => 'param','category_id' => 'e']);
         $response->seeStatusCode(422);
         $responseArray = $response->decodeResponseJson();
-        $this->assertArrayContains(['type','label','category_id'], array_keys($responseArray));
+        $this->assertArrayContains(['category_id','label','type'], array_keys($responseArray['errors']));
     }
 
     public function test_upload_validate_file()
