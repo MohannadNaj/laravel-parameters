@@ -1,8 +1,9 @@
-let files = ['src/**/*.php',
-            'tests/**/*.php',
-            'app/**/*.php'];
+let files = [
+            'resources/assets/js/**/*.js',
+            'resources/assets/js/**/*.vue',
+            'specs/**/*.js'];
 
-let cmd = '"./vendor/bin/phpunit"';
+let cmd = 'npm run test';
 
 let chokidarOptions = {};
 
@@ -37,8 +38,8 @@ let handleOutput = (error, stdout, stderr) => {
 	    if (error) {
 	        console.error(`exec error: ${error}`);
 	    }
-/*	    console.log(`${stdout}`);
-	    console.log(`${stderr}`);*/
+	    console.log(`${stdout}`);
+	    console.log(`${stderr}`);
 	};
  
  let eventInfoStructure = (path) => { return [
@@ -61,22 +62,12 @@ let eventInfo = (path) => {
 };
 
 let getFilters = (_path) => {
-  var uniqueFileChanges = countFileChanges.filter((elem, pos) => {
-    return countFileChanges.indexOf(elem) == pos;
-  });
-
-  if(uniqueFileChanges.length != 1 || _path.toLowerCase().indexOf('tests') == -1)
     return '';
-
-  var changedFile = path.parse(_path).name;
-  var phpunitFilter = ` --filter ${changedFile}`;
-
-  console.log(phpunitFilter);
-  return phpunitFilter;
 };
 
 let execute = debounce((path) => {
-  console.log('running phpunit..');
+  console.log('running karma..');
+  var executedCommand = exec(cmd);
   var execProcess = exec(cmd + getFilters(path) , handleOutput);
   execProcess.stdout.pipe(process.stdout);
   countFileChanges = [];

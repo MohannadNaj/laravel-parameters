@@ -1,19 +1,30 @@
-let mix = require('laravel-mix');
+console.log(process.env.NODE_ENV, 'env');
+if(process.env.NODE_ENV == 'testing')
+{
+	require('./specs-watcher');
+} else if(process.env.NODE_ENV != 't0est') {
+	let mix = require('laravel-mix');
 
-mix.setPublicPath('public');
+	mix.setPublicPath('public');
 
-mix.js('./resources/assets/js/app.js', 'js')
-.sass('./resources/assets/sass/app.scss', 'css');
+	mix.js('./resources/assets/js/app.js', 'js')
+	.sass('./resources/assets/sass/app.scss', 'css');
 
-mix.copy('node_modules/tinymce/skins', 'public/css/libs/tinymce/skins');
-mix.copy('node_modules/tinymce/themes', 'public/css/libs/tinymce/themes');
 
-mix.copy('node_modules/tinymce/plugins/emoticons/img', 'public/js/plugins/emoticons/img');
-mix.copy('node_modules/tinymce/plugins/codesample/css', 'public/js/plugins/codesample/css');
-mix.copy('node_modules/tinymce/plugins/visualblocks/css', 'public/js/plugins/visualblocks/css');
+	mix.setResourceRoot('/vendor/parameters/');
 
-mix.setResourceRoot('/vendor/parameters/');
+	if(! mix.inProduction()) {
+		require('./phpunit-watcher');
+	}
 
-if(! mix.inProduction()) {
-	require('./phpunit-watcher');
+	if( mix.inProduction()) {
+
+		mix.copy('node_modules/tinymce/skins', 'public/css/libs/tinymce/skins');
+		mix.copy('node_modules/tinymce/themes', 'public/css/libs/tinymce/themes');
+
+		mix.copy('node_modules/tinymce/plugins/emoticons/img', 'public/js/plugins/emoticons/img');
+		mix.copy('node_modules/tinymce/plugins/codesample/css', 'public/js/plugins/codesample/css');
+		mix.copy('node_modules/tinymce/plugins/visualblocks/css', 'public/js/plugins/visualblocks/css');	
+
+	}
 }
