@@ -8,10 +8,10 @@
     "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
     "prod": "npm run production",
     "test": "cross-env NODE_ENV=test npm run karma",
-    "karma": "karma start karma.conf.js",
+    "karma": "cross-env FORCE_COLOR=true karma start karma.conf.js",
     "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "pretty": "pretty.js",
-    "tdd": "cross-env NODE_ENV=testing node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+    "tdd": "cross-env NODE_ENV=testing  FORCE_COLOR=true node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "devDependencies": {
     "axios": "^0.16.2",
@@ -23,6 +23,7 @@
     "karma": "^1.7.1",
     "karma-jasmine": "^1.1.0",
     "karma-phantomjs-launcher": "^1.0.4",
+    "karma-spec-reporter": "0.0.31",
     "karma-webpack": "^2.0.4",
     "laravel-mix": "^1.0",
     "lodash": "^4.17.4",

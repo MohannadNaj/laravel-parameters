@@ -2,8 +2,6 @@ import Vue from 'vue';
 
 import Modal from '../resources/assets/js/components/Modal';
 
-console.log(tst);
-
 describe('Modal', () => {
 
   it('has a mounted hook', () => {

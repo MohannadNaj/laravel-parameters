@@ -33,6 +33,8 @@ module.exports = function (config) {
     webpackMiddleware: {
       noInfo: true
     },
+    colors: true,
+    reporters: ['spec'],
     singleRun: process.env.NODE_ENV !== 'testing'
   })
 }
