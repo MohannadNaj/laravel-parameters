@@ -11,7 +11,7 @@
     "karma": "cross-env FORCE_COLOR=true karma start karma.conf.js",
     "karma-watch": "cross-env NODE_ENV=testing FORCE_COLOR=true karma start karma.conf.js",
     "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "pretty": "pretty.js",
+    "pretty": "node pretty.js",
     "tdd": "cross-env NODE_ENV=testing FORCE_COLOR=true node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "devDependencies": {

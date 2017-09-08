@@ -56,9 +56,9 @@ export default {
     }
   },
   components: {
-    'parameter': parameter ,
+    parameter: parameter,
     'add-parameter': addParameter,
-    'add-category' : addcategory,
+    'add-category': addcategory
   },
   mounted() {
     this.registerEvents()

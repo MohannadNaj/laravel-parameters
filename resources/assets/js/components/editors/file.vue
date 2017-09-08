@@ -60,7 +60,8 @@ export default {
     getImageSrc() {
       return (
         window.Laravel.base_url +
-        window.Laravel.images_dir + '/' +
+        window.Laravel.images_dir +
+        '/' +
         this.paramValue
       )
     }

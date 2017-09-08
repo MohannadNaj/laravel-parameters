@@ -20,6 +20,7 @@
 		</template>
 
 		<script>
+
 import addCategory from './add-category'
 
 export default {

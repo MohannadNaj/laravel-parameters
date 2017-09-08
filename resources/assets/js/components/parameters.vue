@@ -35,9 +35,9 @@
 
 <script>
 
-import parametersCategory from './parameters-category';
-import addCategory from './add-category';
-import parametersList from './parameters-list';
+import parametersCategory from './parameters-category'
+import addCategory from './add-category'
+import parametersList from './parameters-list'
 
 import base from './mixins/parameters/base.js'
 
@@ -53,9 +53,9 @@ export default {
     }
   },
   components: {
-    'parameters-category' : parametersCategory,
-    'add-category' : addCategory,
-    'parameters-list' : parametersList
+    'parameters-category': parametersCategory,
+    'add-category': addCategory,
+    'parameters-list': parametersList
   },
   mounted() {
     this.parameters = this.parameters_list

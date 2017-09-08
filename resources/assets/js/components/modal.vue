@@ -27,6 +27,7 @@
   </div>
 </template>
 <script>
+
 import removeParameter from './remove-parameter'
 import changeParamCategory from './change-paramCategory'
 import addParameter from './add-parameter'
@@ -51,10 +52,10 @@ export default {
     }
   },
   components: {
-    'remove-parameter': removeParameter ,
-    'change-paramCategory': changeParamCategory ,
-    'add-parameter' : addParameter,
-    'add-category' : addcategory,
+    'remove-parameter': removeParameter,
+    'change-paramCategory': changeParamCategory,
+    'add-parameter': addParameter,
+    'add-category': addcategory
   },
   mounted() {
     this.mapPropsToData()
@@ -67,7 +68,7 @@ export default {
     title: { default: '' },
     callerData: {},
     html: { default: '' },
-    showFooter: {default: true}
+    showFooter: { default: true }
   },
   methods: {
     savedata_click() {
