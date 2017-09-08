@@ -57,7 +57,7 @@ export default {
     title: { default: '' },
     callerData: {},
     html: { default: '' },
-    showFooter: true
+    showFooter: {default: true}
   },
   methods: {
     savedata_click() {
