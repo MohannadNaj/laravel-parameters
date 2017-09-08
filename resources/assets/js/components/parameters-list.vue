@@ -41,6 +41,10 @@
 
 <script>
 
+import parameter from './parameter'
+import addParameter from './add-parameter'
+import addcategory from './add-category'
+
 export default {
   data() {
     return {
@@ -51,7 +55,11 @@ export default {
       parameters: []
     }
   },
-
+  components: {
+    'parameter': parameter ,
+    'add-parameter': addParameter,
+    'add-category' : addcategory,
+  },
   mounted() {
     this.registerEvents()
   },

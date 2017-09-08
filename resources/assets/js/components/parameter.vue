@@ -56,6 +56,13 @@
 
 <script>
 
+import parameterMeta    from './parameter-meta'
+import editorBoolean    from './editors/boolean'
+import editorFile       from './editors/file'
+import editorInteger    from './editors/integer'
+import editorText       from './editors/text'
+import editorTextfield  from './editors/textfield'
+
 export default {
   data() {
     return {
@@ -65,6 +72,14 @@ export default {
       childComponent: null,
       originalParameter: window.Laravel.parametersColumns
     }
+  },
+  components: {
+    'parameter-meta': parameterMeta,
+    'editor-boolean' : editorBoolean,
+    'editor-file' : editorFile,
+    'editor-integer' : editorInteger,
+    'editor-text' : editorText,
+    'editor-textfield' : editorTextfield
   },
   props: {
     parameter: {

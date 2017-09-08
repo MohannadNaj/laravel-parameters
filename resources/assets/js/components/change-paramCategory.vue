@@ -20,6 +20,7 @@
 		</template>
 
 		<script>
+import addCategory from './add-category'
 
 export default {
   data() {
@@ -30,6 +31,9 @@ export default {
     }
   },
   props: {},
+  components: {
+    'add-category': addCategory
+  },
   methods: {
     init() {
       this.registerEvents()

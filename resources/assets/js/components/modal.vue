@@ -27,6 +27,10 @@
   </div>
 </template>
 <script>
+import removeParameter from './remove-parameter'
+import changeParamCategory from './change-paramCategory'
+import addParameter from './add-parameter'
+import addcategory from './add-category'
 
 export default {
   data() {
@@ -45,6 +49,12 @@ export default {
       data_html: '',
       data_showFooter: true
     }
+  },
+  components: {
+    'remove-parameter': removeParameter ,
+    'change-paramCategory': changeParamCategory ,
+    'add-parameter' : addParameter,
+    'add-category' : addcategory,
   },
   mounted() {
     this.mapPropsToData()
