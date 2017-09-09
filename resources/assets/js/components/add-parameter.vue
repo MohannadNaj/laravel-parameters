@@ -84,7 +84,6 @@ export default {
       this.$nextTick(x => {
         this.mapPropsToData()
       })
-      console.log()
     }
   },
   methods: {
