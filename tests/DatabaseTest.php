@@ -1,4 +1,5 @@
 <?php
+
 namespace Parameter\Tests;
 
 trait DatabaseTest
@@ -15,6 +16,7 @@ trait DatabaseTest
         $this->resetDatabase();
 
         $this->createParametersTable();
+        $this->withFactories(__DIR__.'/_database');
     }
 
     protected function resetDatabase()

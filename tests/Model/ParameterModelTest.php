@@ -5,12 +5,16 @@ namespace Parameter\Tests\Model;
 use Mockery;
 use StdClass;
 use Parameter\Parameter;
+use Faker\Factory as Faker;
 use Parameter\Tests\ModelTest;
 use Parameter\ParameterObserver;
 
 class ParameterModelTest extends ModelTest
 {
 	public function test_parameter_contains_columns_for_frontend() {
+		dd(factory(Parameter::class,2)->make(['type'=>'boolean','file'=>'eeee.exe']));//dd(Faker::create());
+		
+		dd(true);
 		$columns = Parameter::getColumns();
 		$essentialColumns = [
 			'id', 'name', 'label', 'type','meta',
