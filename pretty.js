@@ -26,7 +26,7 @@ glob(files, function(er, files) {
     let result
 
     if (file.endsWith('vue')) {
-      result = jsBeautify(source, { indent_size: 2 })
+      result = jsBeautify(source)
       result = parser(result, {
         scriptCallback: function(code) {
           return `\n\n${prettier.format(code, formatOptions)}\n`
