@@ -16,6 +16,7 @@ const glob = require('glob')
 const prettier = require('prettier')
 const fs = require('fs')
 const parser = require('html-script-hook')
+const jsBeautify = require('js-beautify').js_beautify
 
 const files = process.argv[2] || 'resources/assets/js/**/*.{vue,js}'
 
@@ -25,7 +26,8 @@ glob(files, function(er, files) {
     let result
 
     if (file.endsWith('vue')) {
-      result = parser(source, {
+      result = jsBeautify(source, { indent_size: 2 })
+      result = parser(result, {
         scriptCallback: function(code) {
           return `\n\n${prettier.format(code, formatOptions)}\n`
         },
