@@ -1,36 +1,26 @@
 <template>
-  	<div class="row">
-  		<div class="col-sm-3">
-  			<div class="list-group">
-	            <parameters-category
-		            :ref="category.target + '_parameter_category'"
-		            :key="category.target + '_cat'"
-		            :title="category.title"
-		            :parameters="category.parameters"
-		            :is-categories-group="category.isCategoriesGroup"
-		            :blocked="category.blocked"
-		            :target="category.target"
-		            v-if="shouldShowCategory(category)"
-		            :related-parameter="category.relatedParameter"
-		            v-for="category in categories"
-				></parameters-category>
-				<div class="list-group-item">
-                    <button @click="toggleEditCategories" type="button" class="btn btn-default btn-sm">
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="list-group">
+        <parameters-category :ref="category.target + '_parameter_category'" :key="category.target + '_cat'" :title="category.title" :parameters="category.parameters" :is-categories-group="category.isCategoriesGroup" :blocked="category.blocked" :target="category.target"
+          v-if="shouldShowCategory(category)" :related-parameter="category.relatedParameter" v-for="category in categories"></parameters-category>
+        <div class="list-group-item">
+          <button @click="toggleEditCategories" type="button" class="btn btn-default btn-sm">
                     	Edit Categories
                         <i class="fa fa-pencil" v-show="editCategoriesMode"></i>
                     </button>
-				</div>
-				<div class="note-container" v-if="categories.length <= 1">
-					No Categories Found, Start by Adding one
-					<add-category></add-category>
-				</div>
+        </div>
+        <div class="note-container" v-if="categories.length <= 1">
+          No Categories Found, Start by Adding one
+          <add-category></add-category>
         </div>
       </div>
-      <div class="col-sm-9">
-  			<parameters-list ref="parameters"></parameters-list>
-  	  </div>
     </div>
-	
+    <div class="col-sm-9">
+      <parameters-list ref="parameters"></parameters-list>
+    </div>
+  </div>
+
 </template>
 
 <script>

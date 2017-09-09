@@ -1,12 +1,12 @@
 <template>
-	<div>
-		<div v-if="previewMode">
-			<span style="background: #eee;">{{ paramValue }}</span>
-		</div>
-		<div v-if="!previewMode">
-			<input type="number" class="form-control editor" v-model="paramValue">
-		</div>
-	</div>
+  <div>
+    <div v-if="previewMode">
+      <span style="background: #eee;">{{ paramValue }}</span>
+    </div>
+    <div v-if="!previewMode">
+      <input type="number" class="form-control editor" v-model="paramValue">
+    </div>
+  </div>
 </template>
 
 <script>

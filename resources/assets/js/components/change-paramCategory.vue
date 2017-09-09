@@ -1,25 +1,20 @@
-		<style scoped>
-
-		</style>
-		<template>
-			<div class="">
-				<div class="list-group">
-					<button type="button"
-						v-for="category in categories"
-						v-if="!category.isCategoriesGroup"
-						@click="choseCategory(category)"
-						:class="['list-group-item', paramBelongsToCategory(category) ? 'list-group-item-success':'']">
+<style scoped>
+</style>
+<template>
+  <div class="">
+    <div class="list-group">
+      <button type="button" v-for="category in categories" v-if="!category.isCategoriesGroup" @click="choseCategory(category)" :class="['list-group-item', paramBelongsToCategory(category) ? 'list-group-item-success':'']">
 						<i :class="['fa', paramBelongsToCategory(category) ? 'fa-check-square-o': 'fa-square-o']"></i>
 						{{category.title}}
 					</button>
-					<div class="list-group-item">
-						<add-category></add-category>
-					</div>
-				</div>
-			</div>
-		</template>
+      <div class="list-group-item">
+        <add-category></add-category>
+      </div>
+    </div>
+  </div>
+</template>
 
-		<script>
+<script>
 
 import addCategory from './add-category'
 

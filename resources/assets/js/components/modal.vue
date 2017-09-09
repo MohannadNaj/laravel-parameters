@@ -61,14 +61,28 @@ export default {
     this.mapPropsToData()
   },
   props: {
-    body: { default: '' },
-    close: { default: 'Close' },
-    id: { default: '' },
-    save: { default: 'Save' },
-    title: { default: '' },
+    body: {
+      default: ''
+    },
+    close: {
+      default: 'Close'
+    },
+    id: {
+      default: ''
+    },
+    save: {
+      default: 'Save'
+    },
+    title: {
+      default: ''
+    },
     callerData: {},
-    html: { default: '' },
-    showFooter: { default: true }
+    html: {
+      default: ''
+    },
+    showFooter: {
+      default: true
+    }
   },
   methods: {
     savedata_click() {

@@ -1,12 +1,12 @@
 <template>
-	<div>
-		<div v-if="previewMode">
-			{{ parseText(this.paramValue) }}
-		</div>
-		<div v-show="!previewMode">
-			<textarea :id="tinymceId" v-model="paramValue" class="editor form-control"></textarea>
-		</div>
-	</div>
+  <div>
+    <div v-if="previewMode">
+      {{ parseText(this.paramValue) }}
+    </div>
+    <div v-show="!previewMode">
+      <textarea :id="tinymceId" v-model="paramValue" class="editor form-control"></textarea>
+    </div>
+  </div>
 </template>
 
 <script>

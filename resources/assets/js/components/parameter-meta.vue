@@ -1,18 +1,18 @@
 <template>
-    <div class="row">
-        <div class="col-xs-4">
-            <i class="glyphicon glyphicon-calendar"></i>
-            <span class="meta-label">
+  <div class="row">
+    <div class="col-xs-4">
+      <i class="glyphicon glyphicon-calendar"></i>
+      <span class="meta-label">
                 updated 
                 {{parameter.humanizedUpdatedAt}}
             </span>
-        </div>
-        <div class="col-xs-4">
-            <button type="button" @click="showLogs" class="btn btn-default">
+    </div>
+    <div class="col-xs-4">
+      <button type="button" @click="showLogs" class="btn btn-default">
                 <i class="fa fa-book"></i>
                     Revisions: {{countLogs}}
             </button>
-            <span v-if="hasLogs">
+      <span v-if="hasLogs">
                 <div class="logs-list hidden">
                     <ul class="list-group break-word">
                         <li v-for="log in reverseLogs" class="list-group-item">
@@ -22,22 +22,22 @@
                                 <div class="col-xs-6"><b>Old:</b>{{parseValue(log.old)}}</div>
                                 <div class="col-xs-6"><b>New:</b>{{parseValue(log.new)}}</div>
                                 <div class="col-xs-12"><b>Diff:</b><span v-html="getDiff(log)"></span></div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </span>
-        </div>
-        <div class="col-xs-4">
-            <button type="button" @click="changeCategory" class="btn btn-default">
+  </div>
+  </li>
+  </ul>
+  </div>
+  </span>
+  </div>
+  <div class="col-xs-4">
+    <button type="button" @click="changeCategory" class="btn btn-default">
                 Category
                 <i class="fa fa-bookmark"></i>
             </button>
-        </div>
-        <div class="col-xs-4">
-            <input class="form-control" onclick="this.select();" readonly="" v-on:input="preventChange" :value="getPHPCode">
-        </div>
-    </div>
+  </div>
+  <div class="col-xs-4">
+    <input class="form-control" onclick="this.select();" readonly="" v-on:input="preventChange" :value="getPHPCode">
+  </div>
+  </div>
 </template>
 
 <script>

@@ -1,21 +1,22 @@
 <style scoped>
-	.fa {
-		font-size: 50px;
-	}
-	.uploaded-img {
-		max-width: 100%
-	}
+.fa {
+  font-size: 50px;
+}
+
+.uploaded-img {
+  max-width: 100%
+}
 </style>
 <template>
-	<div>
-		<div>
-			<img class="uploaded-img" v-if="isImage" :src="getImageSrc()" />
-			<div v-else>
-				<i class="fa fa-file-o"></i>
-				<a :href="getImageSrc()">{{paramValue}}</a>
-			</div>
-		</div>
-	</div>
+  <div>
+    <div>
+      <img class="uploaded-img" v-if="isImage" :src="getImageSrc()" />
+      <div v-else>
+        <i class="fa fa-file-o"></i>
+        <a :href="getImageSrc()">{{paramValue}}</a>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -45,7 +46,9 @@ export default {
         this.dropzone_modal.handlerInstance = this
         this.dropzone_modal.modal.modal('show')
         this.dropzone_modal.header_msg = this.parameter.label
-        this.dropzone_modal.additionalParams = { parameter: this.parameter.id }
+        this.dropzone_modal.additionalParams = {
+          parameter: this.parameter.id
+        }
       })
     })
   },

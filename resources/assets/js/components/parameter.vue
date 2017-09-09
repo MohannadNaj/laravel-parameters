@@ -1,57 +1,59 @@
 <style>
-    .meta {
-        background: #ccc;
-        margin-top: 5px;
-    }
-    .meta-label {
-        color: #626262;
-    }
-    .panel-title .btn {
-        margin-top: -6px;
-    }
+.meta {
+  background: #ccc;
+  margin-top: 5px;
+}
+
+.meta-label {
+  color: #626262;
+}
+
+.panel-title .btn {
+  margin-top: -6px;
+}
 </style>
 <template>
-    <div>
-        <div :class="['panel',markIfDirty,'no-margin']">
-            <div class="panel-heading">
-                <h3 class="panel-title">
-                    <div>
-                        {{originalParameter.label}}
-                        <span class="pull-right">
+  <div>
+    <div :class="['panel',markIfDirty,'no-margin']">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <div>
+            {{originalParameter.label}}
+            <span class="pull-right">
                             <span v-if="isDirty && previewMode" class="label label-warning">
                                 Unsaved Changes!
                             </span>
-                            <button v-if="isDirty && !previewMode" @click="undoChanges" type="button" class="btn btn-default btn-sm">
+            <button v-if="isDirty && !previewMode" @click="undoChanges" type="button" class="btn btn-default btn-sm">
                                 <i class="fa fa-undo"></i>
                             </button>
-                            <button v-if="isDirty && !previewMode" @click="submit" type="button" class="btn btn-default btn-sm">
+            <button v-if="isDirty && !previewMode" @click="submit" type="button" class="btn btn-default btn-sm">
                                 <i class="fa fa-floppy-o"></i>
                             </button>
-                            <span class="badge">{{originalParameter.type}}</span>
-                            <button @click="togglePreview" type="button" class="btn btn-default btn-sm">
+            <span class="badge">{{originalParameter.type}}</span>
+            <button @click="togglePreview" type="button" class="btn btn-default btn-sm">
                                 <i class="fa fa-pencil"></i>
                             </button>
-                            <button @click="removeParameter" type="button" class="btn btn-danger btn-sm">
+            <button @click="removeParameter" type="button" class="btn btn-danger btn-sm">
                                 <i class="fa fa-times-circle"></i>
                             </button>
-                        </span>
-                        &nbsp;
-                    </div>
-                </h3>
-            </div>
-            <div class="panel-body">
-                <form v-if="originalParameter.type != null" v-on:submit.prevent="submit">
-                    <component :parameter="originalParameter" :is="getEditorComponentName" :ref="getEditorComponentRef"></component>
-                    <ul class="list-group" v-show="errors.length > 0">
-                        <li class="list-group-item list-group-item-danger" v-for="error in errors" v-html="parseError(error)"></li>
-                    </ul>
-                </form>
-            </div>
-            <div class="panel-footer">
-                <parameter-meta :parameter.sync="originalParameter"></parameter-meta>
-            </div>
-        </div>
+            </span>
+            &nbsp;
+          </div>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <form v-if="originalParameter.type != null" v-on:submit.prevent="submit">
+          <component :parameter="originalParameter" :is="getEditorComponentName" :ref="getEditorComponentRef"></component>
+          <ul class="list-group" v-show="errors.length > 0">
+            <li class="list-group-item list-group-item-danger" v-for="error in errors" v-html="parseError(error)"></li>
+          </ul>
+        </form>
+      </div>
+      <div class="panel-footer">
+        <parameter-meta :parameter.sync="originalParameter"></parameter-meta>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>

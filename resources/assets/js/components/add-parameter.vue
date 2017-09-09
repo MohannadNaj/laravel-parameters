@@ -1,52 +1,51 @@
-		<style scoped>
-
-		</style>
-		<template>
-			<div>
-				<form class="form-horizontal" role="form" v-on:submit.prevent="submit">
-					<div class="form-group">
-						<label class="control-label col-sm-2">Name</label>
-						<div class="col-sm-4">
-							<input type="text" class="form-control" v-model="data.name" placeholder="parameter_name">
-							<div v-if="showErrors" class="help-block">
-								<ul>
-									<li v-for="message in errors.name_errors">{{message}}</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div class="form-group ">
-						<label class="control-label col-sm-2">Label</label>
-						<div class="col-sm-4">
-							<input type="text" class="form-control" v-model="data.label" placeholder="parameter_label">
-							<div v-if="showErrors" class="help-block">
-								<ul>
-									<li v-for="message in errors.label_errors">{{message}}</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div class="form-group ">
-						<label class="control-label col-sm-2">
+<style scoped>
+</style>
+<template>
+  <div>
+    <form class="form-horizontal" role="form" v-on:submit.prevent="submit">
+      <div class="form-group">
+        <label class="control-label col-sm-2">Name</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" v-model="data.name" placeholder="parameter_name">
+          <div v-if="showErrors" class="help-block">
+            <ul>
+              <li v-for="message in errors.name_errors">{{message}}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="form-group ">
+        <label class="control-label col-sm-2">Label</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" v-model="data.label" placeholder="parameter_label">
+          <div v-if="showErrors" class="help-block">
+            <ul>
+              <li v-for="message in errors.label_errors">{{message}}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="form-group ">
+        <label class="control-label col-sm-2">
 							Type
 						</label>
-						<div class="col-sm-4">
-							<select v-model="data.type" class="form-control">
+        <div class="col-sm-4">
+          <select v-model="data.type" class="form-control">
 								<option v-for="(type,index) in parametersTypes" v-text="type" :value="type"></option>
 							</select>
-							<div v-if="showErrors" class="help-block">
-								<ul>
-									<li v-for="message in errors.type_errors">{{message}}</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<button type="submit" class="col-sm-offset-1 btn btn-primary">Submit</button>
-				</form>
-			</div>
-		</template>
+          <div v-if="showErrors" class="help-block">
+            <ul>
+              <li v-for="message in errors.type_errors">{{message}}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="col-sm-offset-1 btn btn-primary">Submit</button>
+    </form>
+  </div>
+</template>
 
-		<script>
+<script>
 
 export default {
   data() {
@@ -95,7 +94,9 @@ export default {
     prepareRequestData() {
       if (this.isCategoriesGroup) return this.data
 
-      return _.extend(this.data, { category_id: this.data_category_id })
+      return _.extend(this.data, {
+        category_id: this.data_category_id
+      })
     },
     submit() {
       this.$http

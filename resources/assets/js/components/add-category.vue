@@ -1,19 +1,18 @@
-		<style scoped>
+<style scoped>
+</style>
+<template>
+  <div>
+    <form method="POST" role="form" v-on:submit.prevent="createCategory">
+      <div class="form-group">
+        <label>New Category?</label>
+        <input type="text" class="form-control" v-model="newCategoryName">
+      </div>
+      <button type="submit" :disabled="!valideCategoryName" class="btn btn-primary">Add+</button>
+    </form>
+  </div>
+</template>
 
-		</style>
-		<template>
-			<div>
-				<form method="POST" role="form" v-on:submit.prevent="createCategory">
-					<div class="form-group">
-						<label>New Category?</label>
-						<input type="text" class="form-control" v-model="newCategoryName">
-					</div>
-					<button type="submit" :disabled="!valideCategoryName" class="btn btn-primary">Add+</button>
-				</form>
-			</div>
-		</template>
-
-		<script>
+<script>
 
 export default {
   data() {

@@ -1,42 +1,38 @@
 <style scoped>
-    .meta-list-group-item {
-        padding: 0px;
-        box-shadow: 0px 1px 2px black;
-        margin-bottom: 20px;
-    }
+.meta-list-group-item {
+  padding: 0px;
+  box-shadow: 0px 1px 2px black;
+  margin-bottom: 20px;
+}
 </style>
 <template>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div v-if="parameters.length > 0" class="panel panel-default">
-                    <div class="panel-heading">
-                        {{ title }}
-                        <span class="pull-right">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div v-if="parameters.length > 0" class="panel panel-default">
+          <div class="panel-heading">
+            {{ title }}
+            <span class="pull-right">
                             <span class="badge">{{ parameters.length }}</span>
-                            <button type="button" class="btn btn-success btn-sm" @click="add">+</button>
-                        </span>
-                    </div>
-                    <div class="panel-body">
-                        <ul class="list-group">
-                            <parameter class="list-group-item meta-list-group-item"
-                            v-for="parameter in parameters"
-                            :parameter="parameter"
-                            :ref="'parameter'+parameter.id"
-                            :key="parameter.id"></parameter>
-                        </ul>
-                    </div>
-                </div>
-                <div class="note-container" v-if="parameters.length == 0">
-                    <add-category v-if="isCategoriesGroup"></add-category>
-                    <div v-if="!isCategoriesGroup">
-                        No Parameters Added, start by adding one
-                        <add-parameter :is-categories-group="isCategoriesGroup" :category_id='category_id'></add-parameter>
-                    </div>
-                </div>
-            </div>
+            <button type="button" class="btn btn-success btn-sm" @click="add">+</button>
+            </span>
+          </div>
+          <div class="panel-body">
+            <ul class="list-group">
+              <parameter class="list-group-item meta-list-group-item" v-for="parameter in parameters" :parameter="parameter" :ref="'parameter'+parameter.id" :key="parameter.id"></parameter>
+            </ul>
+          </div>
         </div>
+        <div class="note-container" v-if="parameters.length == 0">
+          <add-category v-if="isCategoriesGroup"></add-category>
+          <div v-if="!isCategoriesGroup">
+            No Parameters Added, start by adding one
+            <add-parameter :is-categories-group="isCategoriesGroup" :category_id='category_id'></add-parameter>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
