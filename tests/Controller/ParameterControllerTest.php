@@ -6,13 +6,13 @@ use Mockery;
 use StdClass;
 use Parameter\Tests\User;
 use Illuminate\Http\UploadedFile;
-use Parameter\Tests\ControllerTest;
+use Parameter\Tests\ControllerTestCase;
 use Illuminate\Support\Facades\Storage;
 
-class ParameterControllerTest extends ControllerTest
+class ParameterControllerTestCase extends ControllerTestCase
 {
     private $uploadedFilePath;
-
+ 
     public function test_index()
     {
         $response = $this->actingAs(new User())->get('/parameters');

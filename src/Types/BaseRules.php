@@ -30,7 +30,7 @@ abstract class BaseRules
             'name'=>'unique:parameters|required',
             'label' => 'required|max:255',
             'category_id' => 'integer|nullable',
-            'type' => 'required|in:' . implode(ParametersManager::$supportedTypes,','),
+            'type' => 'required|in:' . implode(ParametersManager::getSupportedTypes(),','),
         ];
     }
 

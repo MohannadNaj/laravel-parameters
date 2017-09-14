@@ -6,38 +6,28 @@ use Mockery;
 use StdClass;
 use Parameter\Parameter;
 use Faker\Factory as Faker;
-use Parameter\Tests\ModelTest;
+use Parameter\Tests\ModelTestCase;
 use Parameter\ParameterObserver;
 
-class ParameterModelTest extends ModelTest
+class ParameterModelTestCase extends ModelTestCase
 {
 	public function test_parameter_contains_columns_for_frontend() {
-		dd(factory(Parameter::class,2)->make(['type'=>'boolean','file'=>'eeee.exe']));//dd(Faker::create());
-		
-		dd(true);
 		$columns = Parameter::getColumns();
 		$essentialColumns = [
 			'id', 'name', 'label', 'type','meta',
 			'is_category', 'category_id', 'value'];
 		$this->assertArrayContains($essentialColumns, $columns);
-	}
+	} 
 
 	public function test_values_casts_properly() {
-		Parameter::create(
-			['name'=>'param_1','type'=>'boolean','label'=>'hmmm','value'=>true]
-		);
 
-		Parameter::create(
-			['name'=>'param_2','type'=>'integer','label'=>'hmmm','value'=>2]
-		);
+		factory(Parameter::class)->create(['type'=>'boolean', 'value'=>true]);
 
-		Parameter::create(
-			['name'=>'param_3','type'=>'textfield','label'=>'hmmm','value'=>3]
-		);
+		factory(Parameter::class)->create(['type'=>'integer', 'value'=>2]);
 
-		Parameter::create(
-			['name'=>'param_4','type'=>'text','label'=>'hmmm','value'=>4]
-		);
+		factory(Parameter::class)->create(['type'=>'textfield', 'value'=>3]);
+
+		factory(Parameter::class)->create(['type'=>'text', 'value'=>4]);
 
 		$this->assertSame(true, param(1) );
 
@@ -69,13 +59,28 @@ class ParameterModelTest extends ModelTest
 	        return $observer;
 	    });
 
-		$parameter = Parameter::create(['name'=>'param_1','type'=>'boolean','label'=>'hmmm','value'=>true]);
+		$parameter = factory(Parameter::class)->create(['type'=>'boolean', 'value'=>true]);
 
 		$parameter->value = false;
 		$parameter->save();
 
 		$parameter->delete();
+	}
 
-//		$this->assertEquals(0 , param()->count() );
+	public function test_parameters_signleton_is_up2date()
+	{
+		factory(Parameter::class, 5)->create();
+
+		$this->assertEquals(5 , param()->count() );
+
+		param()->random()->delete();
+		param()->random()->delete();
+
+		$this->assertEquals(3 , param()->count() );
+	
+		$parameter = factory(Parameter::class)->create(['type'=>'integer']);
+		dd(param()->last()->value);
+		$parameter->value = 55;
+
 	}
 }

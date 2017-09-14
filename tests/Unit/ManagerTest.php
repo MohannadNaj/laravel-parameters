@@ -4,14 +4,14 @@ namespace Parameter\Tests\Unit;
 
 use Mockery;
 use StdClass;
-use Parameter\Tests\UnitTest;
+use Parameter\Tests\UnitTestCase;
 use Parameter\ParametersManager;
 
-class ManagerTest extends UnitTest
+class ManagerTest extends UnitTestCase
 {
 	public function test_static_arrays_visible()
 	{
-		$this->assertArrayContains(['textfield','boolean'], ParametersManager::$supportedTypes);
+		$this->assertArrayContains(['textfield','boolean'], ParametersManager::getSupportedTypes() );
 		$this->assertArrayContains(['name'], ParametersManager::$addCategoryRequestFields);
 		$this->assertArrayContains(['name'], ParametersManager::$createParameterFields);
 	}

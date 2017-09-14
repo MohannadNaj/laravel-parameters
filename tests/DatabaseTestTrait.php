@@ -2,7 +2,7 @@
 
 namespace Parameter\Tests;
 
-trait DatabaseTest
+trait DatabaseTestTrait
 {
     public function setUp()
     {
@@ -16,7 +16,7 @@ trait DatabaseTest
         $this->resetDatabase();
 
         $this->createParametersTable();
-        $this->withFactories(__DIR__.'/_database');
+        $this->withFactories(__DIR__.'/_database/factories/');
     }
 
     protected function resetDatabase()
@@ -26,7 +26,7 @@ trait DatabaseTest
 
     protected function createParametersTable()
     {
-        include_once '__DIR__'.'/../src/database/migrations/2017_06_20_063902_create_parameters_table.php';
+        include_once __DIR__.'/../src/database/migrations/2017_06_20_063902_create_parameters_table.php';
 
         (new \CreateParametersTable())->up();
     }

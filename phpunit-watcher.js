@@ -34,12 +34,12 @@ let debounce = (func, wait, immediate) => {
 };
 
 let handleOutput = (error, stdout, stderr) => {
-	    if (error) {
-	        console.error(`exec error: ${error}`);
-	    }
-/*	    console.log(`${stdout}`);
-	    console.log(`${stderr}`);*/
-	};
+      if (error) {
+          console.error(`exec error: ${error}`);
+      }
+/*      console.log(`${stdout}`);
+      console.log(`${stderr}`);*/
+  };
  
  let eventInfoStructure = (path) => { return [
     ['\x1b[92m','____________________'],
@@ -53,6 +53,7 @@ let handleOutput = (error, stdout, stderr) => {
 };
 
 var countFileChanges = [];
+var lastChangedFile = "";
 
 let eventInfo = (path) => {
     eventInfoStructure(path).forEach((line) => {
@@ -68,6 +69,10 @@ let getFilters = (_path) => {
   if(uniqueFileChanges.length != 1 || _path.toLowerCase().indexOf('tests') == -1)
     return '';
 
+  //console.log(_path, lastChangedFile);
+  if(_path.substr(-8) != "Test.php" && lastChangedFile.substr(-8) == "Test.php")
+    _path = lastChangedFile;
+
   var changedFile = path.parse(_path).name;
   var phpunitFilter = ` --filter ${changedFile}`;
 
@@ -75,16 +80,35 @@ let getFilters = (_path) => {
   return phpunitFilter;
 };
 
+let clearToGo = true;
+let queue = [];
+
+let runNext = (e) => {
+
+};
+
 let execute = debounce((path) => {
   console.log('running phpunit..');
+
+  clearToGo = false;
+
   var execProcess = exec(cmd + getFilters(path) , handleOutput);
+
+  execProcess.on('exit', (x) => {clearToGo = true;});
+
   execProcess.stdout.pipe(process.stdout);
+
   countFileChanges = [];
+
 }, 1000);
 
 let handleChange = (_path) => {
     eventInfo(_path);
     countFileChanges.push(_path);
+//    console.log(_path.substr(-8));
+    if(_path.substr(-8) == "Test.php")
+      lastChangedFile = _path;
+
     execute(_path);
 };
 

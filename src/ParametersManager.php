@@ -13,6 +13,10 @@ class ParametersManager {
 
     public static $createParameterFields = ['name','type','label','category_id'];
 
+    public static function getSupportedTypes() {
+        return static::$supportedTypes;
+    }
+
     public static function getCategoryDefaults() {
 
         return ['type' => 'textfield',
@@ -29,7 +33,7 @@ class ParametersManager {
             'images_dir' => 'storage',
             'base_url' => url('/') . '/',
             'parametersColumns' =>  array_fill_keys($parametersColumns, null ),
-            'parametersTypes'=> static::$supportedTypes,
+            'parametersTypes'=> static::getSupportedTypes(),
         ];
     }
     private static function getTypesInterface($type = null)

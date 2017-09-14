@@ -8,7 +8,7 @@ use Orchestra\Testbench\BrowserKit\TestCase as OrchestraTestCase;
 
 use Mockery;
 
-class TestCase extends OrchestraTestCase
+abstract class TestCase extends OrchestraTestCase
 {
     use TestHelper;
 
@@ -47,6 +47,6 @@ class TestCase extends OrchestraTestCase
 
     public function getTempDirectory()
     {
-        return __DIR__.'/_temp';
+        return __DIR__.'/_database/temp';
     }
 }
