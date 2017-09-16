@@ -18,6 +18,13 @@ trait ParametersModelTrait {
 		$parameterBuilder->build();
 	}
 
+	public function buildMetaValue()
+	{
+		$parameterBuilderClassName = ParametersManager::BuilderClassPath($this->type);
+		$parameterBuilder = new $parameterBuilderClassName($this);
+		$parameterBuilder->buildMeta();
+	}
+
 	public function getValueAttribute($value)
 	{
 		$parameterRetrieverClassName = ParametersManager::RetrieverClassPath($this->type);
