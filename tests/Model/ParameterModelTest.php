@@ -6,8 +6,9 @@ use Mockery;
 use StdClass;
 use Parameter\Parameter;
 use Faker\Factory as Faker;
-use Parameter\Tests\ModelTestCase;
 use Parameter\ParameterObserver;
+use Parameter\ParametersManager;
+use Parameter\Tests\ModelTestCase;
 
 class ParameterModelTestCase extends ModelTestCase
 {
@@ -74,7 +75,11 @@ class ParameterModelTestCase extends ModelTestCase
         $this->assertEquals(0, param()->count());
         
         // on add
-        factory(Parameter::class, 5)->create();
+    	$types = collect(ParametersManager::getSupportedTypes());
+
+	    for ($i=0; $i < 5; $i++) { 
+	        factory(Parameter::class)->create(['type'=>$types->random()]);
+	    }
 
         $this->assertEquals(5, param()->count());
 

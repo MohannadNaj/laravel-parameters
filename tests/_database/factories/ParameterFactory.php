@@ -2,6 +2,7 @@
 
 use Parameter\Parameter;
 use Parameter\ParametersManager;
+use Illuminate\Http\UploadedFile;
 
 $factory->define(
 	Parameter::class,
@@ -38,7 +39,7 @@ $factory->define(
 	 			$data['value'] = $faker->realText;
 	 			break;
  			case 'file':
-	 			$data['value'] = $faker->image();
+	 			$data['value'] = UploadedFile::fake()->image( $faker->slug(2). '.jpg');
 	 			break;
  			case 'integer':
 	 			$data['value'] = $faker->randomNumber;
