@@ -8,7 +8,6 @@ var files = [
               watched: true, included: false, served: false, served: false},
           ];
 
-
 var OLD_NODE_ENV = process.env.NODE_ENV;
 process.env.NODE_ENV = 'temp-require'
 var webpackConfig = require('./node_modules/laravel-mix/setup/webpack.config.js');
@@ -18,11 +17,24 @@ process.env.NODE_ENV = OLD_NODE_ENV;
 
 // karma.conf.js
 module.exports = function (config) {
+  var browsers =  ['PhantomJS'];
+
+  if(process.env.NODE_ENV !== "testing")
+    browsers.push('Chrome_custom');
+
   config.set({
-    browsers: ['PhantomJS'],
+    browsers: browsers,
+    customLaunchers: {
+      Chrome_custom: {
+        base: 'Chrome',
+        flags: ['--disable-gpu']
+      }
+    },
+
     frameworks: ['jasmine'],
     // this is the entry file for all our tests.
     files: files,
+
     // we will pass the entry file to webpack for bundling.
     preprocessors: {
       'specs/index.js': ['webpack']
@@ -35,6 +47,7 @@ module.exports = function (config) {
     },
     colors: true,
     reporters: ['spec'],
+
     singleRun: process.env.NODE_ENV !== 'testing'
   })
 }

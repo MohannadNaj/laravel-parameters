@@ -62,6 +62,12 @@ let eventInfo = (path) => {
 };
 
 let getFilters = (_path) => {
+
+  let duplicates = countFileChanges.filter(i => countFileChanges.filter(ii => ii === i).length > 2)
+
+  if(duplicates[0] != undefined)
+    return '';
+
   var uniqueFileChanges = countFileChanges.filter((elem, pos) => {
     return countFileChanges.indexOf(elem) == pos;
   });

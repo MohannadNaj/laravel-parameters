@@ -31,10 +31,11 @@ describe('Modal', () => {
       }
     }).$mount()
 
+
     vm.$nextTick(() => {
       expect(vm.$el.querySelector('.modal-title').textContent)
       .toBe('Title!')
-      
+
       expect(vm.$el.querySelector('.btn.btn-primary').textContent)
       .toBe('Save Message!')
 
@@ -42,5 +43,31 @@ describe('Modal', () => {
       .toBe('Lorem!')
     })
   })
+
+  it('open modal', () => {
+    let Ctor = Vue.extend(Modal)
+    let vm = new Ctor({
+      propsData: {
+        title: 'Title!',
+        save: 'Some Text Here',
+        html: '<p class="save-paragraph">Lorem!</p>',
+        id: 'modal_id'
+      }
+    }).$mount()
+
+//    let vm = new Vue(Modal).$mount()
+
+    vm.$nextTick(() => {
+      //console.log($(vm.$el))
+      
+      vm.showModal()
+      vm.$nextTick(() => {
+        //console.log($(vm.$el));
+        var modalEl = $(vm.$el).find('#' + vm.data_id)
+        
+      })
+    })
+  })
+
 })
 
