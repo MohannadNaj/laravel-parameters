@@ -1,6 +1,11 @@
 require('./core')
 require('./bootstrap')
 
+Vue.component('dropzone-upload', require('./components/dropzone-upload.vue'))
+Vue.component('modal', require('./components/modal.vue'))
+
+Vue.component('parameters', require('./components/parameters.vue'))
+
 const app = new Vue({
   el: '#app',
   mounted() {

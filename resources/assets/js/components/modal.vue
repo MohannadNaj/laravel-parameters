@@ -59,6 +59,7 @@ export default {
   },
   mounted() {
     this.mapPropsToData()
+    this.$nextTick(this.registerEvents)
   },
   props: {
     body: {
@@ -68,7 +69,7 @@ export default {
       default: 'Close'
     },
     id: {
-      default: ''
+      default: 'modal_id'
     },
     save: {
       default: 'Save'
@@ -85,6 +86,14 @@ export default {
     }
   },
   methods: {
+    registerEvents() {
+      var modalElement = this.getModalElement()
+      modalElement.on('show.bs.modal', () => { EventBus.fire('modal.show.bs.modal', modalElement) })
+      modalElement.on('shown.bs.modal', () => { EventBus.fire('modal.shown.bs.modal', modalElement) })
+      modalElement.on('hide.bs.modal', () => { EventBus.fire('modal.hide.bs.modal', modalElement) })
+      modalElement.on('hidden.bs.modal', () => { EventBus.fire('modal.hidden.bs.modal', modalElement) })
+    },
+
     savedata_click() {
       this.$parent.$emit('modal-save', this.callerData)
       $(window).trigger('modal-save', this.callerData)
@@ -106,11 +115,17 @@ export default {
 
       return this
     },
+    getModalElementId() {
+      return '#' + this.data_id;
+    },
+    getModalElement() {
+      return $(this.$el).find(this.getModalElementId());
+    },
     showModal() {
-      $('#' + this.data_id).modal('show')
+      this.getModalElement().modal('show')
     },
     hideModal() {
-      $('#' + this.data_id).modal('hide')
+      this.getModalElement().modal('hide')
     },
     showComponent(componentTag = null, title = null) {
       this.cleanContent()
@@ -130,7 +145,7 @@ export default {
       this.data_showComponent = false
     },
     hideComponentOnClose() {
-      $('#' + this.data_id).one('hide.bs.modal', y => {
+      this.getModalElement().one('hide.bs.modal', y => {
         this.hideComponent()
       })
     },

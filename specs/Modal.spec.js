@@ -1,9 +1,6 @@
-import Vue from 'vue';
-
-import Modal from '../resources/assets/js/components/Modal';
+import Modal from '../resources/assets/js/components/Modal'
 
 describe('Modal', () => {
-
   it('has a mounted hook', () => {
     expect(typeof Modal.mounted).toBe('function')
   })
@@ -17,7 +14,7 @@ describe('Modal', () => {
 
   it('correctly sets the message when mounted', () => {
     let vm = new Vue(Modal).$mount()
-    vm.data_body = "heeey!";
+    vm.data_body = "heeey!"
     expect(vm.data_body).toBe('heeey!')
   })
 
@@ -30,7 +27,6 @@ describe('Modal', () => {
         html: '<p class="save-paragraph">Lorem!</p>'
       }
     }).$mount()
-
 
     vm.$nextTick(() => {
       expect(vm.$el.querySelector('.modal-title').textContent)
@@ -49,25 +45,31 @@ describe('Modal', () => {
     let vm = new Ctor({
       propsData: {
         title: 'Title!',
-        save: 'Some Text Here',
-        html: '<p class="save-paragraph">Lorem!</p>',
-        id: 'modal_id'
+        save: 'Save Message!',
+        html: '<p class="save-paragraph">Lorem!</p>'
       }
     }).$mount()
+    var showEventIsFired = false;
 
-//    let vm = new Vue(Modal).$mount()
-
-    vm.$nextTick(() => {
-      //console.log($(vm.$el))
-      
-      vm.showModal()
-      vm.$nextTick(() => {
-        //console.log($(vm.$el));
-        var modalEl = $(vm.$el).find('#' + vm.data_id)
-        
+    vm.$nextTick(()=> {
+      var el = vm.getModalElement()
+      var beforeHtml = el.html()
+      el.on('show.bs.modal', ()=> {
+        showEventIsFired = true
       })
     })
+
+    vm.$nextTick(vm.showModal)
+
+    vm.$nextTick(() => {
+      var expectedEvent = "modal.show.bs.modal";
+
+      var eventInHistory = EventBus.getHistoryEvents()
+        .filter((e) => e == expectedEvent)
+
+      expect(
+        expectedEvent
+      ).toEqual(eventInHistory[0])
+    })
   })
-
 })
-

@@ -1,11 +1,12 @@
 var files = [
-            'specs/index.js',
-            { pattern: 'resources/assets/js/**/*.js',
-              watched: true, included: false, served: false, served: false},
-            { pattern: 'resources/assets/js/**/*.vue',
-              watched: true, included: false, served: false, served: false},
-            { pattern: 'specs/**/*.js', 
-              watched: true, included: false, served: false, served: false},
+            { pattern: 'specs/index.js',
+              watched: true, included: true, served: true},
+//            { pattern: 'resources/assets/js/**/*.js',
+//              watched: false, included: false, served: false},
+//            { pattern: 'resources/assets/js/**/*.vue',
+//              watched: false, included: false, served: false},
+//            { pattern: 'specs/**/*.js', 
+//              watched: false, included: false, served: false},
           ];
 
 var OLD_NODE_ENV = process.env.NODE_ENV;
@@ -20,11 +21,20 @@ module.exports = function (config) {
   var browsers =  ['PhantomJS'];
 
   if(process.env.NODE_ENV !== "testing")
-    browsers.push('Chrome_custom');
+    browsers//.push('Chrome_custom');
 
   config.set({
     browsers: browsers,
     customLaunchers: {
+      PhantomJS_custom: {
+        'base': 'PhantomJS',
+        'options': {
+          'viewportSize': {
+            'width': 1920,
+            'height': 1080
+          },
+        }
+      },
       Chrome_custom: {
         base: 'Chrome',
         flags: ['--disable-gpu']
