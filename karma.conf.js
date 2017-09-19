@@ -21,7 +21,7 @@ module.exports = function (config) {
   var browsers =  ['PhantomJS'];
 
   if(process.env.NODE_ENV !== "testing")
-    browsers//.push('Chrome_custom');
+    browsers.push('Chrome_custom');
 
   config.set({
     browsers: browsers,
