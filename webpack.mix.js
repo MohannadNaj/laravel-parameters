@@ -22,7 +22,7 @@ if(process.env.NODE_ENV != 'temp-require')
 		mix.copy('node_modules/tinymce/plugins/visualblocks/css', 'public/js/plugins/visualblocks/css');
 	}
 
-	if(process.env.NODE_ENV === 'testing')
+	if(process.env.NODE_ENV === 'testing' || process.env.NODE_ENV === 'development')
 	{
 		require('./specs-watcher');
 	}

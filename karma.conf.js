@@ -1,12 +1,6 @@
 var files = [
             { pattern: 'specs/index.js',
-              watched: true, included: true, served: true},
-//            { pattern: 'resources/assets/js/**/*.js',
-//              watched: false, included: false, served: false},
-//            { pattern: 'resources/assets/js/**/*.vue',
-//              watched: false, included: false, served: false},
-//            { pattern: 'specs/**/*.js', 
-//              watched: false, included: false, served: false},
+              watched: true, included: true, served: true}
           ];
 
 var OLD_NODE_ENV = process.env.NODE_ENV;

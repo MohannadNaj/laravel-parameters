@@ -1,6 +1,6 @@
 import Modal from '../resources/assets/js/components/Modal'
 
-describe('Modal', () => {
+describe('Modal Component', () => {
   it('has a mounted hook', () => {
     expect(typeof Modal.mounted).toBe('function')
   })

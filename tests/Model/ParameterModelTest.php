@@ -14,6 +14,7 @@ class ParameterModelTestCase extends ModelTestCase
 {
     public function test_parameter_contains_columns_for_frontend()
     {
+        dd('..');
         $columns = Parameter::getColumns();
         $essentialColumns = [
             'id', 'name', 'label', 'type','meta',

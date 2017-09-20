@@ -10,7 +10,7 @@ class Parameter extends Model
 {
     use ParametersModelTrait;
 
-    protected $guarded = ['id'];
+    protected $guarded = [];
     protected $appends = ['humanizedCreatedAt','humanizedUpdatedAt'];
     protected $casts = ['meta'=>'array'];
 
