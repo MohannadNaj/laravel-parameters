@@ -1,10 +1,6 @@
 import Modal from '../resources/assets/js/components/Modal'
 
 describe('Modal Component', () => {
-  it('has a mounted hook', () => {
-    expect(typeof Modal.mounted).toBe('function')
-  })
-
 
   it('sets the correct default data', () => {
     expect(typeof Modal.data).toBe('function')
@@ -49,16 +45,7 @@ describe('Modal Component', () => {
         html: '<p class="save-paragraph">Lorem!</p>'
       }
     }).$mount()
-    var showEventIsFired = false;
-
-    vm.$nextTick(()=> {
-      var el = vm.getModalElement()
-      var beforeHtml = el.html()
-      el.on('show.bs.modal', ()=> {
-        showEventIsFired = true
-      })
-    })
-
+   
     vm.$nextTick(vm.showModal)
 
     vm.$nextTick(() => {
@@ -71,5 +58,27 @@ describe('Modal Component', () => {
         expectedEvent
       ).toEqual(eventInHistory[0])
     })
+  })
+
+  it('show remove-parameter component', () => {
+    let Ctor = Vue.extend(Modal)
+    let vm = new Ctor().$mount()
+    var component;
+
+    vm.showComponent('remove-parameter', "Confirmation")
+
+    vm.showModalAfter(x => {
+      component = vm.$refs['component']
+      component.parameter = {name:'some param'}
+    })
+
+    vm.$nextTick(()=> {
+      expect(vm.$el.textContent).toContain('Confirmation')
+
+      component.$nextTick(()=> {
+        expect(component.$el.textContent).toContain('some param')
+      })
+    })
+    expectEvent("modal.show.bs.modal", vm)
   })
 })
