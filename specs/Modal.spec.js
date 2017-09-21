@@ -1,6 +1,9 @@
 import Modal from '../resources/assets/js/components/Modal'
 
 describe('Modal Component', () => {
+  beforeEach(() => {
+    window.specComponent = Modal
+  })
 
   it('sets the correct default data', () => {
     expect(typeof Modal.data).toBe('function')
@@ -9,22 +12,21 @@ describe('Modal Component', () => {
   })
 
   it('correctly sets the message when mounted', () => {
-    let vm = new Vue(Modal).$mount()
+    createVue()
+
     vm.data_body = "heeey!"
     expect(vm.data_body).toBe('heeey!')
   })
 
   it('renders the correct message', () => {
-    let Ctor = Vue.extend(Modal)
-    let vm = new Ctor({
-      propsData: {
-        title: 'Title!',
-        save: 'Save Message!',
-        html: '<p class="save-paragraph">Lorem!</p>'
-      }
-    }).$mount()
 
-    vm.$nextTick(() => {
+    createVue( {
+      title: 'Title!',
+      save: 'Save Message!',
+      html: '<p class="save-paragraph">Lorem!</p>'
+    })
+
+    then(() => {
       expect(vm.$el.querySelector('.modal-title').textContent)
       .toBe('Title!')
 
@@ -37,18 +39,10 @@ describe('Modal Component', () => {
   })
 
   it('open modal', () => {
-    let Ctor = Vue.extend(Modal)
-    let vm = new Ctor({
-      propsData: {
-        title: 'Title!',
-        save: 'Save Message!',
-        html: '<p class="save-paragraph">Lorem!</p>'
-      }
-    }).$mount()
-   
-    vm.$nextTick(vm.showModal)
+    createVue()
 
-    vm.$nextTick(() => {
+    then(vm.showModal)
+    then(() => {
       var expectedEvent = "modal.show.bs.modal";
 
       var eventInHistory = EventBus.getHistoryEvents()
@@ -72,13 +66,13 @@ describe('Modal Component', () => {
       component.parameter = {name:'some param'}
     })
 
-    vm.$nextTick(()=> {
+    then(()=> {
       expect(vm.$el.textContent).toContain('Confirmation')
 
       component.$nextTick(()=> {
         expect(component.$el.textContent).toContain('some param')
       })
     })
-    expectEvent("modal.show.bs.modal", vm)
+    expectEvent('modal.show.bs.modal')
   })
 })

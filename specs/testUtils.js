@@ -1,5 +1,8 @@
-expectEvent = (eventName, vm) => {
-    vm.$nextTick(() => {
+expectEvent = (eventName, component = null) => {
+    if(component == null)
+        component = window.vm
+
+    component.$nextTick(() => {
       var expectedEvent = eventName;
 
       var eventInHistory = EventBus.getHistoryEvents()
@@ -9,4 +12,23 @@ expectEvent = (eventName, vm) => {
         expectedEvent
       ).toEqual(eventInHistory[0])
     })
+}
+
+createVue = (props = null, component = null)=> {
+
+    if(component == null)
+        component = window.specComponent;
+
+    let Ctor = Vue.extend(component)
+
+    window.vm = new Ctor({
+      propsData: props
+    }).$mount()
+
+    return window.vm
+}
+
+then = (callback, data = null) => {
+    window.vm.$nextTick(() => {callback(data)})
+    return {then: then, next: then}
 }
