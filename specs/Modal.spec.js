@@ -40,9 +40,8 @@ describe('Modal Component', () => {
 
   it('open modal', () => {
     createVue()
-
     then(vm.showModal)
-    then(() => {
+    .then(() => {
       var expectedEvent = "modal.show.bs.modal";
 
       var eventInHistory = EventBus.getHistoryEvents()
@@ -55,22 +54,22 @@ describe('Modal Component', () => {
   })
 
   it('show remove-parameter component', () => {
-    let Ctor = Vue.extend(Modal)
-    let vm = new Ctor().$mount()
-    var component;
+    createVue()
+    
+    var component
 
     vm.showComponent('remove-parameter', "Confirmation")
 
-    vm.showModalAfter(x => {
+    vm.showModalAfter(() => {
       component = vm.$refs['component']
-      component.parameter = {name:'some param'}
+      component.parameter = TestData.parameters[0]
     })
 
     then(()=> {
       expect(vm.$el.textContent).toContain('Confirmation')
 
       component.$nextTick(()=> {
-        expect(component.$el.textContent).toContain('some param')
+        expect(component.$el.textContent).toContain(TestData.parameters[0].name)
       })
     })
     expectEvent('modal.show.bs.modal')
