@@ -1,7 +1,4 @@
-var files = [
-            { pattern: 'specs/index.js',
-              watched: true, included: true, served: true}
-          ];
+var files = [ 'specs/**/*.js'];
 
 var OLD_NODE_ENV = process.env.NODE_ENV;
 process.env.NODE_ENV = 'temp-require'
@@ -14,9 +11,9 @@ process.env.NODE_ENV = OLD_NODE_ENV;
 module.exports = function (config) {
   var browsers =  ['PhantomJS'];
 
-  if(process.env.NODE_ENV !== "testing")
+/*  if(process.env.NODE_ENV !== "testing")
     browsers.push('Chrome_custom');
-
+*/
   config.set({
     browsers: browsers,
     customLaunchers: {
@@ -41,7 +38,8 @@ module.exports = function (config) {
 
     // we will pass the entry file to webpack for bundling.
     preprocessors: {
-      'specs/index.js': ['webpack']
+      'specs/setup/index.js': ['webpack'],
+      'specs/**/*.js': ['webpack']
     },
     // use the webpack config
     webpack: webpackConfig,

@@ -121,6 +121,16 @@ export default {
     getModalElement() {
       return $(this.$el).find(this.getModalElementId());
     },
+    getComponent() {
+      return this.$refs['component'];
+    },
+    setComponentData(data) {
+      var component = this.getComponent()
+
+      _.keys(data).forEach((key) => {
+        component[key] = data[key]
+      })
+    },
     showModal() {
       this.getModalElement().modal('show')
     },

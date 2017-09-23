@@ -57,10 +57,13 @@ module.exports = {
       modal.showComponent('change-paramCategory', title)
 
       modal.showModalAfter(x => {
-        var component = modal.$refs['component']
+        var component = modal.getComponent()
+        // modal.setComponentData({parameter: data, categories: this.categories})
 
         component.parameter = data
         component.categories = this.categories
+
+        // modal.getComponent().init()
         component.init()
       })
     }

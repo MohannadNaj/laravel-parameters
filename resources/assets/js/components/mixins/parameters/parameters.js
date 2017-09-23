@@ -43,6 +43,7 @@ module.exports = {
       modal.showComponent('remove-parameter', title)
 
       modal.showModalAfter(x => {
+        // modal.setComponentData(parameter)
         var component = modal.$refs['component']
         component.parameter = parameter
       })

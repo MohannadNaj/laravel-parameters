@@ -1,3 +1,6 @@
 {
-    "/specs/index.js": "/specs/index.js"
+    "/specs/Modal.spec.js": "/specs/Modal.spec.js",
+    "/specs/setup/index.js": "/specs/setup/index.js",
+    "/specs/setup/testUtils.js": "/specs/setup/testUtils.js",
+    "/specs/setup/fakeDataHelper.js": "/specs/setup/fakeDataHelper.js"
 }

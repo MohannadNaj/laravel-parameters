@@ -61,16 +61,49 @@ describe('Modal Component', () => {
     vm.showComponent('remove-parameter', "Confirmation")
 
     vm.showModalAfter(() => {
-      component = vm.$refs['component']
-      component.parameter = TestData.parameters[0]
+      component = vm.getComponent()
+      vm.setComponentData({parameter: TestData.parameters[0]})
     })
 
     then(()=> {
       expect(vm.$el.textContent).toContain('Confirmation')
 
-      component.$nextTick(()=> {
+      then(()=> {
         expect(component.$el.textContent).toContain(TestData.parameters[0].name)
-      })
+      },
+      null, component)
+    })
+    expectEvent('modal.show.bs.modal')
+  })
+
+  it('show change-paramCategory component', () => {
+    createVue()
+
+    var component
+
+    var parameter = TestData.categorized_parameters[0]
+
+    vm.showComponent('change-paramCategory', parameter.label)
+
+    vm.showModalAfter(x => {
+      component = vm.getComponent()
+      vm.setComponentData(
+        {
+          parameter: parameter,
+          categories: appCategory({title: 'change-paramCategory test'}, 2)
+        })
+
+      component.init()
+    })
+
+    then(()=> {
+      expect(vm.$el.textContent).toContain(parameter.label)
+
+      then(()=> {
+        expect(component.$el.textContent)
+        .toContain('change-paramCategory test')
+      },
+      null, component)
     })
     expectEvent('modal.show.bs.modal')
   })

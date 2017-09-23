@@ -28,7 +28,10 @@ createVue = (props = null, component = null)=> {
     return window.vm
 }
 
-then = (callback, data = null) => {
-    window.vm.$nextTick(() => {callback(data)})
+then = (callback, data = null, component = null) => {
+    if(component == null)
+        component = window.vm;
+
+    component.$nextTick(() => {callback(data)})
     return {then: then, next: then}
 }
