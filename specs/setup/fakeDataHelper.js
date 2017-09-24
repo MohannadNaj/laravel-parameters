@@ -29,10 +29,3 @@ setUpCategories = () => {
     vm.categories.push(category)
   })
 }
-
-getParameterCategory = () => {
-  return _.find(vm.categories,
-  (_category) => {
-      return _category.target == vm.parameter.category_id
-  })
-}

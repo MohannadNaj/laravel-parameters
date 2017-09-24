@@ -3,6 +3,7 @@ import changeParamCategory from '../resources/assets/js/components/change-paramC
 describe('change-paramCategory Component', () => {
   beforeEach(() => {
     window.specComponent = changeParamCategory
+    EventBus.clearHistory()
   })
 
   it('can update categories', () => {
@@ -67,7 +68,6 @@ describe('change-paramCategory Component', () => {
 
     // assert
     
-
     then(() => {
       vm.categories.forEach((_category) => {
         expect(vm.paramBelongsToCategory(_category))
@@ -82,7 +82,7 @@ describe('change-paramCategory Component', () => {
     })
   })
 
-  it('do nothing if parameter\'s category is chosen', () => {
+  it(`do nothing if parameter's category is chosen`, () => {
     // arrange
     createVue()
 
@@ -97,12 +97,16 @@ describe('change-paramCategory Component', () => {
 
     // assert
     then(() => {
+
       expect(choseCategory)
       .toBeNull()
+
+      expect(EventBus.getFireHistory().length)
+      .toBe(0)
     })
   })
 
-  it('returns alert if category is chosen while busy', () => {
+  it('alert and stop if category is chosen while busy', () => {
     // arrange
     createVue()
 
@@ -113,15 +117,26 @@ describe('change-paramCategory Component', () => {
 
     // act
     then(() => {
-      var choseCategory = vm.choseCategory(TestData.categories[0])
-      //console.log(choseCategory)      
+      vm.choseCategory(TestData.categories[0])
     })
 
     // assert
     .then(() => {
-      console.log(choseCategory)
-      expect(choseCategory)
-      .toBeNull()
+      expect(vm.notificationStore.state.length)
+      .toBe(1)
+      expect(vm.notificationStore.state[0].message)
+      .toBe('Wait until the previous request processed..')
+
+      expect(EventBus.getFireHistory().length)
+      .toBe(0)
     })
   })
 })
+
+
+var getParameterCategory = () => {
+  return _.find(vm.categories,
+  (_category) => {
+      return _category.target == vm.parameter.category_id
+  })
+}

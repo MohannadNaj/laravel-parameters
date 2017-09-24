@@ -49,6 +49,11 @@ window.EventBus = new class {
           res.push(_.keys(item)[0])
         })
         return res
+      },
+
+      clearHistory() {
+        this.listenHistory = [];
+        this.fireHistory = [];
       }
     }
   }
