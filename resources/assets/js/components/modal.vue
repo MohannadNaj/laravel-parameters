@@ -19,7 +19,7 @@
           </div>
           <div class="modal-footer" v-if="data_showFooter">
             <button type="button" class="btn btn-default" data-dismiss="modal">{{data_close}}</button>
-            <button type="button" class="btn btn-primary" v-on:click="savedata_click" data-dismiss="modal">{{data_save}}</button>
+            <button type="button" class="btn btn-primary" id="modal-submit" v-on:click="submit" data-dismiss="modal">{{data_save}}</button>
           </div>
         </div>
       </div>
@@ -46,7 +46,6 @@ export default {
       data_id: '',
       data_save: '',
       data_title: '',
-      data_callerData: '',
       data_html: '',
       data_showFooter: true
     }
@@ -77,7 +76,6 @@ export default {
     title: {
       default: ''
     },
-    callerData: {},
     html: {
       default: ''
     },
@@ -87,16 +85,19 @@ export default {
   },
   methods: {
     registerEvents() {
-      var modalElement = this.getModalElement()
-      modalElement.on('show.bs.modal', () => { EventBus.fire('modal.show.bs.modal', modalElement) })
-      modalElement.on('shown.bs.modal', () => { EventBus.fire('modal.shown.bs.modal', modalElement) })
-      modalElement.on('hide.bs.modal', () => { EventBus.fire('modal.hide.bs.modal', modalElement) })
-      modalElement.on('hidden.bs.modal', () => { EventBus.fire('modal.hidden.bs.modal', modalElement) })
+      this.matchBootstrapModalEvents()
     },
-
-    savedata_click() {
-      this.$parent.$emit('modal-save', this.callerData)
-      $(window).trigger('modal-save', this.callerData)
+    matchBootstrapModalEvents() {
+      ['show','shown','hide','hidden']
+      .forEach((event) => {
+        this.getModalElement().on(`${event}.bs.modal`,
+          () => {
+            EventBus.fire(`modal.${event}.bs.modal`, this.getModalElement())
+          })
+      })
+    },
+    submit() {
+      EventBus.fire('modal-submit', this)
     },
     mapPropsToData() {
       this.data_body = this.body
@@ -104,7 +105,6 @@ export default {
       this.data_id = this.id
       this.data_save = this.save
       this.data_title = this.title
-      this.data_callerData = this.callerData
       this.data_html = this.html
       this.data_showFooter = this.showFooter
     },

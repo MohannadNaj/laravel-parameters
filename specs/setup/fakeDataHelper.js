@@ -1,20 +1,38 @@
 appCategoryStub = {
-        target: 34,
+        target: null,
         blocked: false,
         title: 'Category',
         parameters: [],
         isCategoriesGroup: false
     }
 
-appCategory = (data, count = 1) => {
-    if(count == 1)
-        return _.extend(appCategoryStub, data)
-
-    var appCategories = [];
+appCategory = (mergeData, count = 1) => {
+    appCategories = [];
 
     for (var i = 0; i < count; i++) {
-        appCategories.push(_.extend(appCategoryStub, data))
+        appCategories.push(_.extend(appCategoryStub, mergeData))
     }
 
-    return appCategories
+    return count == 1 ? _.clone(appCategories[0]) : appCategories
+}
+
+
+setUpCategories = () => {
+  TestData.categories.forEach((_category) => {
+    var category = appCategory(
+        { title: _category.value,
+          target: _category.id,
+          parameters: TestData.categorized_parameters
+            .filter(
+              (param)=> param.category_id == _category.id)
+          })
+    vm.categories.push(category)
+  })
+}
+
+getParameterCategory = () => {
+  return _.find(vm.categories,
+  (_category) => {
+      return _category.target == vm.parameter.category_id
+  })
 }

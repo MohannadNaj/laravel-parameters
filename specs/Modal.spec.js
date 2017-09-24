@@ -42,14 +42,29 @@ describe('Modal Component', () => {
     createVue()
     then(vm.showModal)
     .then(() => {
-      var expectedEvent = "modal.show.bs.modal";
+      expectEvent('modal.show.bs.modal');
+    })
+  })
 
-      var eventInHistory = EventBus.getHistoryEvents()
-        .filter((e) => e == expectedEvent)
+  it('hide footer if requested', () => {
+    createVue()
+    vm.data_showFooter = false
+    vm.data_close = 'Close Message'
 
-      expect(
-        expectedEvent
-      ).toEqual(eventInHistory[0])
+    then(vm.showModal)
+    .then(()=> {
+      expect(vm.$el.textContent).not.toContain('Close Message')
+    })
+  })
+
+  it('send event on "submit" button click', () => {
+    createVue()
+    .then(vm.showModal)
+    .then(()=> {
+      $(vm.$el).find("#modal-submit")[0].click()
+    })
+    .then(() => {
+      expectEvent('modal-submit')
     })
   })
 
@@ -60,18 +75,14 @@ describe('Modal Component', () => {
 
     vm.showComponent('remove-parameter', "Confirmation")
 
-    vm.showModalAfter(() => {
-      component = vm.getComponent()
-      vm.setComponentData({parameter: TestData.parameters[0]})
-    })
-
     then(()=> {
       expect(vm.$el.textContent).toContain('Confirmation')
 
       then(()=> {
-        expect(component.$el.textContent).toContain(TestData.parameters[0].name)
+        expect(vm.$el.textContent)
+        .toContain(vm.getComponent().$el.textContent)
       },
-      null, component)
+      null, vm.getComponent())
     })
     expectEvent('modal.show.bs.modal')
   })
@@ -79,32 +90,39 @@ describe('Modal Component', () => {
   it('show change-paramCategory component', () => {
     createVue()
 
-    var component
-
-    var parameter = TestData.categorized_parameters[0]
-
-    vm.showComponent('change-paramCategory', parameter.label)
-
-    vm.showModalAfter(x => {
-      component = vm.getComponent()
-      vm.setComponentData(
-        {
-          parameter: parameter,
-          categories: appCategory({title: 'change-paramCategory test'}, 2)
-        })
-
-      component.init()
-    })
+    vm.showComponent('change-paramCategory', 'some title')
 
     then(()=> {
-      expect(vm.$el.textContent).toContain(parameter.label)
+      expect(vm.$el.textContent).toContain('some title')
 
       then(()=> {
-        expect(component.$el.textContent)
-        .toContain('change-paramCategory test')
+        expect(vm.$el.textContent)
+        .toContain(vm.getComponent().$el.textContent)
       },
-      null, component)
+      null, vm.getComponent())
     })
     expectEvent('modal.show.bs.modal')
+  })
+
+  it('hide component after close', () => {
+    createVue()
+
+    vm.showComponent('change-paramCategory', 'some title')
+
+    then(()=> {
+      expect(vm.$el.textContent).toContain('some title')
+
+    })
+    .then(()=> {
+      expect(vm.$el.textContent)
+      .toContain(vm.getComponent().$el.textContent)
+    },
+    null, vm.getComponent())
+    .then(() => {
+      vm.hideModal()
+    }, null, vm)
+    .then(() => {
+      expectEvent('modal.hide.bs.modal')
+    })
   })
 })

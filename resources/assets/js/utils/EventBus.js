@@ -6,30 +6,46 @@ window.EventBus = new class {
 
   get data() {
     return {
-      history: []
+      fireHistory: [],
+      listenHistory: []
     }
   }
 
   get methods() {
     return {
       fire(event, data = null) {
-        this.record(event, data)
+        this.recordFire(event, data)
         this.$emit(event, data)
       },
 
       listen(event, callback) {
+        this.recordListen(event, callback)
         this.$on(event, callback)
       },
 
-      record(event, data = null) {
+      recordFire(event, data = null) {
         var recordedEvent = {}
         recordedEvent[event] = data
-        this.history.push(recordedEvent)
+        this.fireHistory.push(recordedEvent)
       },
 
-      getHistoryEvents() {
+      getFireHistory() {
         var res = []
-        this.history.forEach((item) => {
+        this.fireHistory.forEach((item) => {
+          res.push(_.keys(item)[0])
+        })
+        return res
+      },
+
+      recordListen(event, data = null) {
+        var recordedEvent = {}
+        recordedEvent[event] = data
+        this.listenHistory.push(recordedEvent)
+      },
+
+      getListenHistory() {
+        var res = []
+        this.listenHistory.forEach((item) => {
           res.push(_.keys(item)[0])
         })
         return res

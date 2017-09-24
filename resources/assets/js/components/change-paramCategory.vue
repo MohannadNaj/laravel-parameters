@@ -36,6 +36,18 @@ export default {
     },
     registerEvents() {
       EventBus.listen('update-categories', this.updateCategories)
+      EventBus.listen('changed-paramCategory', data => {
+        this.isBusy = false
+        if (!data.ok) return
+
+        this.parameter = data.parameter
+      })
+      EventBus.listen('start-addCategory', x => {
+        this.isBusy = true
+      })
+      EventBus.listen('end-addCategory', x => {
+        this.isBusy = false
+      })
     },
     updateCategories(categories) {
       this.categories = categories
@@ -48,7 +60,7 @@ export default {
       return paramCategoryId == category.target
     },
     choseCategory(category) {
-      if (this.paramBelongsToCategory(category)) return
+      if (this.paramBelongsToCategory(category)) return null
 
       if (this.isBusy)
         return this.alert(
@@ -65,18 +77,7 @@ export default {
     }
   },
   mounted() {
-    EventBus.listen('changed-paramCategory', data => {
-      this.isBusy = false
-      if (!data.ok) return
-
-      this.parameter = data.parameter
-    })
-    EventBus.listen('start-addCategory', x => {
-      this.isBusy = true
-    })
-    EventBus.listen('end-addCategory', x => {
-      this.isBusy = false
-    })
+    this.init()
   },
   computed: {}
 }

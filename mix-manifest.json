@@ -1,6 +1,7 @@
 {
-    "/specs/Modal.spec.js": "/specs/Modal.spec.js",
+    "/specs/change-paramCategory.spec.js": "/specs/change-paramCategory.spec.js",
     "/specs/setup/index.js": "/specs/setup/index.js",
+    "/specs/Modal.spec.js": "/specs/Modal.spec.js",
     "/specs/setup/testUtils.js": "/specs/setup/testUtils.js",
     "/specs/setup/fakeDataHelper.js": "/specs/setup/fakeDataHelper.js"
 }
