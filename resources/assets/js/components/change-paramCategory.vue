@@ -57,9 +57,6 @@ export default {
 
       paramCategoryId = paramCategoryId == null ? '' : paramCategoryId
 
-      if(typeof _category.target == 'undefined')
-        console.log( _category, paramCategoryId , _category.target)
-
       return paramCategoryId == _category.target
     },
     choseCategory(category) {

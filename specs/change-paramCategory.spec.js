@@ -2,15 +2,29 @@ import changeParamCategory from '../resources/assets/js/components/change-paramC
 
 describe('change-paramCategory Component', () => {
   beforeEach(() => {
-    if(vm)
-      vm.$destroy()
+    if (vm) vm.$destroy()
+
     window.specComponent = changeParamCategory
     EventBus.clearHistory()
-    if(vm)
-      vm.notificationStore.state = []
+    if (vm) vm.notificationStore.state = []
   })
 
-  afterEach(() => {
+  it(`check for empty string if parameter's category is null`, () => {
+    // arrange
+    createVue()
+
+    vm.parameter = _.clone(TestData.categorized_parameters[0])
+    vm.parameter.category_id = null
+
+    var category = { target: '' }
+
+    // act
+    var paramBelongsToCategory = vm.paramBelongsToCategory(category)
+
+    // assert
+    then(() => {
+      expect(paramBelongsToCategory).toBe(true)
+    })
   })
 
   it('can update categories', () => {
@@ -21,10 +35,8 @@ describe('change-paramCategory Component', () => {
       expect(typeof vm.updateCategories).toBe('function')
 
       vm.updateCategories(appCategory({}, 4))
-    })
-    .then(() => {
-      expect(vm.categories.length)
-      .toBe(4)
+    }).then(() => {
+      expect(vm.categories.length).toBe(4)
     })
   })
 
@@ -36,9 +48,8 @@ describe('change-paramCategory Component', () => {
     setUpCategories()
 
     then(() => {
-      TestData.categories.forEach((_category) => {
-        expect(vm.$el.textContent)
-        .toContain(_category.value)
+      TestData.categories.forEach(_category => {
+        expect(vm.$el.textContent).toContain(_category.value)
       })
     })
   })
@@ -49,17 +60,19 @@ describe('change-paramCategory Component', () => {
     createVue()
 
     then(() => {
-      ['update-categories',
-      'changed-paramCategory',
-      'start-addCategory',
-      'end-addCategory']
-      .forEach((event) => {
+      ;[
+        'update-categories',
+        'changed-paramCategory',
+        'start-addCategory',
+        'end-addCategory'
+      ].forEach(event => {
         expectListenEvent(event)
       })
     })
 
-    expect(EventBus.getListenHistory().length)
-    .toBeGreaterThan(listenEventsLength + 3)
+    expect(EventBus.getListenHistory().length).toBeGreaterThan(
+      listenEventsLength + 3
+    )
   })
 
   it('check if parameter belongs to category', () => {
@@ -74,18 +87,17 @@ describe('change-paramCategory Component', () => {
     var selectedParameterCategory = getParameterCategory()
 
     // assert
-    
+
     then(() => {
-      vm.categories.forEach((_category) => {
-        expect(vm.paramBelongsToCategory(_category))
-        .toBe( selectedParameterCategory.target == _category.target )
+      vm.categories.forEach(_category => {
+        expect(vm.paramBelongsToCategory(_category)).toBe(
+          selectedParameterCategory.target == _category.target
+        )
       })
-  
+
       //   validate test data
-      expect(typeof selectedParameterCategory)
-      .toBe('object')
-      expect(vm.categories.length)
-      .toBeGreaterThan(2)
+      expect(typeof selectedParameterCategory).toBe('object')
+      expect(vm.categories.length).toBeGreaterThan(2)
     })
   })
 
@@ -104,12 +116,9 @@ describe('change-paramCategory Component', () => {
 
     // assert
     then(() => {
+      expect(choseCategory).toBeNull()
 
-      expect(choseCategory)
-      .toBeNull()
-
-      expect(EventBus.getFireHistory().length)
-      .toBe(0)
+      expect(EventBus.getFireHistory().length).toBe(0)
     })
   })
 
@@ -124,19 +133,17 @@ describe('change-paramCategory Component', () => {
 
     // act
     then(() => {
-      vm.choseCategory(TestData.categories[0])
+      vm.choseCategory({ target: 'target' })
     })
+      // assert
+      .then(() => {
+        expect(vm.notificationStore.state.length).toBe(1)
+        expect(vm.notificationStore.state[0].message).toBe(
+          'Wait until the previous request processed..'
+        )
 
-    // assert
-    .then(() => {
-      expect(vm.notificationStore.state.length)
-      .toBe(1)
-      expect(vm.notificationStore.state[0].message)
-      .toBe('Wait until the previous request processed..')
-
-      expect(EventBus.getFireHistory().length)
-      .toBe(0)
-    })
+        expect(EventBus.getFireHistory().length).toBe(0)
+      })
   })
 
   it('fire event if a valid-to-chose category is chosen', () => {
@@ -147,26 +154,27 @@ describe('change-paramCategory Component', () => {
 
     vm.parameter = TestData.categorized_parameters[0]
 
-    var newCategory = _.find(vm.categories,
-          (_category) => _category.target != vm.parameter.category_id)
+    var newCategory = _.find(
+      vm.categories,
+      _category => _category.target != vm.parameter.category_id
+    )
 
     // act
     then(() => {
       vm.choseCategory(newCategory)
     })
+      // assert
+      .then(() => {
+        expectEvent('chose-paramCategory')
 
-    // assert
-    .then(() => {
-      expectEvent('chose-paramCategory')
-
-      expect(EventBus.getFireHistory().length)
-      .toBe(1)
-    })
+        expect(EventBus.getFireHistory().length).toBe(1)
+      })
   })
 })
 
-
 var getParameterCategory = () => {
-  return _.find(vm.categories,
-  (_category) => _category.target == vm.parameter.category_id)
+  return _.find(
+    vm.categories,
+    _category => _category.target == vm.parameter.category_id
+  )
 }
