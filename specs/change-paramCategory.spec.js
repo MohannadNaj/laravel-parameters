@@ -2,8 +2,15 @@ import changeParamCategory from '../resources/assets/js/components/change-paramC
 
 describe('change-paramCategory Component', () => {
   beforeEach(() => {
+    if(vm)
+      vm.$destroy()
     window.specComponent = changeParamCategory
     EventBus.clearHistory()
+    if(vm)
+      vm.notificationStore.state = []
+  })
+
+  afterEach(() => {
   })
 
   it('can update categories', () => {
@@ -131,12 +138,35 @@ describe('change-paramCategory Component', () => {
       .toBe(0)
     })
   })
+
+  it('fire event if a valid-to-chose category is chosen', () => {
+    // arrange
+    createVue()
+
+    setUpCategories()
+
+    vm.parameter = TestData.categorized_parameters[0]
+
+    var newCategory = _.find(vm.categories,
+          (_category) => _category.target != vm.parameter.category_id)
+
+    // act
+    then(() => {
+      vm.choseCategory(newCategory)
+    })
+
+    // assert
+    .then(() => {
+      expectEvent('chose-paramCategory')
+
+      expect(EventBus.getFireHistory().length)
+      .toBe(1)
+    })
+  })
 })
 
 
 var getParameterCategory = () => {
   return _.find(vm.categories,
-  (_category) => {
-      return _category.target == vm.parameter.category_id
-  })
+  (_category) => _category.target == vm.parameter.category_id)
 }
