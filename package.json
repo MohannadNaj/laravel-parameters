@@ -12,13 +12,14 @@
     "karma-watch": "cross-env NODE_ENV=testing FORCE_COLOR=true karma start karma.conf.js",
     "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "pretty": "node pretty.js",
-    "tdd": "cross-env NODE_ENV=testing FORCE_COLOR=true node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+    "tdd": "cross-env NODE_ENV=testing FORCE_COLOR=true node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "e2e": "./node_modules/.bin/nightwatch",
+    "postinstall": "node nightwatch.conf.js"
   },
   "devDependencies": {
     "axios": "^0.16.2",
     "bootstrap-sass": "^3.3.7",
     "cross-env": "^5.0.1",
-    "env2": "^2.2.0",
     "html-script-hook": "^1.0.0",
     "jasmine-core": "^2.8.0",
     "jquery": "^3.1.1",
