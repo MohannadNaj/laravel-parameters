@@ -52,15 +52,15 @@ export default {
     updateCategories(categories) {
       this.categories = categories
     },
-    paramBelongsToCategory(category) {
+    paramBelongsToCategory(_category) {
       var paramCategoryId = this.parameter.category_id
 
       paramCategoryId = paramCategoryId == null ? '' : paramCategoryId
 
-      if(category.target == undefined)
-        console.log( category, paramCategoryId , category.target)
+      if(typeof _category.target == 'undefined')
+        console.log( _category, paramCategoryId , _category.target)
 
-      return paramCategoryId == category.target
+      return paramCategoryId == _category.target
     },
     choseCategory(category) {
       if (this.paramBelongsToCategory(category)) return null
