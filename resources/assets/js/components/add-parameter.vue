@@ -62,8 +62,7 @@ export default {
     }
   },
   props: {
-    category_id: '',
-    isCategoriesGroup: false
+    category_id: ''
   },
   mounted() {
     this.parametersTypes = window.Laravel.parametersTypes
@@ -91,8 +90,6 @@ export default {
       this.data_category_id = this.category_id
     },
     prepareRequestData() {
-      if (this.isCategoriesGroup) return this.data
-
       return _.extend(this.data, {
         category_id: this.data_category_id
       })
@@ -103,7 +100,7 @@ export default {
         .then(response => {
           EventBus.fire('created-parameter', response.data.parameter)
         })
-        .catch(error => {      // TODO: should be laravel 5.5 compliant
+        .catch(error => { // TODO: should be laravel 5.5 compliant
           var errorMessage = 'Error in adding parameter'
           var errorData = error.response.data
 

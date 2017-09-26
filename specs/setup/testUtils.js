@@ -38,3 +38,9 @@ then = (callback, data = null, component = null) => {
   })
   return { then: then, next: then }
 }
+
+spy = (method, component = null) => {
+  if (component == null) component = window.vm
+
+    sinonSandbox.spy(component, method)
+}

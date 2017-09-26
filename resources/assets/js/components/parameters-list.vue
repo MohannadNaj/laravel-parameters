@@ -27,7 +27,7 @@
           <add-category v-if="isCategoriesGroup"></add-category>
           <div v-if="!isCategoriesGroup">
             No Parameters Added, start by adding one
-            <add-parameter :is-categories-group="isCategoriesGroup" :category_id='category_id'></add-parameter>
+            <add-parameter :category_id='category_id'></add-parameter>
           </div>
         </div>
       </div>
@@ -75,7 +75,7 @@ export default {
       modal.showComponent(componentTag, title)
 
       modal.showModalAfter(x => {
-        if (!this.isCategoriesGroup) {
+        if (!this.isCategoriesGroup) { // review here
           var component = modal.$refs['component']
           component.data_category_id = this.category_id
         }
