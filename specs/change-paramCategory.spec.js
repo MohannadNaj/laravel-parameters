@@ -9,7 +9,7 @@ describe('change-paramCategory Component', () => {
     if (vm) vm.notificationStore.state = []
   })
 
-  it(`check for empty string if parameter's category is null`, () => {
+  it(`check for empty string if parameter's category is null`, (done) => {
     // arrange
     createVue()
 
@@ -24,10 +24,11 @@ describe('change-paramCategory Component', () => {
     // assert
     then(() => {
       expect(paramBelongsToCategory).toBe(true)
+      done()
     })
   })
 
-  it('can update categories', () => {
+  it('can update categories', (done) => {
     createVue()
     then(() => {
       vm.parameter = TestData.categorized_parameters[0]
@@ -37,10 +38,11 @@ describe('change-paramCategory Component', () => {
       vm.updateCategories(appCategory({}, 4))
     }).then(() => {
       expect(vm.categories.length).toBe(4)
+      done()
     })
   })
 
-  it('mount the given categories', () => {
+  it('mount the given categories', (done) => {
     createVue()
 
     vm.parameter = TestData.categorized_parameters[0]
@@ -50,33 +52,35 @@ describe('change-paramCategory Component', () => {
     then(() => {
       TestData.categories.forEach(_category => {
         expect(vm.$el.textContent).toContain(_category.value)
+        done()
       })
     })
   })
 
-  it('listen to the correct events', () => {
+  it('listen to the correct events', (done) => {
     var listenEventsLength = EventBus.getListenHistory().length
-
     createVue()
+    var expectedEvents = [ 'update-categories',
+      'changed-paramCategory',
+      'start-addCategory',
+      'end-addCategory']
 
-    then(() => {
-      ;[
-        'update-categories',
-        'changed-paramCategory',
-        'start-addCategory',
-        'end-addCategory'
-      ].forEach(event => {
-        expectListenEvent(event)
-      })
-    })
 
     expect(EventBus.getListenHistory().length)
     .toBeGreaterThanOrEqual(
-      listenEventsLength + 4
+      listenEventsLength + expectedEvents.length
     )
+
+    then(() => {
+        expectedEvents
+        .forEach(event => {
+        expectListenEvent(event)
+      })
+      done()
+    })
   })
 
-  it('check if parameter belongs to category', () => {
+  it('check if parameter belongs to category', (done) => {
     // arrange
     createVue()
 
@@ -99,10 +103,11 @@ describe('change-paramCategory Component', () => {
       //   validate test data
       expect(typeof selectedParameterCategory).toBe('object')
       expect(vm.categories.length).toBeGreaterThan(2)
+      done()
     })
   })
 
-  it(`do nothing if parameter's category is chosen`, () => {
+  it(`do nothing if parameter's category is chosen`, (done) => {
     // arrange
     createVue()
 
@@ -118,12 +123,12 @@ describe('change-paramCategory Component', () => {
     // assert
     then(() => {
       expect(choseCategory).toBeNull()
-
       expect(EventBus.getFireHistory().length).toBe(0)
+      done()
     })
   })
 
-  it('alert and stop if category is chosen while busy', () => {
+  it('alert and stop if category is chosen while busy', (done) => {
     // arrange
     createVue()
 
@@ -144,10 +149,11 @@ describe('change-paramCategory Component', () => {
         )
 
         expect(EventBus.getFireHistory().length).toBe(0)
+        done()
       })
   })
 
-  it('fire event if a valid-to-chose category is chosen', () => {
+  it('fire event if a valid-to-chose category is chosen', (done) => {
     // arrange
     createVue()
 
@@ -169,6 +175,7 @@ describe('change-paramCategory Component', () => {
         expectEvent('chose-paramCategory')
 
         expect(EventBus.getFireHistory().length).toBe(1)
+        done()
       })
   })
 })
