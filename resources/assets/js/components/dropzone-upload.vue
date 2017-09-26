@@ -79,7 +79,7 @@ export default {
       if (!this.is_uploaded) return
 
       this.modal.modal('hide')
-      this.$http.post(this.update_target, this.requestParams).then(response => {
+      axios.post(this.update_target, this.requestParams).then(response => {
         if (typeof response.data.path == 'undefined') return
 
         var vm = this

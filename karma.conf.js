@@ -1,4 +1,4 @@
-var files = [ 'specs/**/*.js'];
+var files = ['specs/setup/index.js','specs/**/*.spec.js'];
 
 var OLD_NODE_ENV = process.env.NODE_ENV;
 process.env.NODE_ENV = 'temp-require'
@@ -32,7 +32,7 @@ module.exports = function (config) {
       }
     },
 
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine','moxios'],
     // this is the entry file for all our tests.
     files: files,
 

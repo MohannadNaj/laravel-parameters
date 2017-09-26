@@ -121,7 +121,7 @@ export default {
     submit() {
       if (!this.isDirty) return null
 
-      this.$http
+      axios
         .patch(
           window.Laravel.base_url + 'parameters/' + this.originalParameter.id,
           {

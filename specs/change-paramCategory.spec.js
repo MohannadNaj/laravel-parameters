@@ -54,7 +54,7 @@ describe('change-paramCategory Component', () => {
     })
   })
 
-  it('register the correct events', () => {
+  it('listen to the correct events', () => {
     var listenEventsLength = EventBus.getListenHistory().length
 
     createVue()
@@ -70,8 +70,9 @@ describe('change-paramCategory Component', () => {
       })
     })
 
-    expect(EventBus.getListenHistory().length).toBeGreaterThan(
-      listenEventsLength + 3
+    expect(EventBus.getListenHistory().length)
+    .toBeGreaterThanOrEqual(
+      listenEventsLength + 4
     )
   })
 

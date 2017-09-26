@@ -98,12 +98,12 @@ export default {
       })
     },
     submit() {
-      this.$http
+      axios
         .post(window.Laravel.base_url + 'parameters', this.prepareRequestData())
         .then(response => {
           EventBus.fire('created-parameter', response.data.parameter)
         })
-        .catch(error => {
+        .catch(error => {      // TODO: should be laravel 5.5 compliant
           var errorMessage = 'Error in adding parameter'
           var errorData = error.response.data
 

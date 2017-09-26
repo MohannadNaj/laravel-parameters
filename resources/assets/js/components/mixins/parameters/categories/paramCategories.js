@@ -9,7 +9,7 @@ module.exports = {
       var parameter_id = data.parameter
       var category_id = data.category
 
-      this.$http
+      axios
         .post(
           window.Laravel.base_url +
             'parameters/' +

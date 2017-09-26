@@ -8,7 +8,7 @@ module.exports = {
       Helper.modal.hideModal()
     },
     confirmedRemoveParameter(parameter) {
-      this.$http
+      axios
         .delete(window.Laravel.base_url + 'parameters/' + parameter.id)
         .then(response => {
           var data = response.data

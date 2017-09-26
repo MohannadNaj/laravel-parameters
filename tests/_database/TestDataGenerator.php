@@ -13,7 +13,7 @@ use Parameter\Tests\ModelTestCase;
 
 class TestDataGenerator extends ModelTestCase
 {
-    protected $output = "../../specs/testData.json"; // relative to __DIR__
+    protected $output = "../../specs/setup/testData.json"; // relative to __DIR__
     protected $faker;
 
     public function setup()
@@ -25,6 +25,7 @@ class TestDataGenerator extends ModelTestCase
     public function test_generate_test_data_for_client()
     {
         $testData = [
+            'clientData' => ParametersManager::clientData(),
             'parameters' => factory(Parameter::class, 20)
                 ->create()
                 ->toArray(),
@@ -63,6 +64,7 @@ class TestDataGenerator extends ModelTestCase
         ->merge($this->createType('textfield', $count))
         ->merge($this->createType('text', $count));
 
+        // modify the parameter at least once
         foreach ($data as $parameter) {
             for ($i=0; $i <$this->faker->numberBetween(1,3); $i++) { 
                 $parameter->value = 
