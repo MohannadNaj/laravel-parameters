@@ -48,8 +48,11 @@ module.exports = function (config) {
       noInfo: true
     },
     colors: true,
-    reporters: ['spec'],
-
+    reporters: ['spec','notify'],
+    notifyReporter: {
+      reportEachFailure: true,
+      reportSuccess: true,
+    },
     singleRun: process.env.NODE_ENV !== 'testing'
   })
 }

@@ -2,12 +2,12 @@
 </style>
 <template>
   <div>
-    <form method="POST" role="form" v-on:submit.prevent="createCategory">
+    <form method="POST" role="form" v-on:submit.prevent="submit">
       <div class="form-group">
         <label>New Category?</label>
         <input type="text" class="form-control" v-model="newCategoryName">
       </div>
-      <button type="submit" :disabled="!valideCategoryName" class="btn btn-primary">Add+</button>
+      <button type="submit" :disabled="!validCategoryName" class="btn btn-primary addCategory--button__submit">Add+</button>
     </form>
   </div>
 </template>
@@ -20,18 +20,17 @@ export default {
       newCategoryName: ''
     }
   },
-  props: {
-    detailedView: false
-  },
-  mounted() {},
   methods: {
-    createCategory() {
+    submit() {
+      if(! this.validCategoryName) return null
+
       EventBus.fire('start-addCategory')
       axios
         .post(window.Laravel.base_url + 'parameters/addCategory', {
           value: this.newCategoryName
         })
         .then(response => {
+          console.log('add category', 'then')
           var data = response.data
           EventBus.fire('created-category', data.parameter)
           EventBus.$nextTick(x => {
@@ -40,6 +39,7 @@ export default {
           EventBus.fire('end-addCategory')
         })
         .catch(error => {
+          console.log('add category', 'catch')
           var errorMessage = 'Error in adding category'
           var errorData = error.response.data
           Helper.checkCommonErrors(errorData, errorMessage)
@@ -48,7 +48,7 @@ export default {
     }
   },
   computed: {
-    valideCategoryName() {
+    validCategoryName() {
       return this.newCategoryName.length != 0
     }
   }

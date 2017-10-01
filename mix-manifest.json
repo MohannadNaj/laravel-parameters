@@ -1,4 +1,5 @@
 {
+    "/specs/add-category.spec.js": "/specs/add-category.spec.js",
     "/specs/setup/index.js": "/specs/setup/index.js",
     "/specs/Modal.spec.js": "/specs/Modal.spec.js",
     "/specs/change-paramCategory.spec.js": "/specs/change-paramCategory.spec.js",

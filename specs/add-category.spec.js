@@ -1,42 +1,83 @@
-import addParameter from '../resources/assets/js/components/add-parameter'
+import addCategory from '../resources/assets/js/components/add-category'
 
-describe('add-parameter Component', () => {
+describe('add-category Component', () => {
   beforeEach(() => {
-    if (vm) vm.$destroy()
+    if (window.vm) window.vm.$destroy()
 
     moxios.install()
-    window.specComponent = addParameter
-    EventBus.clearHistory()
+    window.specComponent = addCategory
     window.sinonSandbox = sinon.createSandbox()
-    if (vm) vm.notificationStore.state = []
+    if (window.vm) window.vm.notificationStore.state = []
   })
 
   afterEach(() => {
     moxios.uninstall()
     sinonSandbox.restore()
+    EventBus.clearHistory()
   })
 
-
-  it(`load and list parameters types`, () => {
+  it(`validate category name before submit`, (done) => {
     // arrange
     createVue()
 
+
+    // act
+    vm.newCategoryName = ''
+    let submit = vm.submit()
+
     // assert
-    expect(vm.parametersTypes.length)
-    .toBeGreaterThan(4)
+    expect(submit)
+    .toBe(null)
 
     then(() => {
-      vm.parametersTypes.forEach((type)=> {
-        expect(vm.$el.textContent).toContain(type)
-      })
+      expect(vm.$el.querySelector('.addCategory--button__submit').disabled)
+      .toBe(true)
+
+      notExpectEvent('start-addCategory')
+
+      expect(vm.validCategoryName)
+      .toBe(false)
+      done()
     })
   })
 
+  it(`failed request: notify the user about the error`, (done) => {
+    // arrange
+    createVue()
+    vm.newCategoryName = 'new category'
+    // act
+    submitFailedRequest("...",'parameters/addCategory')
+    // assert
+    then(() => {
+      expect( window.vm.notificationStore.state.length )
+      .toBe(1)
+      //console.log('here')
+      done()
+    })
+  })
+
+  it(`failed request: register event`, (done) => {
+    // arrange
+    createVue()
+    vm.newCategoryName = 'new category'
+    // act
+    submitFailedRequest("...",'parameters/addCategory')
+    // assert
+    then(() => {
+      expectListenEvent('end-addCategory')
+//      console.log('here')
+      done()
+    })
+  })
+})
+/*
   it(`output error text on invalid data`, (done) => {
     // arrange
     createVue()
 
     // act
+    vm.newCategoryName = 'New Category'
+
     submitFailedRequest({
       label:['The label field is required.'],
       name: ['first validation error.','second validation error']})
@@ -55,7 +96,7 @@ describe('add-parameter Component', () => {
     })
   })
 
-  it(`notify user on invalid data`, (done) => {
+/*  it(`notify user on invalid data`, (done) => {
     // arrange
     createVue()
 
@@ -157,4 +198,4 @@ describe('add-parameter Component', () => {
     )
   })
 })
-
+*/

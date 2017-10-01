@@ -29,6 +29,7 @@
     "karma-chrome-launcher": "^2.2.0",
     "karma-jasmine": "^1.1.0",
     "karma-moxios": "^0.1.0",
+    "karma-notify-reporter": "^1.0.1",
     "karma-phantomjs-launcher": "^1.0.4",
     "karma-spec-reporter": "0.0.31",
     "karma-webpack": "^2.0.4",
@@ -39,6 +40,7 @@
     "nightwatch": "^0.9.16",
     "phantomjs-prebuilt": "^2.1.15",
     "prettier": "^1.5.3",
+    "promise-polyfill": "^6.0.2",
     "selenium-download": "^2.0.10",
     "sinon": "^3.3.0",
     "vue": "^2.1.10"

@@ -1,4 +1,4 @@
-expectEvent = (eventName, component = null, eventType = 'Fire') => {
+expectEvent = (eventName, component = null, eventType = 'Fire', expectPresent = true) => {
   if (component == null) component = window.vm
 
   component.$nextTick(() => {
@@ -7,11 +7,16 @@ expectEvent = (eventName, component = null, eventType = 'Fire') => {
     var eventInHistory = EventBus[`get${eventType}History`]().filter(
       e => e == expectedEvent
     )
+    if(expectPresent)
+      return expect(expectedEvent).toEqual(eventInHistory[0])
 
-    expect(expectedEvent).toEqual(eventInHistory[0])
+    return expect(eventInHistory).toEqual([])
   })
 }
 
+notExpectEvent = (eventName, component = null, eventType = 'Fire') => {
+  return expectEvent(eventName, component, eventType, false)
+}
 expectListenEvent = (eventName, component = null) => {
   return expectEvent(eventName, component, 'Listen')
 }
@@ -43,4 +48,24 @@ spy = (method, component = null) => {
   if (component == null) component = window.vm
 
     sinonSandbox.spy(component, method)
+}
+
+
+window.submitFailedRequest = (response, target = 'parameters') => {
+  moxios.stubRequest(window.Laravel.base_url + target, {
+    status: 422,
+    response: response})
+
+  window.vm.submit()
+
+  return {
+    then: (callback) => {
+      then(() => {
+        moxios.wait(() => {
+          console.log('from wait,,' , target)
+          callback()
+        })
+      })
+    }
+  }
 }

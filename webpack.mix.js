@@ -24,6 +24,7 @@ if(process.env.NODE_ENV != 'temp-require')
 
 	if(process.env.NODE_ENV === 'testing' || process.env.NODE_ENV === 'development')
 	{
+		mix.disableNotifications()
 		require('./specs-watcher');
 	}
 }

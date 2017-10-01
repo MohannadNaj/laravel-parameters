@@ -2,23 +2,26 @@ import Modal from '../resources/assets/js/components/Modal'
 
 describe('Modal Component', () => {
   beforeEach(() => {
+    if (window.vm) window.vm.$destroy()
+
     window.specComponent = Modal
     EventBus.clearHistory()
   })
 
-  it('sets the correct default data', (done) => {
+  it('sets the correct default data', () => {
     expect(typeof Modal.data).toBe('function')
     let defaultData = Modal.data()
     expect(defaultData.data_save).toBe('')
-    done()
   })
 
   it('correctly sets the message when mounted', (done) => {
     createVue()
 
-    vm.data_body = 'heeey!'
-    expect(vm.data_body).toBe('heeey!')
-    done()
+    then(() => {
+      vm.data_body = 'heeey!'
+      expect(vm.data_body).toBe('heeey!')
+      done()      
+    })
   })
 
   it('renders the correct message', (done) => {
@@ -36,16 +39,17 @@ describe('Modal Component', () => {
       )
 
       expect(vm.$el.querySelector('.save-paragraph').textContent).toBe('Lorem!')
+      done()
     })
-    done()
   })
 
   it('open modal', (done) => {
     createVue()
-    EventBus.listen('modal.shown.bs.modal', done)
+    EventBus.listen('modal.show.bs.modal', done)
 
     then(vm.showModal).then(() => {
       expectEvent('modal.show.bs.modal')
+      done()
     })
   })
 
@@ -56,8 +60,8 @@ describe('Modal Component', () => {
 
     then(vm.showModal).then(() => {
       expect(vm.$el.textContent).not.toContain('Close Message')
+      done()
     })
-    done()
   })
 
   it('send event on "submit" button click', (done) => {
@@ -68,60 +72,16 @@ describe('Modal Component', () => {
       })
       .then(() => {
         expectEvent('modal-submit')
+        done()
       })
-      done()
   })
 
   it('show remove-parameter component', (done) => {
-    createVue()
-
-    EventBus.listen('modal.shown.bs.modal', () => {
-      expectEvent('modal.shown.bs.modal')
-      done()
-    })
-
-    var component
-
-    vm.showComponent('remove-parameter', 'Confirmation')
-
-    then(() => {
-      expect(vm.$el.textContent).toContain('Confirmation')
-
-      then(
-        () => {
-          expect(vm.$el.textContent).toContain(
-            vm.getComponent().$el.textContent
-          )
-        },
-        null,
-        vm.getComponent()
-      )
-    })
+    showComponentInModal('remove-parameter', done)
   })
 
   it('show change-paramCategory component', (done) => {
-    EventBus.listen('modal.shown.bs.modal', () => {
-      expectEvent('modal.shown.bs.modal')
-      done()
-    })
-
-    createVue()
-
-    vm.showComponent('change-paramCategory', 'some title')
-
-    then(() => {
-      expect(vm.$el.textContent).toContain('some title')
-
-      then(
-        () => {
-          expect(vm.$el.textContent).toContain(
-            vm.getComponent().$el.textContent
-          )
-        },
-        null,
-        vm.getComponent()
-      )
-    })
+    showComponentInModal('change-paramCategory', done)
   })
 
   it('hide component after close', (done) => {
@@ -147,3 +107,19 @@ describe('Modal Component', () => {
     }, null, vm)
   })
 })
+
+var showComponentInModal = (componentTag, done) => {
+  createVue()
+
+
+  vm.showComponent(componentTag, 'some title')
+  then(() => { vm.showModal() })
+  .then(() => {
+    expect(vm.$el.textContent).toContain('some title')
+
+    expect(vm.$el.textContent).toContain(vm.getComponent().$el.textContent)
+
+    expectEvent('modal.show.bs.modal')
+    done()
+  }, null, vm.getComponent())
+}
