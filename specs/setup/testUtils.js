@@ -62,7 +62,6 @@ window.submitFailedRequest = (response, target = 'parameters') => {
     then: (callback) => {
       then(() => {
         moxios.wait(() => {
-          console.log('from wait,,' , target)
           callback()
         })
       })

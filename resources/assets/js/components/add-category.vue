@@ -23,14 +23,13 @@ export default {
   methods: {
     submit() {
       if(! this.validCategoryName) return null
-
       EventBus.fire('start-addCategory')
+
       axios
         .post(window.Laravel.base_url + 'parameters/addCategory', {
           value: this.newCategoryName
         })
         .then(response => {
-          console.log('add category', 'then')
           var data = response.data
           EventBus.fire('created-category', data.parameter)
           EventBus.$nextTick(x => {
@@ -39,7 +38,6 @@ export default {
           EventBus.fire('end-addCategory')
         })
         .catch(error => {
-          console.log('add category', 'catch')
           var errorMessage = 'Error in adding category'
           var errorData = error.response.data
           Helper.checkCommonErrors(errorData, errorMessage)

@@ -2,24 +2,23 @@ import addCategory from '../resources/assets/js/components/add-category'
 
 describe('add-category Component', () => {
   beforeEach(() => {
-    if (window.vm) window.vm.$destroy()
+    if (vm) vm.$destroy()
 
     moxios.install()
     window.specComponent = addCategory
+    EventBus.clearHistory()
     window.sinonSandbox = sinon.createSandbox()
-    if (window.vm) window.vm.notificationStore.state = []
+    if (vm) vm.notificationStore.state = []
   })
 
   afterEach(() => {
     moxios.uninstall()
     sinonSandbox.restore()
-    EventBus.clearHistory()
   })
 
   it(`validate category name before submit`, (done) => {
     // arrange
     createVue()
-
 
     // act
     vm.newCategoryName = ''
@@ -41,116 +40,12 @@ describe('add-category Component', () => {
     })
   })
 
-  it(`failed request: notify the user about the error`, (done) => {
+
+  it(`submit successful request: fire created-category event`, (done) => {
     // arrange
     createVue()
     vm.newCategoryName = 'new category'
-    // act
-    submitFailedRequest("...",'parameters/addCategory')
-    // assert
-    then(() => {
-      expect( window.vm.notificationStore.state.length )
-      .toBe(1)
-      //console.log('here')
-      done()
-    })
-  })
-
-  it(`failed request: register event`, (done) => {
-    // arrange
-    createVue()
-    vm.newCategoryName = 'new category'
-    // act
-    submitFailedRequest("...",'parameters/addCategory')
-    // assert
-    then(() => {
-      expectListenEvent('end-addCategory')
-//      console.log('here')
-      done()
-    })
-  })
-})
-/*
-  it(`output error text on invalid data`, (done) => {
-    // arrange
-    createVue()
-
-    // act
-    vm.newCategoryName = 'New Category'
-
-    submitFailedRequest({
-      label:['The label field is required.'],
-      name: ['first validation error.','second validation error']})
-
-    // assert
-    .then(() => {
-      expect(vm.$el.textContent)
-      .toContain('The label field is required')
-
-      expect(vm.$el.textContent)
-      .toContain('first validation')
-      
-      expect(vm.$el.textContent)
-      .toContain('second validation')
-      done()
-    })
-  })
-
-/*  it(`notify user on invalid data`, (done) => {
-    // arrange
-    createVue()
-
-    // act
-    submitFailedRequest()
-
-    // assert
-    .then(() => {
-      expect(vm.notificationStore.state.length)
-      .toBe(1)
-      expect(vm.notificationStore.state[0].message)
-      .toContain('Error')
-      done()
-    })
-  })
-
-  it(`notify user on token exception expiration`, (done) => {
-    // arrange
-    createVue()
-
-    // act
-    submitFailedRequest('TokenMismatchException')
-
-    // assert
-    .then(() => {
-
-      expect(vm.notificationStore.state[0].message)
-      .toContain('token mismatch')
-      done()
-    })
-  })
-
-  it(`attach category_id to request data`, () => {
-    // arrange
-    createVue({category_id: 'category_id'})
-    vm.data.name = 'name'
-
-    // act
-    var requestData = vm.prepareRequestData()
-
-    // assert
-    then(() => {
-      expect(requestData.name)
-      .toBe('name')
-      expect(requestData.category_id)
-      .toBe('category_id')
-    })
-  })
-
-  it(`fire event on successful request`, (done) => {
-    // arrange
-    createVue({category_id: null})
-    spy('prepareRequestData')
-    moxios.stubRequest(window.Laravel.base_url + 'parameters',
+    moxios.stubRequest(window.Laravel.base_url + 'parameters/addCategory',
     {
       status: 200,
       response: {parameter: {id:1}}
@@ -159,43 +54,75 @@ describe('add-category Component', () => {
     // act
     vm.submit()
 
-    then(() => {
-      moxios.wait(() => {
-
-      var emittedData = _.find(EventBus.fireHistory, (event, data) => {return _.keys(event)[0] == 'created-parameter'})['created-parameter'];
-
-        expectEvent('created-parameter')
-
-        expect(emittedData)
-        .toBeDefined()
-
-        expect(emittedData.id)
-        .toBe(1)
-
-        expect(vm.prepareRequestData.calledOnce)
-        .toBe(true)
+    // assert
+    moxios.wait(() => {
+      then(() => {
+        console.log(EventBus.getFireHistory(), 'EventBus.getFireHistory()')
+        expectEvent('end-addCategory')
         done()
       })
     })
   })
 
-  it('listen to the correct events', () => {
-    var listenEventsLength = EventBus.getListenHistory().length
-
+  it(`submit request: include newCategoryName in the request`, (done) => {
+    // arrange
     createVue()
+    vm.newCategoryName = 'new category'
 
-    then(() => {
-      ;[
-        'opening-category'
-      ].forEach(event => {
-        expectListenEvent(event)
+    // act
+    submitFailedRequest({}, 'parameters/addCategory')
+    // assert
+    .then(() => {
+      let request = moxios.requests.mostRecent()
+
+        expect(JSON.parse(request.config.data))
+        .toEqual({value: 'new category'})
+        done()
+    })
+  })
+
+  it(`submit request: fire start-addCategory event`, (done) => {
+    // arrange
+    createVue()
+    vm.newCategoryName = 'new category'
+    // act
+    submitFailedRequest({},'parameters/addCategory')
+    // assert
+    .then(() => {
+      then( () => {
+        expectEvent('start-addCategory')
+        done()
       })
     })
+  })
 
-    expect(EventBus.getListenHistory().length)
-    .toBeGreaterThanOrEqual(
-      listenEventsLength + 1
-    )
+  it(`submit failed request: notify the user about the error`, (done) => {
+    // arrange
+    createVue()
+    vm.newCategoryName = 'new category'
+    // act
+    submitFailedRequest({},'parameters/addCategory')
+    // assert
+    .then(() => {
+      expect( window.vm.notificationStore.state.length )
+      .toBe(1)
+      //console.log('here')
+      done()
+    })
+  })
+
+  it(`submit failed request: fire end-addCategory event`, (done) => {
+    // arrange
+    createVue()
+    vm.newCategoryName = 'new category'
+    // act
+    submitFailedRequest({},'parameters/addCategory')
+    // assert
+    .then(() => {
+      then( () => {
+        expectEvent('end-addCategory')
+        done()
+      })
+    })
   })
 })
-*/
