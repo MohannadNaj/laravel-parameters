@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-sm-3">
-      <div class="list-group">
+      <div class="list-group categories--list">
         <parameters-category :ref="category.target + '_parameter_category'" :key="category.target + '_cat'" :title="category.title" :parameters="category.parameters" :is-categories-group="category.isCategoriesGroup" :blocked="category.blocked" :target="category.target"
           v-if="shouldShowCategory(category)" :related-parameter="category.relatedParameter" v-for="category in categories"></parameters-category>
         <div class="list-group-item">

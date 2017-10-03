@@ -16,81 +16,72 @@ describe('add-parameter Component', () => {
     sinonSandbox.restore()
   })
 
-
   it(`load and list parameters types`, () => {
     // arrange
     createVue()
 
     // assert
-    expect(vm.parametersTypes.length)
-    .toBeGreaterThan(4)
+    expect(vm.parametersTypes.length).toBeGreaterThan(4)
 
     then(() => {
-      vm.parametersTypes.forEach((type)=> {
+      vm.parametersTypes.forEach(type => {
         expect(vm.$el.textContent).toContain(type)
       })
     })
   })
 
-  it(`output error text on invalid data`, (done) => {
+  it(`output error text on invalid data`, done => {
     // arrange
     createVue()
 
     // act
     submitFailedRequest({
-      label:['The label field is required.'],
-      name: ['first validation error.','second validation error']})
-
-    // assert
-    .then(() => {
-      expect(vm.$el.textContent)
-      .toContain('The label field is required')
-
-      expect(vm.$el.textContent)
-      .toContain('first validation')
-      
-      expect(vm.$el.textContent)
-      .toContain('second validation')
-      done()
+      label: ['The label field is required.'],
+      name: ['first validation error.', 'second validation error']
     })
+      // assert
+      .then(() => {
+        expect(vm.$el.textContent).toContain('The label field is required')
+
+        expect(vm.$el.textContent).toContain('first validation')
+
+        expect(vm.$el.textContent).toContain('second validation')
+        done()
+      })
   })
 
-  it(`notify user on invalid data`, (done) => {
+  it(`notify user on invalid data`, done => {
     // arrange
     createVue()
 
     // act
     submitFailedRequest()
-
-    // assert
-    .then(() => {
-      expect(vm.notificationStore.state.length)
-      .toBe(1)
-      expect(vm.notificationStore.state[0].message)
-      .toContain('Error')
-      done()
-    })
+      // assert
+      .then(() => {
+        expect(vm.notificationStore.state.length).toBe(1)
+        expect(vm.notificationStore.state[0].message).toContain('Error')
+        done()
+      })
   })
 
-  it(`notify user on token exception expiration`, (done) => {
+  it(`notify user on token exception expiration`, done => {
     // arrange
     createVue()
 
     // act
     submitFailedRequest('TokenMismatchException')
-
-    // assert
-    .then(() => {
-
-      expect(vm.notificationStore.state[0].message)
-      .toContain('token mismatch')
-      done()
-    })
+      // assert
+      .then(() => {
+        expect(vm.notificationStore.state[0].message).toContain(
+          'token mismatch'
+        )
+        done()
+      })
   })
 
   it(`attach category_id to request data`, () => {
     // arrange
-    createVue({category_id: 'category_id'})
+    createVue({ category_id: 'category_id' })
     vm.data.name = 'name'
 
     // act
@@ -98,21 +89,18 @@ describe('add-parameter Component', () => {
 
     // assert
     then(() => {
-      expect(requestData.name)
-      .toBe('name')
-      expect(requestData.category_id)
-      .toBe('category_id')
+      expect(requestData.name).toBe('name')
+      expect(requestData.category_id).toBe('category_id')
     })
   })
 
-  it(`fire event on successful request`, (done) => {
+  it(`fire event on successful request`, done => {
     // arrange
-    createVue({category_id: null})
+    createVue({ category_id: null })
     spy('prepareRequestData')
-    moxios.stubRequest(window.Laravel.base_url + 'parameters',
-    {
+    moxios.stubRequest(window.Laravel.base_url + 'parameters', {
       status: 200,
-      response: {parameter: {id:1}}
+      response: { parameter: { id: 1 } }
     })
 
     // act
@@ -120,19 +108,17 @@ describe('add-parameter Component', () => {
 
     then(() => {
       moxios.wait(() => {
-
-      var emittedData = _.find(EventBus.fireHistory, (event, data) => {return _.keys(event)[0] == 'created-parameter'})['created-parameter'];
+        var emittedData = _.find(EventBus.fireHistory, (event, data) => {
+          return _.keys(event)[0] == 'created-parameter'
+        })['created-parameter']
 
         expectEvent('created-parameter')
 
-        expect(emittedData)
-        .toBeDefined()
+        expect(emittedData).toBeDefined()
 
-        expect(emittedData.id)
-        .toBe(1)
+        expect(emittedData.id).toBe(1)
 
-        expect(vm.prepareRequestData.calledOnce)
-        .toBe(true)
+        expect(vm.prepareRequestData.calledOnce).toBe(true)
         done()
       })
     })
@@ -144,17 +130,13 @@ describe('add-parameter Component', () => {
     createVue()
 
     then(() => {
-      ;[
-        'opening-category'
-      ].forEach(event => {
+      ;['opening-category'].forEach(event => {
         expectListenEvent(event)
       })
     })
 
-    expect(EventBus.getListenHistory().length)
-    .toBeGreaterThanOrEqual(
+    expect(EventBus.getListenHistory().length).toBeGreaterThanOrEqual(
       listenEventsLength + 1
     )
   })
 })
-

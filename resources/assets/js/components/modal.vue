@@ -88,12 +88,10 @@ export default {
       this.matchBootstrapModalEvents()
     },
     matchBootstrapModalEvents() {
-      ['show','shown','hide','hidden']
-      .forEach((event) => {
-        this.getModalElement().on(`${event}.bs.modal`,
-          () => {
-            EventBus.fire(`modal.${event}.bs.modal`, this.getModalElement())
-          })
+      ;['show', 'shown', 'hide', 'hidden'].forEach(event => {
+        this.getModalElement().on(`${event}.bs.modal`, () => {
+          EventBus.fire(`modal.${event}.bs.modal`, this.getModalElement())
+        })
       })
     },
     submit() {
@@ -116,18 +114,18 @@ export default {
       return this
     },
     getModalElementId() {
-      return '#' + this.data_id;
+      return '#' + this.data_id
     },
     getModalElement() {
-      return $(this.$el).find(this.getModalElementId());
+      return $(this.$el).find(this.getModalElementId())
     },
     getComponent() {
-      return this.$refs['component'];
+      return this.$refs['component']
     },
     setComponentData(data) {
       var component = this.getComponent()
 
-      _.keys(data).forEach((key) => {
+      _.keys(data).forEach(key => {
         component[key] = data[key]
       })
     },

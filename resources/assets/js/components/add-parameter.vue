@@ -1,12 +1,12 @@
 <style scoped>
 </style>
 <template>
-  <div>
-    <form class="form-horizontal" role="form" v-on:submit.prevent="submit">
+  <div class="addParameter">
+    <form class="form-horizontal addParameter--form" role="form" v-on:submit.prevent="submit">
       <div class="form-group">
         <label class="control-label col-sm-2">Name</label>
         <div class="col-sm-4">
-          <input type="text" class="form-control" v-model="data.name" placeholder="parameter_name">
+          <input type="text" class="form-control addParameter--form-input__name" v-model="data.name" placeholder="parameter_name">
           <div v-if="showErrors" class="help-block">
             <ul>
               <li v-for="message in errors.name_errors">{{message}}</li>
@@ -17,7 +17,7 @@
       <div class="form-group ">
         <label class="control-label col-sm-2">Label</label>
         <div class="col-sm-4">
-          <input type="text" class="form-control" v-model="data.label" placeholder="parameter_label">
+          <input type="text" class="form-control addParameter--form-input__label" v-model="data.label" placeholder="parameter_label">
           <div v-if="showErrors" class="help-block">
             <ul>
               <li v-for="message in errors.label_errors">{{message}}</li>
@@ -30,7 +30,7 @@
 							Type
 						</label>
         <div class="col-sm-4">
-          <select v-model="data.type" class="form-control">
+          <select v-model="data.type" class="form-control addParameter--form-input__type">
 								<option v-for="(type,index) in parametersTypes" v-text="type" :value="type"></option>
 							</select>
           <div v-if="showErrors" class="help-block">
@@ -40,7 +40,7 @@
           </div>
         </div>
       </div>
-      <button type="submit" class="col-sm-offset-1 btn btn-primary">Submit</button>
+      <button type="submit" class="col-sm-offset-1 btn btn-primary addParameter--button__submit">Submit</button>
     </form>
   </div>
 </template>
@@ -100,7 +100,8 @@ export default {
         .then(response => {
           EventBus.fire('created-parameter', response.data.parameter)
         })
-        .catch(error => { // TODO: should be laravel 5.5 compliant
+        .catch(error => {
+          // TODO: should be laravel 5.5 compliant
           var errorMessage = 'Error in adding parameter'
           var errorData = error.response.data
 

@@ -16,7 +16,7 @@ describe('add-category Component', () => {
     sinonSandbox.restore()
   })
 
-  it(`validate category name before submit`, (done) => {
+  it(`validate category name before submit`, done => {
     // arrange
     createVue()
 
@@ -25,30 +25,27 @@ describe('add-category Component', () => {
     let submit = vm.submit()
 
     // assert
-    expect(submit)
-    .toBe(null)
+    expect(submit).toBe(null)
 
     then(() => {
-      expect(vm.$el.querySelector('.addCategory--button__submit').disabled)
-      .toBe(true)
+      expect(
+        vm.$el.querySelector('.addCategory--button__submit').disabled
+      ).toBe(true)
 
       notExpectEvent('start-addCategory')
 
-      expect(vm.validCategoryName)
-      .toBe(false)
+      expect(vm.validCategoryName).toBe(false)
       done()
     })
   })
 
-
-  it(`submit successful request: fire created-category event`, (done) => {
+  it(`submit successful request: fire created-category event`, done => {
     // arrange
     createVue()
     vm.newCategoryName = 'new category'
-    moxios.stubRequest(window.Laravel.base_url + 'parameters/addCategory',
-    {
+    moxios.stubRequest(window.Laravel.base_url + 'parameters/addCategory', {
       status: 200,
-      response: {parameter: {id:1}}
+      response: { parameter: { id: 1 } }
     })
 
     // act
@@ -64,65 +61,65 @@ describe('add-category Component', () => {
     })
   })
 
-  it(`submit request: include newCategoryName in the request`, (done) => {
+  it(`submit request: include newCategoryName in the request`, done => {
     // arrange
     createVue()
     vm.newCategoryName = 'new category'
 
     // act
     submitFailedRequest({}, 'parameters/addCategory')
-    // assert
-    .then(() => {
-      let request = moxios.requests.mostRecent()
+      // assert
+      .then(() => {
+        let request = moxios.requests.mostRecent()
 
-        expect(JSON.parse(request.config.data))
-        .toEqual({value: 'new category'})
-        done()
-    })
-  })
-
-  it(`submit request: fire start-addCategory event`, (done) => {
-    // arrange
-    createVue()
-    vm.newCategoryName = 'new category'
-    // act
-    submitFailedRequest({},'parameters/addCategory')
-    // assert
-    .then(() => {
-      then( () => {
-        expectEvent('start-addCategory')
+        expect(JSON.parse(request.config.data)).toEqual({
+          value: 'new category'
+        })
         done()
       })
-    })
   })
 
-  it(`submit failed request: notify the user about the error`, (done) => {
+  it(`submit request: fire start-addCategory event`, done => {
     // arrange
     createVue()
     vm.newCategoryName = 'new category'
     // act
-    submitFailedRequest({},'parameters/addCategory')
-    // assert
-    .then(() => {
-      expect( window.vm.notificationStore.state.length )
-      .toBe(1)
-      //console.log('here')
-      done()
-    })
+    submitFailedRequest({}, 'parameters/addCategory')
+      // assert
+      .then(() => {
+        then(() => {
+          expectEvent('start-addCategory')
+          done()
+        })
+      })
   })
 
-  it(`submit failed request: fire end-addCategory event`, (done) => {
+  it(`submit failed request: notify the user about the error`, done => {
     // arrange
     createVue()
     vm.newCategoryName = 'new category'
     // act
-    submitFailedRequest({},'parameters/addCategory')
-    // assert
-    .then(() => {
-      then( () => {
-        expectEvent('end-addCategory')
+    submitFailedRequest({}, 'parameters/addCategory')
+      // assert
+      .then(() => {
+        expect(window.vm.notificationStore.state.length).toBe(1)
+        //console.log('here')
         done()
       })
-    })
+  })
+
+  it(`submit failed request: fire end-addCategory event`, done => {
+    // arrange
+    createVue()
+    vm.newCategoryName = 'new category'
+    // act
+    submitFailedRequest({}, 'parameters/addCategory')
+      // assert
+      .then(() => {
+        then(() => {
+          expectEvent('end-addCategory')
+          done()
+        })
+      })
   })
 })

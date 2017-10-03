@@ -11,7 +11,7 @@ describe('change-paramCategory Component', () => {
     if (window.vm) window.vm.notificationStore.state = []
   })
 
-  it(`check for empty string if parameter's category is null`, (done) => {
+  it(`check for empty string if parameter's category is null`, done => {
     // arrange
     createVue()
 
@@ -30,7 +30,7 @@ describe('change-paramCategory Component', () => {
     })
   })
 
-  it('can update categories', (done) => {
+  it('can update categories', done => {
     createVue()
     then(() => {
       vm.parameter = TestData.categorized_parameters[0]
@@ -44,7 +44,7 @@ describe('change-paramCategory Component', () => {
     })
   })
 
-  it('mount the given categories', (done) => {
+  it('mount the given categories', done => {
     createVue()
 
     vm.parameter = TestData.categorized_parameters[0]
@@ -59,30 +59,29 @@ describe('change-paramCategory Component', () => {
     })
   })
 
-  it('listen to the correct events', (done) => {
+  it('listen to the correct events', done => {
     var listenEventsLength = EventBus.getListenHistory().length
     createVue()
-    var expectedEvents = [ 'update-categories',
+    var expectedEvents = [
+      'update-categories',
       'changed-paramCategory',
       'start-addCategory',
-      'end-addCategory']
+      'end-addCategory'
+    ]
 
-
-    expect(EventBus.getListenHistory().length)
-    .toBeGreaterThanOrEqual(
+    expect(EventBus.getListenHistory().length).toBeGreaterThanOrEqual(
       listenEventsLength + expectedEvents.length
     )
 
     then(() => {
-        expectedEvents
-        .forEach(event => {
+      expectedEvents.forEach(event => {
         expectListenEvent(event)
       })
       done()
     })
   })
 
-  it('check if parameter belongs to category', (done) => {
+  it('check if parameter belongs to category', done => {
     // arrange
     createVue()
 
@@ -109,7 +108,7 @@ describe('change-paramCategory Component', () => {
     })
   })
 
-  it(`do nothing if parameter's category is chosen`, (done) => {
+  it(`do nothing if parameter's category is chosen`, done => {
     // arrange
     createVue()
 
@@ -130,7 +129,7 @@ describe('change-paramCategory Component', () => {
     })
   })
 
-  it('alert and stop if category is chosen while busy', (done) => {
+  it('alert and stop if category is chosen while busy', done => {
     // arrange
     createVue()
 
@@ -155,7 +154,7 @@ describe('change-paramCategory Component', () => {
       })
   })
 
-  it('fire event if a valid-to-chose category is chosen', (done) => {
+  it('fire event if a valid-to-chose category is chosen', done => {
     // arrange
     createVue()
 

@@ -14,7 +14,7 @@
 </style>
 <template>
   <div>
-    <div :class="['panel',markIfDirty,'no-margin']">
+    <div :class="['panel','parameter',markIfDirty,'no-margin']">
       <div class="panel-heading">
         <h3 class="panel-title">
           <div>
@@ -26,14 +26,14 @@
             <button v-if="isDirty && !previewMode" @click="undoChanges" type="button" class="btn btn-default btn-sm">
                                 <i class="fa fa-undo"></i>
                             </button>
-            <button v-if="isDirty && !previewMode" @click="submit" type="button" class="btn btn-default btn-sm">
+            <button v-if="isDirty && !previewMode" @click="submit" type="button" class="btn btn-default btn-sm parameter--button_undo">
                                 <i class="fa fa-floppy-o"></i>
                             </button>
             <span class="badge">{{originalParameter.type}}</span>
-            <button @click="togglePreview" type="button" class="btn btn-default btn-sm">
+            <button @click="togglePreview" type="button" class="btn btn-default btn-sm parameter--button_edit">
                                 <i class="fa fa-pencil"></i>
                             </button>
-            <button @click="removeParameter" type="button" class="btn btn-danger btn-sm">
+            <button @click="removeParameter" type="button" class="btn btn-danger btn-sm parameter--button_remove">
                                 <i class="fa fa-times-circle"></i>
                             </button>
             </span>

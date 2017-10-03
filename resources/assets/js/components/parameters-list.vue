@@ -6,7 +6,7 @@
 }
 </style>
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid parameters-list">
     <div class="row">
       <div class="col-md-12">
         <div v-if="parameters.length > 0" class="panel panel-default">
@@ -14,10 +14,10 @@
             {{ title }}
             <span class="pull-right">
                             <span class="badge">{{ parameters.length }}</span>
-            <button type="button" class="btn btn-success btn-sm" @click="add">+</button>
+            <button type="button" class="btn btn-success btn-sm parameters-list--button__add" @click="add">+</button>
             </span>
           </div>
-          <div class="panel-body">
+          <div class="parameters panel-body">
             <ul class="list-group">
               <parameter class="list-group-item meta-list-group-item" v-for="parameter in parameters" :parameter="parameter" :ref="'parameter'+parameter.id" :key="parameter.id"></parameter>
             </ul>
@@ -75,7 +75,8 @@ export default {
       modal.showComponent(componentTag, title)
 
       modal.showModalAfter(x => {
-        if (!this.isCategoriesGroup) { // review here
+        if (!this.isCategoriesGroup) {
+          // review here
           var component = modal.$refs['component']
           component.data_category_id = this.category_id
         }

@@ -14,17 +14,17 @@ describe('Modal Component', () => {
     expect(defaultData.data_save).toBe('')
   })
 
-  it('correctly sets the message when mounted', (done) => {
+  it('correctly sets the message when mounted', done => {
     createVue()
 
     then(() => {
       vm.data_body = 'heeey!'
       expect(vm.data_body).toBe('heeey!')
-      done()      
+      done()
     })
   })
 
-  it('renders the correct message', (done) => {
+  it('renders the correct message', done => {
     createVue({
       title: 'Title!',
       save: 'Save Message!',
@@ -43,7 +43,7 @@ describe('Modal Component', () => {
     })
   })
 
-  it('open modal', (done) => {
+  it('open modal', done => {
     createVue()
     EventBus.listen('modal.show.bs.modal', done)
 
@@ -53,7 +53,7 @@ describe('Modal Component', () => {
     })
   })
 
-  it('hide footer if requested', (done) => {
+  it('hide footer if requested', done => {
     createVue()
     vm.data_showFooter = false
     vm.data_close = 'Close Message'
@@ -64,7 +64,7 @@ describe('Modal Component', () => {
     })
   })
 
-  it('send event on "submit" button click', (done) => {
+  it('send event on "submit" button click', done => {
     createVue()
       .then(vm.showModal)
       .then(() => {
@@ -76,15 +76,15 @@ describe('Modal Component', () => {
       })
   })
 
-  it('show remove-parameter component', (done) => {
+  it('show remove-parameter component', done => {
     showComponentInModal('remove-parameter', done)
   })
 
-  it('show change-paramCategory component', (done) => {
+  it('show change-paramCategory component', done => {
     showComponentInModal('change-paramCategory', done)
   })
 
-  it('hide component after close', (done) => {
+  it('hide component after close', done => {
     EventBus.listen('modal.hide.bs.modal', () => {
       expectEvent('modal.hide.bs.modal')
       done()
@@ -97,29 +97,41 @@ describe('Modal Component', () => {
     then(() => {
       expect(vm.$el.textContent).toContain('some title')
     })
-    .then( () => {
-      expect(vm.$el.textContent).toContain(
-        vm.getComponent().$el.textContent
+      .then(
+        () => {
+          expect(vm.$el.textContent).toContain(
+            vm.getComponent().$el.textContent
+          )
+        },
+        null,
+        vm.getComponent()
       )
-    }, null, vm.getComponent())
-    .then(() => {
-      vm.hideModal()
-    }, null, vm)
+      .then(
+        () => {
+          vm.hideModal()
+        },
+        null,
+        vm
+      )
   })
 })
 
 var showComponentInModal = (componentTag, done) => {
   createVue()
 
-
   vm.showComponent(componentTag, 'some title')
-  then(() => { vm.showModal() })
-  .then(() => {
-    expect(vm.$el.textContent).toContain('some title')
+  then(() => {
+    vm.showModal()
+  }).then(
+    () => {
+      expect(vm.$el.textContent).toContain('some title')
 
-    expect(vm.$el.textContent).toContain(vm.getComponent().$el.textContent)
+      expect(vm.$el.textContent).toContain(vm.getComponent().$el.textContent)
 
-    expectEvent('modal.show.bs.modal')
-    done()
-  }, null, vm.getComponent())
+      expectEvent('modal.show.bs.modal')
+      done()
+    },
+    null,
+    vm.getComponent()
+  )
 }

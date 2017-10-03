@@ -35,16 +35,16 @@ const config = {
         "browserName": "chrome",
         "chromeOptions": {
           "args": [
-            `Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46
-            (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3`,
-            "--window-size=640,1136"
+            "--window-size=640,640"
           ]
         },
         "javascriptEnabled": true,
         "acceptSslCerts": true
       }
     },
-  }
+  },
+  "custom_commands_path" : "node_modules/nightwatch-custom-commands-assertions/js/commands",
+  "custom_assertions_path" : "node_modules/nightwatch-custom-commands-assertions/js/assertions"
 }
 module.exports = config;
 

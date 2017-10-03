@@ -1,4 +1,3 @@
-
 // Merge Axios into Vue
 window.Vue.prototype.$http = window.axios
 

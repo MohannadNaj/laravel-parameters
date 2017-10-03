@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     submit() {
-      if(! this.validCategoryName) return null
+      if (!this.validCategoryName) return null
       EventBus.fire('start-addCategory')
 
       axios
