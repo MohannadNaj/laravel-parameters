@@ -44,9 +44,8 @@ module.exports = {
       .pause(100)
       .setValue('.dz-hidden-input',require('path').resolve(__dirname + '/../setup/e2e-upload-file.txt'))
       .pause(1000)
-      .jqueryClick('#dropzone_upload.modal.in .btn.btn-primary')
-      .pause(10000)
-      .execute("alert('leaving..')")
+      .execute(`document.querySelectorAll(#dropzone_upload.modal.in .btn.btn-primary')[0].click();`)
+      .pause(1000)
   },
   'End': browser => {
     browser.end()

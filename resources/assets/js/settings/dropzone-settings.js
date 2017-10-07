@@ -19,7 +19,7 @@ export default {
     })
     this.on('success', function(file, responseText) {
       // success
-      this.options.handlerInstance.handleRespnose(file, responseText)
+      this.options.handlerInstance.handleResponse(file, responseText)
     })
 
     this.on('addedfile', function(file) {

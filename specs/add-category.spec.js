@@ -54,7 +54,7 @@ describe('add-category Component', () => {
     // assert
     moxios.wait(() => {
       then(() => {
-        console.log(EventBus.getFireHistory(), 'EventBus.getFireHistory()')
+      
         expectEvent('end-addCategory')
         done()
       })
@@ -103,7 +103,6 @@ describe('add-category Component', () => {
       // assert
       .then(() => {
         expect(window.vm.notificationStore.state.length).toBe(1)
-        //console.log('here')
         done()
       })
   })

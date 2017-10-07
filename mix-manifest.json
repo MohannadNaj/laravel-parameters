@@ -3,5 +3,6 @@
     "/specs/Modal.spec.js": "/specs/Modal.spec.js",
     "/specs/change-paramCategory.spec.js": "/specs/change-paramCategory.spec.js",
     "/specs/add-parameter.spec.js": "/specs/add-parameter.spec.js",
-    "/specs/add-category.spec.js": "/specs/add-category.spec.js"
+    "/specs/add-category.spec.js": "/specs/add-category.spec.js",
+    "/specs/dropzone-upload.spec.js": "/specs/dropzone-upload.spec.js"
 }

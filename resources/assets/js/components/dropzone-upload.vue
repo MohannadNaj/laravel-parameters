@@ -67,7 +67,7 @@ export default {
       dropzone_settings.handlerInstance = this
       window.Dropzone.options.dropzoneUpload = dropzone_settings
     },
-    handleRespnose(file, responseText) {
+    handleResponse(file, responseText) {
       if (typeof responseText.path != 'undefined') {
         this.path = responseText.path
         this.is_uploaded = true
