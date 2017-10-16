@@ -16,13 +16,21 @@ describe('dropzone-upload Component', () => {
     sinonSandbox.restore()
   })
 
-  it(`has a handleResponse method`, done => {
-    // arrange
+  it(`has a handleResponse method`, () => {
     createVue()
 
     expect(typeof vm.handleResponse)
     .toBe('function')
+  })
 
-    done()
+  it(`handleResponse controls: is_uploaded`, (done) => {
+    createVue()
+
+    //$(vm.$el).find('.dz-hidden-input')[0]
+    //$(vm.$el).find(`#${vm.modalId} .btn`)[1].click()
+    then(() => {
+      // $(vm.$el).find('.dz-hidden-input')[0]
+      done()
+    })
   })
 })
